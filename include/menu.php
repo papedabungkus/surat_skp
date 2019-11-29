@@ -69,8 +69,6 @@
                             <ul>
                                 <li><a href="?page=tsm">Surat Masuk</a></li>
                                 <li><a href="?page=tsk">Surat Keluar</a></li>
-                                <li><a href="?page=tst">Surat Tugas</a></li>
-                                <li><a href="?page=tspt">Surat Perintah Tugas</a></li>
                             </ul>
                         </div>
                    </li>
