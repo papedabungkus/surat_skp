@@ -7,7 +7,7 @@
     } else {
 
         if(isset($_REQUEST['sub'])){
-            $sub = $_REQUEST['sub'];
+            $sub = $_REQUEST['sub']; 
             switch ($sub) {
                 case 'add':
                     include "tambah_disposisi.php";
@@ -38,14 +38,14 @@
                 if(mysqli_num_rows($query) > 0){
                     $no = 1;
                     while($row = mysqli_fetch_array($query)){
-
+                /*
                     if($_SESSION['id_user'] != $row['id_user'] AND $_SESSION['id_user'] != 1){
                         echo '<script language="javascript">
                                 window.alert("ERROR! Anda tidak memiliki hak akses untuk melihat data ini");
                                 window.location.href="./admin.php?page=tsm";
                               </script>';
                     } else {
-
+                */
                       echo '<!-- Row Start -->
                             <div class="row">
                                 <!-- Secondary Nav START -->
@@ -130,9 +130,9 @@
                                             <tr>
                                                 <th width="6%">No</th>
                                                 <th width="22%">Tujuan Disposisi</th>
-                                                <th width="32%">Isi Disposisi</th>
-                                                <th width="24%">Sifat<br/>Batas Waktu</th>
-                                                <th width="16%">Tindakan</th>
+                                                <th width="28%">Isi Disposisi</th>
+                                                <th width="20%">Sifat<br/>Batas Waktu</th>
+                                                <th width="24%">Tindakan</th>
                                             </tr>
                                         </thead>
                                         <tbody>';
@@ -149,7 +149,10 @@
                                                     <td>'.$row['tujuan'].'</td>
                                                     <td>'.$row['isi_disposisi'].'</td>
                                                     <td>'.$row['sifat'].'<br/>'.indoDate($row['batas_waktu']).'</td>
-                                                    <td><a class="btn small blue waves-effect waves-light" href="?page=tsm&act=disp&id_surat='.$id_surat.'&sub=edit&id_disposisi='.$row['id_disposisi'].'">
+                                                    <td>
+                                                    <a class="btn small yellow darken-3 waves-effect waves-light" href="?page=ctk&id_surat='.$row['id_surat'].'&id_disposisi='.$row['id_disposisi'].'" target="_blank">
+                                                            <i class="material-icons">print</i> PRINT</a>
+                                                    <a class="btn small blue waves-effect waves-light" href="?page=tsm&act=disp&id_surat='.$id_surat.'&sub=edit&id_disposisi='.$row['id_disposisi'].'">
                                                             <i class="material-icons">edit</i> EDIT</a>
                                                         <a class="btn small deep-orange waves-effect waves-light" href="?page=tsm&act=disp&id_surat='.$id_surat.'&sub=del&id_disposisi='.$row['id_disposisi'].'"><i class="material-icons">delete</i> DEL</a>
                                                     </td>
@@ -162,7 +165,7 @@
                                 </div>
                             </div>
                             <!-- Row form END -->';
-                    }
+                   // }
                 }
             }
         }

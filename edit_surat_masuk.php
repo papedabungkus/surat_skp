@@ -24,6 +24,7 @@
                 $indeks = $_REQUEST['indeks'];
                 $tgl_surat = $_REQUEST['tgl_surat'];
                 $keterangan = $_REQUEST['keterangan'];
+                $lampiran = $_REQUEST['lampiran'];
                 $id_user = $_SESSION['id_user'];
 
                 //validasi input data
@@ -66,6 +67,10 @@
                                                 $_SESSION['eketerangan'] = 'Form Keterangan hanya boleh mengandung karakter huruf, angka, spasi, titik(.), koma(,), minus(-), garis miring(/), dan kurung()';
                                                 echo '<script language="javascript">window.history.back();</script>';
                                             } else {
+                                                if(!preg_match("/^[a-zA-Z0-9.,()\/ -]*$/", $lampiran)){
+                                                    $_SESSION['elampiran'] = 'Form Lampiran hanya boleh mengandung karakter huruf, angka, spasi, titik(.), koma(,), minus(-), garis miring(/), dan kurung()';
+                                                    echo '<script language="javascript">window.history.back();</script>';
+                                                } else {
 
                                                 $ekstensi = array('jpg','png','jpeg','doc','docx','pdf');
                                                 $file = $_FILES['file']['name'];
@@ -98,7 +103,7 @@
 
                                                             move_uploaded_file($_FILES['file']['tmp_name'], $target_dir.$nfile);
 
-                                                            $query = mysqli_query($config, "UPDATE tbl_surat_masuk SET no_agenda='$no_agenda',no_surat='$no_surat',asal_surat='$asal_surat',isi='$isi',kode='$nkode',indeks='$indeks',tgl_surat='$tgl_surat',file='$nfile',keterangan='$keterangan',id_user='$id_user' WHERE id_surat='$id_surat'");
+                                                            $query = mysqli_query($config, "UPDATE tbl_surat_masuk SET no_agenda='$no_agenda',no_surat='$no_surat',asal_surat='$asal_surat',isi='$isi',kode='$nkode',indeks='$indeks',tgl_surat='$tgl_surat',file='$nfile',keterangan='$keterangan',lampiran='$lampiran',id_user='$id_user' WHERE id_surat='$id_surat'");
 
                                                             if($query == true){
                                                                 $_SESSION['succEdit'] = 'SUKSES! Data berhasil diupdate';
@@ -113,7 +118,7 @@
                                                             //jika file kosong akan mengeksekusi script dibawah ini
                                                             move_uploaded_file($_FILES['file']['tmp_name'], $target_dir.$nfile);
 
-                                                            $query = mysqli_query($config, "UPDATE tbl_surat_masuk SET no_agenda='$no_agenda',no_surat='$no_surat',asal_surat='$asal_surat',isi='$isi',kode='$nkode',indeks='$indeks',tgl_surat='$tgl_surat',file='$nfile',keterangan='$keterangan',id_user='$id_user' WHERE id_surat='$id_surat'");
+                                                            $query = mysqli_query($config, "UPDATE tbl_surat_masuk SET no_agenda='$no_agenda',no_surat='$no_surat',asal_surat='$asal_surat',isi='$isi',kode='$nkode',indeks='$indeks',tgl_surat='$tgl_surat',file='$nfile',keterangan='$keterangan',lampiran='$lampiran',id_user='$id_user' WHERE id_surat='$id_surat'");
 
                                                             if($query == true){
                                                                 $_SESSION['succEdit'] = 'SUKSES! Data berhasil diupdate';
@@ -137,7 +142,7 @@
                                                 //jika form file kosong akan mengeksekusi script dibawah ini
                                                 $id_surat = $_REQUEST['id_surat'];
 
-                                                $query = mysqli_query($config, "UPDATE tbl_surat_masuk SET no_agenda='$no_agenda',no_surat='$no_surat',asal_surat='$asal_surat',isi='$isi',kode='$nkode',indeks='$indeks',tgl_surat='$tgl_surat',keterangan='$keterangan',id_user='$id_user' WHERE id_surat='$id_surat'");
+                                                $query = mysqli_query($config, "UPDATE tbl_surat_masuk SET no_agenda='$no_agenda',no_surat='$no_surat',asal_surat='$asal_surat',isi='$isi',kode='$nkode',indeks='$indeks',tgl_surat='$tgl_surat',keterangan='$keterangan',lampiran='$lampiran',id_user='$id_user' WHERE id_surat='$id_surat'");
 
                                                 if($query == true){
                                                     $_SESSION['succEdit'] = 'SUKSES! Data berhasil diupdate';
@@ -152,7 +157,7 @@
                                     }
                                 }
                             }
-                        }
+                        } }
                     }
                 }
             }
@@ -161,7 +166,7 @@
 
         $id_surat = mysqli_real_escape_string($config, $_REQUEST['id_surat']);
         $query = mysqli_query($config, "SELECT id_surat, no_agenda, no_surat, asal_surat, isi, kode, indeks, tgl_surat, file, keterangan, id_user FROM tbl_surat_masuk WHERE id_surat='$id_surat'");
-        list($id_surat, $no_agenda, $no_surat, $asal_surat, $isi, $kode, $indeks, $tgl_surat, $file, $keterangan, $id_user) = mysqli_fetch_array($query);
+        list($id_surat, $no_agenda, $no_surat, $asal_surat, $isi, $kode, $indeks, $tgl_surat, $file, $keterangan, $lampiran, $id_user) = mysqli_fetch_array($query);
 
         if($_SESSION['id_user'] != $id_user AND $_SESSION['id_user'] != 1){
             echo '<script language="javascript">
@@ -319,6 +324,18 @@
                                     }
                                 ?>
                             <label for="keterangan">Keterangan</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix md-prefix">attach_file</i>
+                            <input id="lampiran" type="text" class="validate" name="lampiran" value="<?php echo $lampiran ;?>" required>
+                                <?php
+                                    if(isset($_SESSION['elampiran'])){
+                                        $elampiran = $_SESSION['elampiran'];
+                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$elampiran.'</div>';
+                                        unset($_SESSION['elampiran']);
+                                    }
+                                ?>
+                            <label for="lampiran">Lampiran</label>
                         </div>
                         <div class="input-field col s6">
                             <div class="file-field input-field">

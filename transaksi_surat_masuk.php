@@ -142,9 +142,9 @@
                                 <tr>
                                     <th width="10%">No. Agenda<br/>Kode</th>
                                     <th width="30%">Isi Ringkas<br/> File</th>
-                                    <th width="24%">Asal Surat</th>
-                                    <th width="18%">No. Surat<br/>Tgl Surat</th>
-                                    <th width="18%">Tindakan <span class="right"><i class="material-icons" style="color: #333;">settings</i></span></th>
+                                    <th width="20%">Asal Surat</th>
+                                    <th width="16%">No. Surat<br/>Tgl Surat</th>
+                                    <th width="24%">Tindakan <span class="right"><i class="material-icons" style="color: #333;">settings</i></span></th>
                                 </tr>
                             </thead>
                             <tbody>';
@@ -169,15 +169,13 @@
                                     <td>';
 
                                     if($_SESSION['id_user'] != $row['id_user'] AND $_SESSION['id_user'] != 1){
-                                        echo '<a class="btn small yellow darken-3 waves-effect waves-light" href="#" target="_blank">
-                                            <i class="material-icons">print</i> PRINT</a>';
+                                        echo '<a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="?page=tsm&act=disp&id_surat='.$row['id_surat'].'">
+                                                <i class="material-icons">description</i> DISP</a>';
                                     } else {
                                       echo '<a class="btn small blue waves-effect waves-light" href="?page=tsm&act=edit&id_surat='.$row['id_surat'].'">
                                                 <i class="material-icons">edit</i> EDIT</a>
-                                            <a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="#">
+                                            <a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="?page=tsm&act=disp&id_surat='.$row['id_surat'].'">
                                                 <i class="material-icons">description</i> DISP</a>
-                                            <a class="btn small yellow darken-3 waves-effect waves-light" href="#" target="_blank">
-                                                <i class="material-icons">print</i> PRINT</a>
                                             <a class="btn small deep-orange waves-effect waves-light" href="?page=tsm&act=del&id_surat='.$row['id_surat'].'">
                                                 <i class="material-icons">delete</i> DEL</a>';
                                     } echo '
@@ -201,9 +199,9 @@
                                     <tr>
                                         <th width="10%">No. Agenda<br/>Kode</th>
                                         <th width="30%">Isi Ringkas<br/> File</th>
-                                        <th width="24%">Asal Surat</th>
-                                        <th width="18%">No. Surat<br/>Tgl Surat</th>
-                                        <th width="18%">Tindakan <span class="right tooltipped" data-position="left" data-tooltip="Atur jumlah data yang ditampilkan"><a class="modal-trigger" href="#modal"><i class="material-icons" style="color: #333;">settings</i></a></span></th>
+                                        <th width="20%">Asal Surat</th>
+                                        <th width="16%">No. Surat<br/>Tgl Surat</th>
+                                        <th width="24%">Tindakan <span class="right tooltipped" data-position="left" data-tooltip="Atur jumlah data yang ditampilkan"><a class="modal-trigger" href="#modal"><i class="material-icons" style="color: #333;">settings</i></a></span></th>
 
                                             <div id="modal" class="modal">
                                                 <div class="modal-content white">
@@ -270,18 +268,16 @@
                                         } echo '</td>
                                         <td>'.$row['asal_surat'].'</td>
                                         <td>'.$row['no_surat'].'<br/><hr/>'.indoDate($row['tgl_surat']).'</td>
-                                        <td>';
+                                        <td>'; 
 
                                         if($_SESSION['id_user'] != $row['id_user'] AND $_SESSION['id_user'] != 1){
-                                            echo '<a class="btn small yellow darken-3 waves-effect waves-light" href="#" target="_blank">
-                                                <i class="material-icons">print</i> PRINT</a>';
+                                            echo '<a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="?page=tsm&act=disp&id_surat='.$row['id_surat'].'">
+                                                <i class="material-icons">description</i> DISP</a>';
                                         } else {
                                           echo '<a class="btn small blue waves-effect waves-light" href="?page=tsm&act=edit&id_surat='.$row['id_surat'].'">
                                                     <i class="material-icons">edit</i> EDIT</a>
-                                                <a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="#">
+                                                <a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="?page=tsm&act=disp&id_surat='.$row['id_surat'].'">
                                                     <i class="material-icons">description</i> DISP</a>
-                                                <a class="btn small yellow darken-3 waves-effect waves-light" href="#" target="_blank">
-                                                    <i class="material-icons">print</i> PRINT</a>
                                                 <a class="btn small deep-orange waves-effect waves-light" href="?page=tsm&act=del&id_surat='.$row['id_surat'].'">
                                                     <i class="material-icons">delete</i> DEL</a>';
                                         } echo '

@@ -78,6 +78,25 @@ $(document).ready(function(){
     });
 
      //jquery autocomplete
+     $( "#tujuandisposisi" ).autocomplete({
+        serviceUrl: "tujuandisposisi.php",   // Kode php untuk prosesing data.
+        dataType: "JSON",           // Tipe data JSON.
+        onSelect: function (suggestion) {
+            $( "#tujuandisposisi" ).val(suggestion.tujuandisposisi);
+        }
+    });
+
+    
+     //jquery autocomplete
+     $( "#catatan" ).autocomplete({
+        serviceUrl: "catatan.php",   // Kode php untuk prosesing data.
+        dataType: "JSON",           // Tipe data JSON.
+        onSelect: function (suggestion) {
+            $( "#catatan" ).val(suggestion.catatan);
+        }
+    });
+
+     //jquery autocomplete
      $( "#nama_ttd" ).autocomplete({
         serviceUrl: "pegawai.php",   // Kode php untuk prosesing data.
         dataType: "JSON",           // Tipe data JSON.

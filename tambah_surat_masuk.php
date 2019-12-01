@@ -24,6 +24,7 @@
                 $indeks = $_REQUEST['indeks'];
                 $tgl_surat = $_REQUEST['tgl_surat'];
                 $keterangan = $_REQUEST['keterangan'];
+                $lampiran = $_REQUEST['lampiran'];
                 $id_user = $_SESSION['id_user'];
 
                 //validasi input data
@@ -66,6 +67,11 @@
                                                 $_SESSION['keterangan'] = 'Form Keterangan hanya boleh mengandung karakter huruf, angka, spasi, titik(.), koma(,), minus(-), garis miring(/), dan kurung()';
                                                 echo '<script language="javascript">window.history.back();</script>';
                                             } else {
+                                                
+                                            if(!preg_match("/^[a-zA-Z0-9.,()\/ -]*$/", $lampiran)){
+                                                $_SESSION['lampiran'] = 'Form Lampiran hanya boleh mengandung karakter huruf, angka, spasi, titik(.), koma(,), minus(-), garis miring(/), dan kurung()';
+                                                echo '<script language="javascript">window.history.back();</script>';
+                                            } else {
 
                                                 $cek = mysqli_query($config, "SELECT * FROM tbl_surat_masuk WHERE no_surat='$no_surat'");
                                                 $result = mysqli_num_rows($cek);
@@ -99,8 +105,8 @@
                                                                 move_uploaded_file($_FILES['file']['tmp_name'], $target_dir.$nfile);
 
                                                                 $query = mysqli_query($config, "INSERT INTO tbl_surat_masuk(no_agenda,no_surat,asal_surat,isi,kode,indeks,tgl_surat,
-                                                                    tgl_diterima,file,keterangan,id_user)
-                                                                        VALUES('$no_agenda','$no_surat','$asal_surat','$isi','$nkode','$indeks','$tgl_surat',NOW(),'$nfile','$keterangan','$id_user')");
+                                                                    tgl_diterima,file,keterangan,lampiran,id_user)
+                                                                        VALUES('$no_agenda','$no_surat','$asal_surat','$isi','$nkode','$indeks','$tgl_surat',NOW(),'$nfile','$keterangan','$lampiran','$id_user')");
 
                                                                 if($query == true){
                                                                     $_SESSION['succAdd'] = 'SUKSES! Data berhasil ditambahkan';
@@ -121,8 +127,8 @@
                                                     } else {
 
                                                         //jika form file kosong akan mengeksekusi script dibawah ini
-                                                        $query = mysqli_query($config, "INSERT INTO tbl_surat_masuk(no_agenda,no_surat,asal_surat,isi,kode,indeks,tgl_surat, tgl_diterima,file,keterangan,id_user)
-                                                            VALUES('$no_agenda','$no_surat','$asal_surat','$isi','$nkode','$indeks','$tgl_surat',NOW(),'','$keterangan','$id_user')");
+                                                        $query = mysqli_query($config, "INSERT INTO tbl_surat_masuk(no_agenda,no_surat,asal_surat,isi,kode,indeks,tgl_surat, tgl_diterima,file,keterangan,lampiran,id_user)
+                                                            VALUES('$no_agenda','$no_surat','$asal_surat','$isi','$nkode','$indeks','$tgl_surat',NOW(),'','$keterangan','$lampiran','$id_user')");
 
                                                         if($query == true){
                                                             $_SESSION['succAdd'] = 'SUKSES! Data berhasil ditambahkan';
@@ -136,7 +142,7 @@
                                                 }
                                             }
                                         }
-                                    }
+                                    }}
                                 }
                             }
                         }
@@ -314,6 +320,18 @@
                                     }
                                 ?>
                             <label for="keterangan">Keterangan</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix md-prefix">attach_file</i>
+                            <input id="lampiran" type="text" class="validate" name="lampiran" required>
+                                <?php
+                                    if(isset($_SESSION['lampiran'])){
+                                        $lampiran = $_SESSION['lampiran'];
+                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$lampiran.'</div>';
+                                        unset($_SESSION['lampiran']);
+                                    }
+                                ?>
+                            <label for="lampiran">Lampiran</label>
                         </div>
                         <div class="input-field col s6">
                             <div class="file-field input-field">

@@ -1,10 +1,11 @@
 <?php
     //cek session
+    /*
     if(empty($_SESSION['admin'])){
         $_SESSION['err'] = '<strong>ERROR!</strong> Anda harus login terlebih dahulu.';
         header("Location: ./");
-        die();
-    } else {
+        die(); 
+    } else { */
 
         echo '
         <style type="text/css">
@@ -24,6 +25,9 @@
             }
             #left {
                 border-left: none !important;
+            }
+            #bottom {
+                border-bottom: none !important;
             }
             .isi {
                 height: 300px!important;
@@ -163,116 +167,122 @@
         </style>
 
         <body onload="window.print()">
-
+ 
         <!-- Container START -->
-            <div id="colres">
-                <div class="disp">';
-                    $query2 = mysqli_query($config, "SELECT institusi, nama, status, alamat, logo FROM tbl_instansi");
-                    list($institusi, $nama, $status, $alamat, $logo) = mysqli_fetch_array($query2);
-                        echo '<img class="logodisp" src="./upload/'.$logo.'"/>';
-                        echo '<h6 class="up">'.$institusi.'</h6>';
-                        echo '<h5 class="up" id="nama">'.$nama.'</h5><br/>';
-                        echo '<h6 class="status">'.$status.'</h6>';
-                        echo '<span id="alamat">Jalan Raya Kediri Gg. Kwagean No. 04 Loceret Telp/Fax. (0358) 329806 Nganjuk 64471</span>';
-
-                    echo '
-                </div>
-                <div class="separator"></div>';
-
+            <div id="colres">';
+                $id_disposisi = mysqli_real_escape_string($config, $_REQUEST['id_disposisi']);
                 $id_surat = mysqli_real_escape_string($config, $_REQUEST['id_surat']);
-                $query = mysqli_query($config, "SELECT * FROM tbl_surat_masuk WHERE id_surat='$id_surat'");
+                $query = mysqli_query($config, "SELECT * FROM tbl_disposisi JOIN tbl_surat_masuk ON tbl_disposisi.id_surat = tbl_surat_masuk.id_surat WHERE tbl_disposisi.id_surat='$id_surat' AND tbl_disposisi.id_disposisi='$id_disposisi'");
 
                 if(mysqli_num_rows($query) > 0){
                 $no = 0;
                 while($row = mysqli_fetch_array($query)){
 
-                echo '
+                echo '<br /><br />
                     <table class="bordered" id="tbl">
                         <tbody>
                             <tr>
-                                <td class="tgh" id="lbr" colspan="5">LEMBAR DISPOSISI</td>
+                                <td class="tgh" id="lbr" colspan="4"><br /><img width="100%" src="./asset/img/kop_disposisi.png"></td>
                             </tr>
                             <tr>
-                                <td id="right" width="18%"><strong>Indeks Berkas</strong></td>
-                                <td id="left" style="border-right: none;" width="57%">: '.$row['indeks'].'</td>
-                                <td id="left" width="25"><strong>Kode</strong> : '.$row['kode'].'</td>
-                            </tr>
-                            <tr><td id="right"><strong>Tanggal Surat</strong></td>
-                                <td id="left" colspan="2">: '.indoDate($row['tgl_surat']).'</td>
+                                <td class="tgh" id="lbr" colspan="4">LEMBAR DISPOSISI</td>
                             </tr>
                             <tr>
-                                <td id="right"><strong>Nomor Surat</strong></td>
-                                <td id="left" colspan="2">: '.$row['no_surat'].'</td>
+                                <td id="right" width="20%"><strong>Nomor Agenda</strong></td>
+                                <td id="left" width="25%">: '.$row['no_agenda'].'</td>
+                                <td id="right" width="25%"><strong>Sifat Surat</strong> </td>
+                                <td id="left" width="30%">: '.$row['sifat'].'</td>
                             </tr>
                             <tr>
-                                <td id="right"><strong>Asal Surat</strong></td>
-                                <td id="left" colspan="2">: '.$row['asal_surat'].'</td>
+                                <td id="right"><strong>Tanggal Terima</strong></td>
+                                <td id="left">: '.indoDate($row['tgl_diterima']).'</td>
+                                <td id="right"><strong>Tanggal Penyelesaian</strong> </td>
+                                <td id="left">: '.indoDate($row['batas_waktu']).'</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="bordered" id="tbl">
+                        <tbody>
+                            <tr>
+                                <td id="right"width="25%"><strong>Nomor/Tanggal Surat </strong></td>
+                                <td id="left" width="75%">: '.$row['no_surat'].'<br />&nbsp;&nbsp;'.indoDate($row['tgl_surat']).'</td>
                             </tr>
                             <tr>
-                                <td id="right"><strong>Isi Ringkas</strong></td>
-                                <td id="left" colspan="2">: '.$row['isi'].'</td>
+                                <td id="right"><strong>Asal Surat </strong></td>
+                                <td id="left">: '.$row['asal_surat'].'</td>
                             </tr>
                             <tr>
-                                <td id="right"><strong>Diterima Tanggal</strong></td>
-                                <td id="left" style="border-right: none;">: '.indoDate($row['tgl_diterima']).'</td>
-                                <td id="left"><strong>No. Agenda</strong> : '.$row['no_agenda'].'</td>
+                                <td id="right"><strong>Lampiran Surat </strong></td>
+                                <td id="left">: '.$row['lampiran'].'</td>
                             </tr>
                             <tr>
-                                <td id="right"><strong>Tanggal Penyelesaian</strong></td>
-                                <td id="left" colspan="2">: </td>
+                                <td id="right"><strong>Isi Surat </strong></td>
+                                <td id="left">: '.$row['isi'].'</td>
                             </tr>
-                            <tr>';
-                            $query3 = mysqli_query($config, "SELECT * FROM tbl_disposisi JOIN tbl_surat_masuk ON tbl_disposisi.id_surat = tbl_surat_masuk.id_surat WHERE tbl_disposisi.id_surat='$id_surat'");
+                        </tbody>
+                    </table><br />
+                    <table class="bordered" id="tbl">
+                        <thead>
+                            <tr>
+                                <td id="left" width="35%"><strong><center>Disposisi</center></strong></td>
+                                <td id="left" width="60%"><strong><center>Diteruskan Kepada</center></strong></td>
+                                <td id="left" width="5%"><strong><center>Paraf</center></strong></td>
+                            </tr>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <img width="20" height="20" src="./asset/img/uncheck.png"> &nbsp;&nbsp;&nbsp;Diketahui<br />
+                                    <img width="20" height="20" src="./asset/img/uncheck.png"> &nbsp;&nbsp;&nbsp;Dipedomani<br />
+                                    <img width="20" height="20" src="./asset/img/uncheck.png"> &nbsp;&nbsp;&nbsp;Ditindaklanjuti<br />
+                                    <img width="20" height="20" src="./asset/img/uncheck.png"> &nbsp;&nbsp;&nbsp;Konsultasikan<br />
+                                    <img width="20" height="20" src="./asset/img/uncheck.png"> &nbsp;&nbsp;&nbsp;Arsip<br />
+                                    <img width="20" height="20" src="./asset/img/uncheck.png"> &nbsp;&nbsp;&nbsp;Lain-lain<br /><br />
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;................................................<br />
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;................................................<br />
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;................................................<br />
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;................................................<br />
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;................................................<br />
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;................................................<br />
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;................................................<br />
+                                    <br /><br /><center>Kepala,</center><br /><br /><br />';
+                                    $q_instansi = mysqli_query($config, "SELECT * FROM tbl_instansi");
+                                    $r_instansi = mysqli_fetch_array($q_instansi);
+                                    $pimpinan = $r_instansi['pimpinan'];
+                                    $queryz = mysqli_query($config, "SELECT * FROM tbl_pegawai WHERE nama='$pimpinan'");
+                                    while($rowz = mysqli_fetch_array($queryz)){
+                                        echo '<center><strong>'.$rowz['nama']."</strong><br />NIP. ".$rowz['nip'].'</center>';
+                                    }
 
-                            if(mysqli_num_rows($query3) > 0){
-                                $no = 0;
-                                $row = mysqli_fetch_array($query3);{
                                 echo '
-                            <tr class="isi">
-                                <td colspan="2">
-                                    <strong>Isi Disposisi :</strong><br/>'.$row['isi_disposisi'].'
-                                    <div style="height: 50px;"></div>
-                                    <strong>Batas Waktu</strong> : '.indoDate($row['batas_waktu']).'<br/>
-                                    <strong>Sifat</strong> : '.$row['sifat'].'<br/>
-                                    <strong>Catatan</strong> :<br/> '.$row['catatan'].'
-                                    <div style="height: 25px;"></div>
-                                </td>
-                                <td><strong>Diteruskan Kepada</strong> : <br/>'.$row['tujuan'].'</td>
-                            </tr>';
-                                }
-                            } else {
-                                echo '
-                                <tr class="isi">
-                                    <td colspan="2"><strong>Isi Disposisi :</strong>
                                     </td>
-                                    <td><strong>Diteruskan Kepada</strong> : </td>
-                                </tr>';
-                            }
-                        } echo '
-                </tbody>
-            </table>
-            <div id="lead">
-                <p>Kepala Sekolah</p>
-                <div style="height: 50px;"></div>';
-                $query = mysqli_query($config, "SELECT kepsek, nip FROM tbl_instansi");
-                list($kepsek,$nip) = mysqli_fetch_array($query);
-                if(!empty($kepsek)){
-                    echo '<p class="lead">'.$kepsek.'</p>';
-                } else {
-                    echo '<p class="lead">H. Riza Fachri, S.Kom.</p>';
-                }
-                if(!empty($nip)){
-                    echo '<p>NIP. '.$nip.'</p>';
-                } else {
-                    echo '<p>NIP. -</p>';
-                }
-                echo '
-            </div>
+                                <td>';
+                                    $x =  mysqli_query($config, "SELECT * FROM tujuan_disposisi");
+                                    echo '<ol>';
+                                    while($kpd = mysqli_fetch_array($x)){
+                                        echo '<li style="line-height: 1.7;">'.$kpd['kepada'].'</li>';
+                                    }
+                                    echo '</ol>';
+                                echo '
+                                </td>
+                                <td>';
+                                    $x =  mysqli_query($config, "SELECT * FROM tujuan_disposisi");
+                                    echo '<ol>';
+                                    while($kpd = mysqli_fetch_array($x)){
+                                        echo '<li style="line-height: 1.7;">..........</li>';
+                                    }
+                                    echo '</ol>';
+                                echo '
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>';
+            } 
+        echo '            
         </div>
         <div class="jarak2"></div>
     <!-- Container END -->
 
     </body>';
     }
-}
+// }
 ?>

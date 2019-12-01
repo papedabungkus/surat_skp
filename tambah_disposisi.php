@@ -128,7 +128,7 @@
                     <div class="row">
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">place</i>
-                            <input id="tujuan" type="text" class="validate" name="tujuan" required>
+                            <input id="tujuandisposisi" type="text" class="validate" name="tujuan" required>
                                 <?php
                                     if(isset($_SESSION['tujuan'])){
                                         $tujuan = $_SESSION['tujuan'];
