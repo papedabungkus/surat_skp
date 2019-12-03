@@ -70,7 +70,7 @@
                                     } else {
 
                                         if(!preg_match("/^[a-zA-Z., ]*$/", $kepsek)){
-                                            $_SESSION['kepsek'] = 'Form Nama Kepala Sekolah hanya boleh mengandung karakter huruf, spasi, titik(.) dan koma(,)<br/><br/>';
+                                            $_SESSION['kepsek'] = 'Form Nama Kepala Instansi hanya boleh mengandung karakter huruf, spasi, titik(.) dan koma(,)<br/><br/>';
                                             echo '<script language="javascript">window.history.back();</script>';
                                         } else {
 

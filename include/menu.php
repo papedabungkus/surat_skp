@@ -104,7 +104,6 @@
                     </li>
                 </ul>
             </li>
-            <li><a href="#"><i class="material-icons middle">class</i> Referensi</a></li>
             <li class="no-padding">
             <?php
                 if($_SESSION['admin'] == 1){ ?>
@@ -113,9 +112,9 @@
                         <a class="collapsible-header"><i class="material-icons">settings</i> Pengaturan</a>
                         <div class="collapsible-body">
                             <ul>
-                                <li><a href="#">Instansi</a></li>
-                                <li><a href="#">User</a></li>
-                                <li><a href="#">Backup Database</a></li>
+                                <li><a href="?page=sett">Instansi</a></li>
+                                <li><a href="?page=sett&sub=usr">User</a></li>
+                                <li><a href="?page=sett&sub=back">Backup Database</a></li>
                                 <li><a href="#">Restore Database</a></li>
                             </ul>
                         </div>
@@ -166,23 +165,22 @@
             ?>
             <li><a class="dropdown-button" href="#!" data-activates="agenda">Buku Agenda <i class="material-icons md-18">arrow_drop_down</i></a></li>
                 <ul id='agenda' class='dropdown-content'>
-                    <li><a href="#">Surat Masuk</a></li>
-                    <li><a href="#">Surat Keluar</a></li>
+                    <li><a href="?page=asm">Surat Masuk</a></li>
+                    <li><a href="?page=ask">Surat Keluar</a></li>
                 </ul>
             <li><a class="dropdown-button" href="#!" data-activates="agenda">Galeri File <i class="material-icons md-18">arrow_drop_down</i></a></li>
                 <ul id='agenda' class='dropdown-content'>
                     <li><a href="#">Surat Masuk</a></li>
                     <li><a href="#">Surat Keluar</a></li>
                 </ul>
-            <li><a href="#">Referensi</a></li>
             <?php
                 if($_SESSION['admin'] == 1){ ?>
             <li><a class="dropdown-button" href="#!" data-activates="pengaturan">Pengaturan <i class="material-icons md-18">arrow_drop_down</i></a></li>
                 <ul id='pengaturan' class='dropdown-content'>
-                    <li><a href="#">Instansi</a></li>
-                    <li><a href="#">User</a></li>
+                    <li><a href="?page=sett">Instansi</a></li>
+                    <li><a href="?page=sett&sub=usr">User</a></li>
                     <li class="divider"></li>
-                    <li><a href="#">Backup Database</a></li>
+                    <li><a href="?page=sett&sub=back">Backup Database</a></li>
                     <li><a href="#">Restore Database</a></li>
                 </ul>
             <?php
@@ -192,8 +190,8 @@
                 if($_SESSION['admin'] == 2){ ?>
             <li><a class="dropdown-button" href="#!" data-activates="pengaturan">Pengaturan <i class="material-icons md-18">arrow_drop_down</i></a></li>
                 <ul id='pengaturan' class='dropdown-content'>
-                    <li><a href="#">Instansi</a></li>
-                    <li><a href="#">User</a></li>
+                    <li><a href="?page=sett">Instansi</a></li>
+                    <li><a href="?page=sett&sub=usr">User</a></li>
                 </ul>
             <?php
                 }

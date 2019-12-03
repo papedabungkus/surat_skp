@@ -10,7 +10,7 @@ if(mysqli_num_rows($query) > 0){
     while($row = mysqli_fetch_array($query)){
 ?>
 <html>
-<head><title>Cetak Surat Tugas - <?=$row['no_surat']?></title></head>
+<head><title>Surat Tugas - <?=$row['no_surat']?></title></head>
 <style type="text/css">
 /* Kode CSS Untuk PAGE ini dibuat oleh http://jsfiddle.net/2wk6Q/1/ */
     body {

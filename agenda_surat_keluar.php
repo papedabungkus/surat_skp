@@ -120,24 +120,13 @@
                     <!-- Row form END -->
 
                     <div class="row agenda">
-                        <div class="disp hidd">';
-                            $query2 = mysqli_query($config, "SELECT institusi, nama, status, alamat, logo FROM tbl_instansi");
-                            list($institusi, $nama, $status, $alamat, $logo) = mysqli_fetch_array($query2);
-                                echo '<img class="logodisp" src="./upload/'.$logo.'"/>';
-
-                                echo '<h6 class="up">'.$institusi.'</h6>';
-
-                                echo '<h5 class="nama" id="nama">'.$nama.'</h5><br/>';
-
-                                echo '<h6 class="status">'.$status.'</h6>';
-
-                                echo '<span id="alamat">'.$alamat.'</span>
+                        <div class="disp hidd">
+                        <img width="100%" src="./asset/img/kop_surat.png">
 
                             </div>
-                            <div class="separator"></div>
                             <h5 class="hid">AGENDA SURAT KELUAR</h5>
                         <div class="col s10">
-                            <p class="warna agenda">Agenda Surat Keluar dari tanggal <strong>'.indoDate($dari_tanggal).'</strong> sampai dengan tanggal <strong>'.indoDate($sampai_tanggal).'</strong></p>
+                            <p class="warna agenda" align="left">Periode <strong>'.indoDate($dari_tanggal).'</strong> sampai dengan tanggal <strong>'.indoDate($sampai_tanggal).'</strong></p>
                         </div>
                         <div class="col s2">
                             <button type="submit" onClick="window.print()" class="btn-large deep-orange waves-effect waves-light right">CETAK <i class="material-icons">print</i></button>
@@ -153,7 +142,6 @@
                                     <th width="18%">Tujuan Surat</th>
                                     <th width="15%">Nomor Surat</th>
                                     <th width="10%">Tanggal<br/> Surat</th>
-                                    <th width="12%">Pengelola</th>
                                     <th width="10%">Keterangan</th>
                                 </tr>
                             </thead>
@@ -170,18 +158,6 @@
                                         <td>'.$row['tujuan'].'</td>
                                         <td>'.$row['no_surat'].'</td>
                                         <td>'.indoDate($row['tgl_surat']).'</td>
-                                        <td>';
-
-                                        if($row['id_user'] == 1){
-                                            $row['id_user'] = 'Administrator';
-                                        } else {
-                                            $id_user = $row['id_user'];
-                                            $query3 = mysqli_query($config, "SELECT nama FROM tbl_user WHERE id_user='$id_user'");
-                                            list($nama) = mysqli_fetch_array($query3);
-                                            $row['id_user'] = ''.$nama.'';
-                                        }
-
-                                        echo ''.$row['id_user'].'</td>
                                         <td>'.$row['keterangan'].'';
                                  echo ' </td>
                                 </tr>';
