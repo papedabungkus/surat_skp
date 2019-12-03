@@ -164,7 +164,9 @@
                                         if($_SESSION['id_user'] != $row['id_user'] AND $_SESSION['id_user'] != 1){
                                             echo '<button class="btn small blue-grey waves-effect waves-light"><i class="material-icons">error</i> No Action</button>';
                                         } else {
-                                          echo '<a class="btn small blue waves-effect waves-light" href="?page=tsk&act=edit&id_surat='.$row['id_surat'].'">
+                                          echo '<a class="btn small yellow darken-3 waves-effect waves-light" target="_BLANK" href="upload/surat_keluar/'.$row['file'].'">
+                                                    <i class="material-icons">cloud_download</i> DOWNLOAD</a>
+                                                <a class="btn small blue waves-effect waves-light" href="?page=tsk&act=edit&id_surat='.$row['id_surat'].'">
                                                     <i class="material-icons">edit</i> EDIT</a>
                                                 <a class="btn small deep-orange waves-effect waves-light" href="?page=tsk&act=del&id_surat='.$row['id_surat'].'">
                                                     <i class="material-icons">delete</i> DEL</a>';
@@ -263,7 +265,9 @@
                                     if($_SESSION['id_user'] != $row['id_user'] AND $_SESSION['id_user'] != 1){
                                         echo '<button class="btn small blue-grey waves-effect waves-light"><i class="material-icons">error</i> No Action</button>';
                                     } else {
-                                      echo '<a class="btn small blue waves-effect waves-light" href="?page=tsk&act=edit&id_surat='.$row['id_surat'].'">
+                                      echo '<a class="btn small yellow darken-3 waves-effect waves-light" target="_BLANK" href="upload/surat_keluar/'.$row['file'].'">
+                                                <i class="material-icons">cloud_download</i> DOWNLOAD</a>
+                                            <a class="btn small blue waves-effect waves-light" href="?page=tsk&act=edit&id_surat='.$row['id_surat'].'">
                                                 <i class="material-icons">edit</i> EDIT</a>
                                             <a class="btn small deep-orange waves-effect waves-light" href="?page=tsk&act=del&id_surat='.$row['id_surat'].'">
                                                 <i class="material-icons">delete</i> DEL</a>';

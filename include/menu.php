@@ -91,19 +91,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="no-padding">
-                <ul class="collapsible collapsible-accordion">
-                    <li>
-                        <a class="collapsible-header"><i class="material-icons">image</i> Galeri File</a>
-                        <div class="collapsible-body">
-                            <ul>
-                                <li><a href="#">Surat Masuk</a></li>
-                                <li><a href="#">Surat Keluar</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </li>
+            
             <li class="no-padding">
             <?php
                 if($_SESSION['admin'] == 1){ ?>
@@ -168,11 +156,7 @@
                     <li><a href="?page=asm">Surat Masuk</a></li>
                     <li><a href="?page=ask">Surat Keluar</a></li>
                 </ul>
-            <li><a class="dropdown-button" href="#!" data-activates="agenda">Galeri File <i class="material-icons md-18">arrow_drop_down</i></a></li>
-                <ul id='agenda' class='dropdown-content'>
-                    <li><a href="#">Surat Masuk</a></li>
-                    <li><a href="#">Surat Keluar</a></li>
-                </ul>
+            
             <?php
                 if($_SESSION['admin'] == 1){ ?>
             <li><a class="dropdown-button" href="#!" data-activates="pengaturan">Pengaturan <i class="material-icons md-18">arrow_drop_down</i></a></li>
