@@ -50,7 +50,7 @@
                                 <div class="nav-wrapper blue-grey darken-1">
                                     <div class="col m7">
                                         <ul class="left">
-                                            <li class="waves-effect waves-light hide-on-small-only"><a href="?page=tsk" class="judul"><i class="material-icons">drafts</i> Surat Tugas</a></li>
+                                            <li class="waves-effect waves-light hide-on-small-only"><a href="?page=bst" class="judul"><i class="material-icons">drafts</i> Surat Tugas</a></li>
                                             <li class="waves-effect waves-light">
                                                 <a href="?page=bst&act=add"><i class="material-icons md-24">add_circle</i> Tambah Data</a>
                                             </li>
@@ -135,7 +135,7 @@
                                 <thead class="blue lighten-4" id="head">
                                     <tr>
                                         <th width="7%">No. Agenda</th>
-                                        <th width="22%">No. Surat / File</th>
+                                        <th width="22%">No. Surat</th>
                                         <th width="31%">Isi Ringkas</th>
                                         <th width="24%">Yang Ditugaskan</th>
                                         <th width="19%">Tempat / Tgl. Dikeluarkan</th>
@@ -148,29 +148,23 @@
                                 $query = mysqli_query($config, "SELECT * FROM tbl_surat_tugas tst JOIN tbl_pegawai tp ON tp.id=tst.penerima_tugas WHERE peruntukan LIKE '%$cari%' OR nama LIKE '%$cari%' ORDER by id_surat DESC LIMIT $curr, 15");
                                 if(mysqli_num_rows($query) > 0){
                                     $no = 1;
+                                    
                                     while($row = mysqli_fetch_array($query)){
                                       echo '
                                       <tr>
                                         <td>'.$row['no_agenda'].'</td>
-                                        <td>'.$row['no_surat'].'<br/><hr/><strong>File :</strong>';
-
-                                        if(!empty($row['file'])){
-                                            echo ' <strong><a href="?page=gsk&act=fsk&id_surat='.$row['id_surat'].'">'.$row['file'].'</a></strong>';
-                                        } else {
-                                            echo ' <em>Tidak ada file yang diupload</em>';
-                                        }
-                                        echo '</td>
+                                        <td>'.$row['no_surat'].'</td>
                                         <td>'.substr($row['peruntukan'],0,200).'</td>
-                                        <td>'.$row['nama'].'</td>
+                                        <td>'.serialize_ke_string($row['penerima_tugas']).'</td>
                                         <td>'.$row['tempat_ttd'].'<br/><hr/>'.indoDate($row['tgl_ttd']).'</td>
                                         <td>';
 
                                         if($_SESSION['id_user'] != $row['id_user'] AND $_SESSION['id_user'] != 1){
                                             echo '<button class="btn small blue-grey waves-effect waves-light"><i class="material-icons">error</i> No Action</button>';
                                         } else {
-                                        echo '<a class="btn small blue waves-effect waves-light" href="?page=tsk&act=edit&id_surat='.$row['id_surat'].'">
+                                        echo '<a class="btn small blue waves-effect waves-light" href="?page=bst&act=edit&id_surat='.$row['id_surat'].'">
                                                     <i class="material-icons">edit</i> EDIT</a>
-                                                <a class="btn small deep-orange waves-effect waves-light" href="?page=tsk&act=del&id_surat='.$row['id_surat'].'">
+                                                <a class="btn small deep-orange waves-effect waves-light" href="?page=bst&act=del&id_surat='.$row['id_surat'].'">
                                                     <i class="material-icons">delete</i> DEL</a>';
                                         } echo '
                                         </td>
@@ -192,7 +186,7 @@
                             <thead class="blue lighten-4" id="head">
                                 <tr>
                                     <th width="7%">No. Agenda</th>
-                                    <th width="22%">No. Surat / File</th>
+                                    <th width="22%">No. Surat</th>
                                     <th width="27%">Isi Ringkas</th>
                                     <th width="24%">Yang Ditugaskan</th>
                                     <th width="19%">Tempat / Tgl Dikeluarkan</th>
@@ -230,7 +224,7 @@
 
                                                                     $query = mysqli_query($config, "UPDATE tbl_sett SET surat_tugas='$surat_tugas',id_user='$id_user' WHERE id_sett='$id_sett'");
                                                                     if($query == true){
-                                                                        header("Location: ./admin.php?page=tsk");
+                                                                        header("Location: ./admin.php?page=bst");
                                                                         die();
                                                                     }
                                                                 } echo '
@@ -252,19 +246,21 @@
                             if(mysqli_num_rows($query) > 0){
                                 $no = 1;
                                 while($row = mysqli_fetch_array($query)){
+                                    $idpeg = unserialize($row['penerima_tugas']);                                   
+                            
                                   echo '
                                   <tr>
                                     <td>'.$row['no_agenda'].'</td>
-                                    <td>'.$row['no_surat'].'<br/><hr/><strong>File :</strong>';
-
-                                    if(!empty($row['file'])){
-                                        echo ' <strong><a href="?page=gsk&act=fsk&id_surat='.$row['id_surat'].'">'.$row['file'].'</a></strong>';
-                                    } else {
-                                        echo ' <em>Tidak ada file yang diupload</em>';
-                                    }
-                                    echo '</td>
+                                    <td>'.$row['no_surat'].'</td>
                                     <td>'.substr($row['peruntukan'],0,200).'</td>
-                                    <td>'.$row['penerima_tugas'].'</td>
+                                    <td><ol type="1">';
+                                    for($i=0;$i<count($idpeg);$i++)
+                                    {
+                                        $querypeg = mysqli_query($config, "SELECT * FROM tbl_pegawai WHERE id='$idpeg[$i]'");
+                                        $rowpeg = mysqli_fetch_array($querypeg);
+                                        echo '<li>'.$rowpeg['nama'].'</li>';
+                                    }
+                                  echo '</ol></td>
                                     <td>'.$row['tempat_ttd'].'<br/><hr/>'.indoDate($row['tgl_ttd']).'</td>
                                     <td>';
 
@@ -299,8 +295,8 @@
                         //first and previous pagging
                         if($pg > 1){
                             $prev = $pg - 1;
-                            echo '<li><a href="?page=tsk&pg=1"><i class="material-icons md-48">first_page</i></a></li>
-                                  <li><a href="?page=tsk&pg='.$prev.'"><i class="material-icons md-48">chevron_left</i></a></li>';
+                            echo '<li><a href="?page=bst&pg=1"><i class="material-icons md-48">first_page</i></a></li>
+                                  <li><a href="?page=bst&pg='.$prev.'"><i class="material-icons md-48">chevron_left</i></a></li>';
                         } else {
                             echo '<li class="disabled"><a href="#"><i class="material-icons md-48">first_page</i></a></li>
                                   <li class="disabled"><a href="#"><i class="material-icons md-48">chevron_left</i></a></li>';
@@ -309,16 +305,16 @@
                         //perulangan pagging
                         for ($i = 1; $i <= $cpg; $i++) {
                             if ((($i >= $pg - 3) && ($i <= $pg + 3)) || ($i == 1) || ($i == $cpg)) {
-                                if ($i == $pg) echo '<li class="active waves-effect waves-dark"><a href="?page=tsk&pg='.$i.'"> '.$i.' </a></li>';
-                                else echo '<li class="waves-effect waves-dark"><a href="?page=tsk&pg='.$i.'"> '.$i.' </a></li>';
+                                if ($i == $pg) echo '<li class="active waves-effect waves-dark"><a href="?page=bst&pg='.$i.'"> '.$i.' </a></li>';
+                                else echo '<li class="waves-effect waves-dark"><a href="?page=bst&pg='.$i.'"> '.$i.' </a></li>';
                             }
                         }
 
                         //last and next pagging
                         if($pg < $cpg){
                             $next = $pg + 1;
-                            echo '<li><a href="?page=tsk&pg='.$next.'"><i class="material-icons md-48">chevron_right</i></a></li>
-                                  <li><a href="?page=tsk&pg='.$cpg.'"><i class="material-icons md-48">last_page</i></a></li>';
+                            echo '<li><a href="?page=bst&pg='.$next.'"><i class="material-icons md-48">chevron_right</i></a></li>
+                                  <li><a href="?page=bst&pg='.$cpg.'"><i class="material-icons md-48">last_page</i></a></li>';
                         } else {
                             echo '<li class="disabled"><a href="#"><i class="material-icons md-48">chevron_right</i></a></li>
                                   <li class="disabled"><a href="#"><i class="material-icons md-48">last_page</i></a></li>';

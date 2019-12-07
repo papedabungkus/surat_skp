@@ -97,15 +97,35 @@ if(mysqli_num_rows($query) > 0){
                     <td width="20%">Menugaskan</td><td width="2%">:</td>
                     <td>
                         <?php
-                            $idpegawai = $row['penerima_tugas'];
-                            $queryx = mysqli_query($config, "SELECT * FROM tbl_pegawai WHERE nama='$idpegawai'");
-                            while($rowx = mysqli_fetch_array($queryx)){
-                                echo '<table>';
-                                echo '<tr valign="top"><td>Nama</td><td>:</td><td>'.$rowx['nama'].'</td></tr>';
-                                echo '<tr valign="top"><td>NIP</td><td>:</td><td>'.$rowx['nip'].'</td></tr>';
-                                echo '<tr valign="top"><td>Pangkat/Golongan</td><td>:</td><td>'.$rowx['pangkat'].', '.$rowx['golongan'].'</td></tr>';
-                                echo '<tr valign="top"><td>Jabatan</td><td>:</td><td>'.$rowx['jabatan'].'</td></tr>';
-                                echo '</table>';
+                            $arraypeg = unserialize($row['penerima_tugas']);
+                            if(count($arraypeg)>1)
+                            {
+                                for($i=0;$i<count($arraypeg);$i++)
+                                {
+                                    $idpegawai = $arraypeg[$i];
+                                    $queryx = mysqli_query($config, "SELECT * FROM tbl_pegawai WHERE id='$idpegawai'");
+                                    $nomor = $i+1;
+                                    while($rowx = mysqli_fetch_array($queryx)){
+                                        echo '<table>';
+                                        echo '<tr valign="top"><td>'.$nomor.'.</td><td>Nama</td><td>:</td><td>'.$rowx['nama'].'</td></tr>';
+                                        echo '<tr valign="top"><td></td><td>NIP</td><td>:</td><td>'.$rowx['nip'].'</td></tr>';
+                                        echo '<tr valign="top"><td></td><td>Pangkat/Golongan</td><td>:</td><td>'.ucwords(strtolower($rowx['pangkat'])).', '.$rowx['golongan'].'</td></tr>';
+                                        echo '<tr valign="top"><td></td><td>Jabatan</td><td>:</td><td>'.ucwords(strtolower($rowx['jabatan'])).'</td></tr>';
+                                        echo '</table><br />';
+                                    }
+                                }
+                            } else {
+                                $idpegawai = $arraypeg[0];
+                                $queryx = mysqli_query($config, "SELECT * FROM tbl_pegawai WHERE id='$idpegawai'");
+                                $nomor = $i+1;
+                                while($rowx = mysqli_fetch_array($queryx)){
+                                    echo '<table>';
+                                    echo '<tr valign="top"><td>Nama</td><td>:</td><td>'.$rowx['nama'].'</td></tr>';
+                                    echo '<tr valign="top"><td>NIP</td><td>:</td><td>'.$rowx['nip'].'</td></tr>';
+                                    echo '<tr valign="top"><td>Pangkat/Golongan</td><td>:</td><td>'.ucwords(strtolower($rowx['pangkat'])).', '.$rowx['golongan'].'</td></tr>';
+                                    echo '<tr valign="top"><td>Jabatan</td><td>:</td><td>'.ucwords(strtolower($rowx['jabatan'])).'</td></tr>';
+                                    echo '</table><br />';
+                                }
                             }
                         ?>
                     </td>

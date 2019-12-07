@@ -53,7 +53,6 @@
                         <div class="collapsible-body">
                             <ul>
                                 <li><a href="?page=bst">Surat Tugas</a></li>
-                                <li><a href="?page=bspt">Surat Perintah Tugas</a></li>
                             </ul>
                         </div>
                     </li>
@@ -139,7 +138,6 @@
             <li><a class="dropdown-button" href="#!" data-activates="agenda">Buat Surat <i class="material-icons md-18">arrow_drop_down</i></a></li>
                 <ul id='agenda' class='dropdown-content'>
                     <li><a href="?page=bst">Surat Tugas</a></li>
-                    <li><a href="?page=bspt">Surat Perintah Tugas</a></li>
                 </ul>
             <?php
                 if($_SESSION['admin'] == 1 || $_SESSION['admin'] == 3){ ?>
@@ -163,6 +161,7 @@
                 <ul id='pengaturan' class='dropdown-content'>
                     <li><a href="?page=sett">Instansi</a></li>
                     <li><a href="?page=sett&sub=usr">User</a></li>
+                    <li><a href="?page=dp">Data Pegawai</a></li>
                     <li class="divider"></li>
                     <li><a href="?page=sett&sub=back">Backup Database</a></li>
                     <li><a href="#">Restore Database</a></li>

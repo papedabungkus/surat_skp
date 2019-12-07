@@ -28,12 +28,18 @@
 
 <!-- Javascript START -->
 <script type="text/javascript" src="asset/js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="asset/js/select2.min.js"></script>
 <script type="text/javascript" src="asset/js/materialize.min.js"></script>
 <script type="text/javascript" src="asset/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="asset/js/jquery.autocomplete.min.js"></script>
 <script data-pace-options='{ "ajax": false }' src='asset/js/pace.min.js'></script>
 <script type="text/javascript">
 $(document).ready(function(){
+    //select2
+    $('.js-example-basic-multiple').select2({
+        placeholder: "Pilih Pegawai Yang Ditugaskan"
+    });
+
     //jquery dropdown
     $(".dropdown-button").dropdown({ hover: false });
 
@@ -45,7 +51,7 @@ $(document).ready(function(){
     });
 
     //jquery datepicker
-    $('#tgl_surat,#batas_waktu,#dari_tanggal,#sampai_tanggal').pickadate({
+    $('#tgl_surat,#batas_waktu,#dari_tanggal,#sampai_tanggal,#tmt').pickadate({
         selectMonths: true,
         selectYears: 10,
         format: "yyyy-mm-dd"

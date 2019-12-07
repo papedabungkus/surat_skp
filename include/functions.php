@@ -1,6 +1,11 @@
 <?php
 date_default_timezone_set("Asia/Jakarta");
-
+/** fungsi serialize_ke_string */
+function serialize_ke_string($serial)
+{
+    $hasil = unserialize($serial);
+    return implode(', ', $hasil);
+}
 /**
  * FUngsi koneksi database.
  */

@@ -22,7 +22,13 @@ $config = conn($host, $username, $password, $database);
                 $no_surat = $_REQUEST['no_surat'];
                 $pertimbangan = $_REQUEST['pertimbangan'];
                 $dasar = $_REQUEST['dasar'];
-                $penerima_tugas = $_REQUEST['penerima_tugas'];
+
+                    $penerima_tugas = array();
+                    foreach ($_REQUEST['penerima_tugas'] as $petugas) {
+                        array_push($penerima_tugas, $petugas);
+                    }
+                    $petugas = serialize($penerima_tugas);
+
                 $peruntukan = $_REQUEST['peruntukan'];
                 $tgl_ttd = $_REQUEST['tgl_ttd'];
                 $tempat_ttd = $_REQUEST['tempat_ttd'];
@@ -96,46 +102,12 @@ $config = conn($host, $username, $password, $database);
                                                     mkdir($target_dir, 0755, true);
                                                 }
 
-                                                //jika form file tidak kosong akan mengekse
-                                                if($file != ""){
-
-                                                    $rand = rand(1,10000);
-                                                    $nfile = $rand."-".$file;
-                                                    if(in_array($eks, $ekstensi) == true){
-                                                        if($ukuran < 2500000){
-
-                                                            move_uploaded_file($_FILES['file']['tmp_name'], $target_dir.$nfile);
-                                                            
-
-                                                            $query = mysqli_query($config, "INSERT INTO tbl_surat_keluar(no_agenda,tujuan,no_surat,isi,kode,tgl_surat,tgl_catat,file,keterangan,id_user)
-                                                                VALUES('$no_agenda','$penerima_tugas','$no_surat','$peruntukan','ST','$tgl_ttd',NOW(),'','','$id_user')");
-                                                            $query_surattugas = mysqli_query($config, "INSERT INTO tbl_surat_tugas(no_agenda,no_surat,pertimbangan,dasar,penerima_tugas,peruntukan,tgl_ttd,tempat_ttd,nama_ttd,id_user)
-                                                            VALUES('$no_agenda','$no_surat','$pertimbangan','$dasar','$penerima_tugas','$peruntukan','$tgl_ttd','$tempat_ttd','1','$id_user')");
-
-
-                                                            if($query == true  && $query_surattugas == true){
-                                                                $_SESSION['succAdd'] = 'SUKSES! Data berhasil ditambahkan';
-                                                                header("Location: ./admin.php?page=bst");
-                                                                die();
-                                                            } else {
-                                                                $_SESSION['errQ'] = 'ERROR! Ada masalah dengan query';
-                                                                echo '<script language="javascript">window.history.back();</script>';
-                                                            }
-                                                        } else {
-                                                            $_SESSION['errSize'] = 'Ukuran file yang diupload terlalu besar!';
-                                                            echo '<script language="javascript">window.history.back();</script>';
-                                                        }
-                                                    } else {
-                                                        $_SESSION['errFormat'] = 'Format file yang diperbolehkan hanya *.JPG, *.PNG, *.DOC, *.DOCX atau *.PDF!';
-                                                        echo '<script language="javascript">window.history.back();</script>';
-                                                    }
-                                                } else {
 
                                                     $query = mysqli_query($config, "INSERT INTO tbl_surat_keluar(no_agenda,tujuan,no_surat,isi,kode,tgl_surat,
                                                         tgl_catat,file,keterangan,id_user)
                                                         VALUES('$no_agenda','$penerima_tugas','$no_surat','$peruntukan','ST','$tgl_ttd',NOW(),'','','$id_user')");
                                                     $query_surattugas = mysqli_query($config, "INSERT INTO tbl_surat_tugas(no_agenda,no_surat,pertimbangan,dasar,penerima_tugas,peruntukan,tgl_ttd,tempat_ttd,nama_ttd,id_user)
-                                                    VALUES('$no_agenda','$no_surat','$pertimbangan','$dasar','$penerima_tugas','$peruntukan','$tgl_ttd','$tempat_ttd','1','$id_user')");
+                                                    VALUES('$no_agenda','$no_surat','$pertimbangan','$dasar','$petugas','$peruntukan','$tgl_ttd','$tempat_ttd','1','$id_user')");
 
                                                     if($query == true  && $query_surattugas == true){
                                                         $_SESSION['succAdd'] = 'SUKSES! Data berhasil ditambahkan';
@@ -145,7 +117,7 @@ $config = conn($host, $username, $password, $database);
                                                         $_SESSION['errQ'] = 'ERROR! Ada masalah dengan query';
                                                         echo '<script language="javascript">window.history.back();</script>';
                                                     }
-                                                }
+                                                
                                             }
                                         }
                                     }
@@ -277,19 +249,27 @@ $config = conn($host, $username, $password, $database);
                                         unset($_SESSION['dasark']);
                                     }
                                 ?>
-                            <label for="isi">Dasar</label>
+                            <label for="isi">Dasar Surat Tugas</label>
                         </div>
                         <div class="input-field col s6">
-                            <i class="material-icons prefix md-prefix">perm_identity</i>
-                            <input id="pegawai" type="text" class="validate" name="penerima_tugas" required>
-                                <?php
+                            <i class="material-icons prefix md-prefix">perm_identity</i><label for="penerima_tugas">Menugaskan Kepada </label><br/>
+                            <!--<input id="pegawai" type="text" class="validate" name="penerima_tugas" required> -->
+                                <?php /*
                                     if(isset($_SESSION['penerima_tugask'])){
                                         $penerima_tugask = $_SESSION['penerima_tugask'];
                                         echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$penerima_tugask.'</div>';
                                         unset($_SESSION['penerima_tugask']);
-                                    }
+                                    } */
                                 ?>
-                            <label for="kode">Menugaskan</label>
+                            <div class="input-field col s11 right">   
+                                <?php $queryx = mysqli_query($config, "SELECT * FROM tbl_pegawai");?>
+                                <select class="browser-default js-example-basic-multiple" name="penerima_tugas[]" multiple="multiple">
+                                    <?php while($rowx = mysqli_fetch_array($queryx)){ ?>
+                                        <option value="<?php echo $rowx['id'] ;?>"><?php echo $rowx['nama']; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">description</i>
