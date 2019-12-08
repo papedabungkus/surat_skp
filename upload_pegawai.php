@@ -20,7 +20,7 @@
 
                 if($file == ""){
                     $_SESSION['errEmpty'] = 'ERROR! Form File tidak boleh kosong';
-                    header("Location: ./admin.php?page=ref&act=imp");
+                    header("Location: ./admin.php?page=dp&act=imp");
                     die();
                 } else {
 
@@ -34,7 +34,7 @@
                             $_SESSION['succUpload'] = 'SUKSES! Data berhasil diimport';
                         } else {
                             $_SESSION['errUpload'] = 'ERROR! Proses upload data gagal';
-                            header("Location: ./admin.php?page=ref&act=imp");                                die();
+                            header("Location: ./admin.php?page=dp&act=imp");                                die();
                         }
 
                         //membuka file csv
@@ -45,15 +45,15 @@
                         while(($data = fgetcsv($handle, 1000, ",")) !== FALSE){
 
                             //insert data ke dalam database
-                             $query = mysqli_query($config, "INSERT into tbl_klasifikasi(id_klasifikasi,kode,nama,uraian,id_user) values(null,'$data[1]','$data[2]','$data[3]','$id_user')");
+                             $query = mysqli_query($config, "INSERT into tbl_pegawai(id,nip,nama,pangkat,golongan,tmt,jabatan) values(null,'$data[1]','$data[2]','$data[3]','$data[4]','$data[5]','$data[6]')");
                         }
                         fclose($handle);
-                        header("Location: ./admin.php?page=ref");
+                        header("Location: ./admin.php?page=dp");
                         die();
 
                     } else {
                         $_SESSION['errFormat'] = 'ERROR! Format file yang diperbolehkan hanya *.CSV';
-                        header("Location: ./admin.php?page=ref&act=imp");
+                        header("Location: ./admin.php?page=dp&act=imp");
                         die();
                     }
                 }
@@ -69,8 +69,8 @@
                                 <div class="nav-wrapper blue-grey darken-1">
                                     <div class="col m12">
                                         <ul class="left">
-                                            <li class="waves-effect waves-light"><a href="?page=ref&act=imp" class="judul"><i class="material-icons">bookmark</i> Import Referensi Surat</a></li>
-                                            <li class="waves-effect waves-light"><a href="?page=ref"><i class="material-icons">arrow_back</i> Kembali</a></li>
+                                            <li class="waves-effect waves-light"><a href="?page=dp&act=imp" class="judul"><i class="material-icons">bookmark</i> Import Referensi Data Pegawai</a></li>
+                                            <li class="waves-effect waves-light"><a href="?page=dp"><i class="material-icons">arrow_back</i> Kembali</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -127,19 +127,19 @@
                     <div class="col m12">
                         <div class="card">
                             <div class="card-content">
-                                <span class="card-title black-text">Import Referensi Kode Klasifikasi Surat</span>
-                                <p class="kata">Silakan pilih file referensi kode klasifikasi berformat *.csv (file excel) lalu klik tombol <strong>"Import"</strong> untuk melakukan import file. Contoh format file csv bisa di download melalui link dibawah ini.</p><br/>';
+                                <span class="card-title black-text">Import Referensi Data Pegawai</span>
+                                <p class="kata">Silakan pilih file referensi data pegawai berformat *.csv (file excel) lalu klik tombol <strong>"Import"</strong> untuk melakukan import file. Contoh format file csv bisa di download melalui link dibawah ini.</p><br/>';
 
                                 // download file contoh format csv
                                 if(isset($_REQUEST['download'])){
 
                                     $dir = "./asset/";
-                                    $file = $dir."contoh_format_kodeklasifikasi.csv";
+                                    $file = $dir."contoh_format_pegawai.csv";
 
                                     if(file_exists($file)){
                                         header('Content-Description: File Transfer');
                                         header('Content-Type: application/octet-stream');
-                                        header('Content-Disposition: attachment; filename="contoh_format.csv"');
+                                        header('Content-Disposition: attachment; filename="contoh_format_pegawai.csv"');
                                         header('Content-Transfer-Encoding: binary');
                                         header('Expires: 0');
                                         header('Cache-Control: private');
@@ -154,7 +154,7 @@
 
                                 <p>
                                     <form method="post" enctype="multipart/form-data" >
-                                        <a href="?page=ref&act=imp&download" name="download" class="waves-effect waves-light blue-text"><i class="material-icons">file_download</i> <strong>DOWNLOAD CONTOH FORMAT FILE CSV</strong></a>
+                                        <a href="?page=dp&act=imp&download" name="download" class="waves-effect waves-light blue-text"><i class="material-icons">file_download</i> <strong>DOWNLOAD CONTOH FORMAT FILE CSV</strong></a>
                                     </form>
                                 </p>
                             </div>

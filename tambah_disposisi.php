@@ -14,12 +14,11 @@
             list($id_surat) = mysqli_fetch_array($query);
 
             //validasi form kosong
-            if($_REQUEST['tujuan'] == "" || $_REQUEST['isi_disposisi'] == "" || $_REQUEST['sifat'] == "" || $_REQUEST['batas_waktu'] == ""
-                || $_REQUEST['catatan'] == ""){
+            if($_REQUEST['tujuan'] == "" || $_REQUEST['isi_disposisi'] == "" || $_REQUEST['sifat'] == "" || $_REQUEST['batas_waktu'] == ""){
                 $_SESSION['errEmpty'] = 'ERROR! Semua form wajib diisi';
                 echo '<script language="javascript">window.history.back();</script>';
             } else {
-
+                $diteruskan = $_REQUEST['diteruskan'];
                 $tujuan = $_REQUEST['tujuan'];
                 $isi_disposisi = $_REQUEST['isi_disposisi'];
                 $sifat = $_REQUEST['sifat'];
@@ -53,8 +52,8 @@
                                     echo '<script language="javascript">window.history.back();</script>';
                                 } else {
 
-                                    $query = mysqli_query($config, "INSERT INTO tbl_disposisi(tujuan,isi_disposisi,sifat,batas_waktu,catatan,id_surat,id_user)
-                                        VALUES('$tujuan','$isi_disposisi','$sifat','$batas_waktu','$catatan','$id_surat','$id_user')");
+                                    $query = mysqli_query($config, "INSERT INTO tbl_disposisi(tujuan,pegawai,isi_disposisi,sifat,batas_waktu,catatan,id_surat,id_user)
+                                        VALUES('$tujuan','$diteruskan','$isi_disposisi','$sifat','$batas_waktu','$catatan','$id_surat','$id_user')");
 
                                     if($query == true){
                                         $_SESSION['succAdd'] = 'SUKSES! Data berhasil ditambahkan';
@@ -139,6 +138,18 @@
                             <label for="tujuan">Tujuan Disposisi</label>
                         </div>
                         <div class="input-field col s6">
+                            <i class="material-icons prefix md-prefix">perm_identity</i>
+                            <input id="pegawai" type="text" class="validate" name="diteruskan" required>
+                                <?php
+                                    if(isset($_SESSION['diteruskan'])){
+                                        $diteruskan = $_SESSION['diteruskan'];
+                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$diteruskan.'</div>';
+                                        unset($_SESSION['diteruskan']);
+                                    }
+                                ?>
+                            <label for="tujuan">Diteruskan Kepada (Opsional)</label>
+                        </div>
+                        <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">alarm</i>
                             <input id="batas_waktu" type="text" name="batas_waktu" class="datepicker" required>
                                 <?php
@@ -148,11 +159,19 @@
                                         unset($_SESSION['batas_waktu']);
                                     }
                                 ?>
-                            <label for="batas_waktu">Batas Waktu</label>
+                            <label for="batas_waktu">Tanggal Penyelesaian</label>
                         </div>
                         <div class="input-field col s6">
-                            <i class="material-icons prefix md-prefix">description</i>
-                            <textarea id="isi_disposisi" class="materialize-textarea validate" name="isi_disposisi" required></textarea>
+                            <i class="material-icons prefix md-prefix">description</i><label for="isi_disposisi">Isi Disposisi</label><br/>
+                            <?php $queryx = mysqli_query($config, "SELECT * FROM tindakan_disposisi");?>
+                            <div class="input-field col s11 right">
+                                <select class="browser-default" name="isi_disposisi" id="isi_disposisi" required>
+                                        <option value="">-- Pilih Salah Satu --</option>
+                                    <?php while($rowx = mysqli_fetch_array($queryx)){ ?>
+                                        <option value="<?php echo $rowx['tindakan'] ;?>"><?php echo $rowx['tindakan'];?></option>
+                                    <?php } ?>
+                               </select>
+                            </div>
                                 <?php
                                     if(isset($_SESSION['isi_disposisi'])){
                                         $isi_disposisi = $_SESSION['isi_disposisi'];
@@ -160,11 +179,11 @@
                                         unset($_SESSION['isi_disposisi']);
                                     }
                                 ?>
-                            <label for="isi_disposisi">Isi Disposisi</label>
+                            
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">featured_play_list   </i>
-                            <input id="catatan" type="text" class="validate" name="catatan" required>
+                            <textarea class="materialize-textarea validate" name="catatan"></textarea>
                                 <?php
                                     if(isset($_SESSION['catatan'])){
                                         $catatan = $_SESSION['catatan'];
@@ -178,10 +197,11 @@
                             <i class="material-icons prefix md-prefix">low_priority</i><label>Pilih Sifat Disposisi</label><br/>
                             <div class="input-field col s11 right">
                                 <select class="browser-default validate" name="sifat" id="sifat" required>
-                                    <option value="Biasa">Biasa</option>
-                                    <option value="Penting">Penting</option>
-                                    <option value="Segera">Segera</option>
+                                    <option value="">-- Pilih Salah Satu --</option>
                                     <option value="Rahasia">Rahasia</option>
+                                    <option value="Segera">Segera</option>
+                                    <option value="Penting">Penting</option>
+                                    <option value="Biasa">Biasa</option>
                                 </select>
                             </div>
                             <?php

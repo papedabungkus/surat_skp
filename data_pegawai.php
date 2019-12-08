@@ -18,6 +18,9 @@
                 case 'del':
                     include "hapus_pegawai.php";
                     break;
+                case 'imp':
+                    include "upload_pegawai.php";
+                    break;
             }
         } else {
 
@@ -41,10 +44,11 @@
                                     <div class="nav-wrapper blue-grey darken-1">
                                         <div class="col m12">
                                             <ul class="left">
-                                                <li class="waves-effect waves-light hide-on-small-only"><a href="?page=sett&sub=usr" class="judul"><i class="material-icons">people</i> Manajemen Pegawai</a></li>
+                                                <li class="waves-effect waves-light hide-on-small-only"><a href="?page=dp" class="judul"><i class="material-icons">people</i> Manajemen Pegawai</a></li>
                                                 <li class="waves-effect waves-light">
                                                     <a href="?page=dp&act=add"><i class="material-icons md-24">person_add</i> Tambah Pegawai</a>
                                                 </li>
+                                                
                                             </ul>
                                         </div>
                                     </div>

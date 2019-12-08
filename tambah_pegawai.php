@@ -62,7 +62,7 @@
                     <nav class="secondary-nav">
                         <div class="nav-wrapper blue-grey darken-1">
                             <ul class="left">
-                                <li class="waves-effect waves-light"><a href="?page=sett&sub=usr&act=add" class="judul"><i class="material-icons">person_add</i> Tambah Pegawai</a></li>
+                                <li class="waves-effect waves-light"><a href="?page=dp&act=add" class="judul"><i class="material-icons">person_add</i> Tambah Pegawai</a></li>
                             </ul>
                         </div>
                     </nav>
@@ -166,7 +166,7 @@
                             <button type="submit" name="submit" class="btn-large blue waves-effect waves-light">SIMPAN <i class="material-icons">done</i></button>
                         </div>
                         <div class="col 6">
-                            <a href="?page=sett&sub=usr" class="btn-large deep-orange waves-effect waves-light">BATAL <i class="material-icons">clear</i></a>
+                            <a href="?page=dp" class="btn-large deep-orange waves-effect waves-light">BATAL <i class="material-icons">clear</i></a>
                         </div>
                     </div>
 

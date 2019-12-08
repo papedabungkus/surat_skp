@@ -32,14 +32,6 @@ $config = conn($host, $username, $password, $database);
                 $peruntukan = $_REQUEST['peruntukan'];
                 $tgl_ttd = $_REQUEST['tgl_ttd'];
                 $tempat_ttd = $_REQUEST['tempat_ttd'];
-                                                                
-                //$nama_ttd = $_REQUEST['nama_ttd'];
-                //$tujuan = $_REQUEST['tujuan'];
-                //$isi = $_REQUEST['isi'];
-                //$kode = substr($_REQUEST['kode'],0,30);
-                //$nkode = trim($kode);
-                //$tgl_surat = $_REQUEST['tgl_surat'];
-                //$keterangan = $_REQUEST['keterangan'];
                 $id_user = $_SESSION['id_user'];
 
                 //validasi input data
@@ -91,20 +83,7 @@ $config = conn($host, $username, $password, $database);
                                                 echo '<script language="javascript">window.history.back();</script>';
                                             } else {
 
-                                                $ekstensi = array('jpg','png','jpeg','doc','docx','pdf');
-                                                $file = $_FILES['file']['name'];
-                                                $x = explode('.', $file);
-                                                $eks = strtolower(end($x));
-                                                $ukuran = $_FILES['file']['size'];
-                                                $target_dir = "upload/surat_keluar/";
-
-                                                if (! is_dir($target_dir)) {
-                                                    mkdir($target_dir, 0755, true);
-                                                }
-
-
-                                                    $query = mysqli_query($config, "INSERT INTO tbl_surat_keluar(no_agenda,tujuan,no_surat,isi,kode,tgl_surat,
-                                                        tgl_catat,file,keterangan,id_user)
+                                                    $query = mysqli_query($config, "INSERT INTO tbl_surat_keluar(no_agenda,tujuan,no_surat,isi,kode,tgl_surat,tgl_catat,file,keterangan,id_user)
                                                         VALUES('$no_agenda','$penerima_tugas','$no_surat','$peruntukan','ST','$tgl_ttd',NOW(),'','','$id_user')");
                                                     $query_surattugas = mysqli_query($config, "INSERT INTO tbl_surat_tugas(no_agenda,no_surat,pertimbangan,dasar,penerima_tugas,peruntukan,tgl_ttd,tempat_ttd,nama_ttd,id_user)
                                                     VALUES('$no_agenda','$no_surat','$pertimbangan','$dasar','$petugas','$peruntukan','$tgl_ttd','$tempat_ttd','1','$id_user')");
@@ -182,7 +161,7 @@ $config = conn($host, $username, $password, $database);
 
                     <!-- Row in form START -->
                     <div class="row">
-                        <div class="input-field col s6">
+                        <div class="input-field col s2">
                             <i class="material-icons prefix md-prefix">looks_one</i>
                             <?php
                             echo '<input id="no_agenda" type="number" class="validate" name="no_agenda" value="';
@@ -210,7 +189,7 @@ $config = conn($host, $username, $password, $database);
                             ?>
                             <label for="no_agenda">Nomor Agenda</label>
                         </div>
-                        <div class="input-field col s6">
+                        <div class="input-field col s4">
                             <i class="material-icons prefix md-prefix">looks_two</i>
                             <input id="no_surat" type="text" class="validate" name="no_surat" required>
                                 <?php
@@ -253,14 +232,6 @@ $config = conn($host, $username, $password, $database);
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">perm_identity</i><label for="penerima_tugas">Menugaskan Kepada </label><br/>
-                            <!--<input id="pegawai" type="text" class="validate" name="penerima_tugas" required> -->
-                                <?php /*
-                                    if(isset($_SESSION['penerima_tugask'])){
-                                        $penerima_tugask = $_SESSION['penerima_tugask'];
-                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$penerima_tugask.'</div>';
-                                        unset($_SESSION['penerima_tugask']);
-                                    } */
-                                ?>
                             <div class="input-field col s11 right">   
                                 <?php $queryx = mysqli_query($config, "SELECT * FROM tbl_pegawai");?>
                                 <select class="browser-default js-example-basic-multiple" name="penerima_tugas[]" multiple="multiple">
@@ -269,7 +240,13 @@ $config = conn($host, $username, $password, $database);
                                     <?php } ?>
                                 </select>
                             </div>
-                            
+                            <?php 
+                                    if(isset($_SESSION['penerima_tugask'])){
+                                        $penerima_tugask = $_SESSION['penerima_tugask'];
+                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$penerima_tugask.'</div>';
+                                        unset($_SESSION['penerima_tugask']);
+                                    } 
+                            ?>
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">description</i>
@@ -281,7 +258,7 @@ $config = conn($host, $username, $password, $database);
                                         unset($_SESSION['peruntukank']);
                                     }
                                 ?>
-                            <label for="isi">Untuk</label>
+                            <label for="isi">Untuk Penugasan</label>
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">places</i>

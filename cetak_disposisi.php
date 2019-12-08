@@ -230,21 +230,51 @@
                             </tr>
                         <tbody>
                             <tr>
-                                <td>
-                                    <img width="20" height="20" src="./asset/img/uncheck.png"> &nbsp;&nbsp;&nbsp;Diketahui<br />
-                                    <img width="20" height="20" src="./asset/img/uncheck.png"> &nbsp;&nbsp;&nbsp;Dipedomani<br />
-                                    <img width="20" height="20" src="./asset/img/uncheck.png"> &nbsp;&nbsp;&nbsp;Ditindaklanjuti<br />
-                                    <img width="20" height="20" src="./asset/img/uncheck.png"> &nbsp;&nbsp;&nbsp;Konsultasikan<br />
-                                    <img width="20" height="20" src="./asset/img/uncheck.png"> &nbsp;&nbsp;&nbsp;Arsip<br />
-                                    <img width="20" height="20" src="./asset/img/uncheck.png"> &nbsp;&nbsp;&nbsp;Lain-lain<br /><br />
+                                <td>';
+                                if($row['isi_disposisi']=="Diketahui") {
+                                    echo '<img width="20" height="20" src="./asset/img/check.jpg"> &nbsp;&nbsp;&nbsp;Diketahui<br />';
+                                } else {
+                                    echo '<img width="20" height="20" src="./asset/img/uncheck.png"> &nbsp;&nbsp;&nbsp;Diketahui<br />';
+                                }
+                                if($row['isi_disposisi']=="Dipedomani") {
+                                    echo '<img width="20" height="20" src="./asset/img/check.jpg"> &nbsp;&nbsp;&nbsp;Dipedomani<br />';
+                                } else {
+                                    echo '<img width="20" height="20" src="./asset/img/uncheck.png"> &nbsp;&nbsp;&nbsp;Dipedomani<br />';
+                                }
+                                if($row['isi_disposisi']=="Ditindaklanjuti") {
+                                    echo '<img width="20" height="20" src="./asset/img/check.jpg"> &nbsp;&nbsp;&nbsp;Ditindaklanjuti<br />';
+                                } else {
+                                    echo '<img width="20" height="20" src="./asset/img/uncheck.png"> &nbsp;&nbsp;&nbsp;Ditindaklanjuti<br />';
+                                }
+                                if($row['isi_disposisi']=="Konsultasikan") {
+                                    echo '<img width="20" height="20" src="./asset/img/check.jpg"> &nbsp;&nbsp;&nbsp;Konsultasikan<br />';
+                                } else {
+                                    echo '<img width="20" height="20" src="./asset/img/uncheck.png"> &nbsp;&nbsp;&nbsp;Konsultasikan<br />';
+                                }
+                                if($row['isi_disposisi']=="Arsip") {
+                                    echo '<img width="20" height="20" src="./asset/img/check.jpg"> &nbsp;&nbsp;&nbsp;Arsip<br />';
+                                } else {
+                                    echo '<img width="20" height="20" src="./asset/img/uncheck.png"> &nbsp;&nbsp;&nbsp;Arsip<br />';
+                                }
+                                if($row['isi_disposisi']=="Lain-lain") {
+                                    echo '<img width="20" height="20" src="./asset/img/check.jpg"> &nbsp;&nbsp;&nbsp;Lain-lain<br />';
+                                } else {
+                                    echo '<img width="20" height="20" src="./asset/img/uncheck.png"> &nbsp;&nbsp;&nbsp;Lain-lain<br />';
+                                }
+                                echo '<br />';
+                                    if($row['catatan']==""){
+                                        echo '
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;................................................<br />
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;................................................<br />
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;................................................<br />
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;................................................<br />
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;................................................<br />
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;................................................<br />
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;................................................<br />
-                                    <br /><br /><center>Kepala,</center><br /><br /><br />';
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;................................................<br />';
+                                    } else {
+                                        echo $row['catatan'];
+                                    };
+                                    echo '<br /><br /><center>Kepala,</center><br /><br /><br />';
                                     $q_instansi = mysqli_query($config, "SELECT * FROM tbl_instansi");
                                     $r_instansi = mysqli_fetch_array($q_instansi);
                                     $pimpinan = $r_instansi['pimpinan'];

@@ -267,7 +267,9 @@
                                     if($_SESSION['id_user'] != $row['id_user'] AND $_SESSION['id_user'] != 1){
                                         echo '<button class="btn small blue-grey waves-effect waves-light"><i class="material-icons">error</i> No Action</button>';
                                     } else {
-                                      echo '<a class="btn small yellow darken-3 waves-effect waves-light" href="cetak_surat_tugas.php?id_surat='.$row['id_surat'].'" target="_blank">
+                                      echo '<a class="btn small blue darken-3 waves-effect waves-light" href="?page=bst&act=edit&id_surat='.$row['id_surat'].'">
+                                                <i class="material-icons">edit</i> EDIT</a>
+                                            <a class="btn small yellow darken-3 waves-effect waves-light" href="cetak_surat_tugas.php?id_surat='.$row['id_surat'].'" target="_blank">
                                                 <i class="material-icons">print</i> PRINT</a>
                                             <a class="btn small deep-orange waves-effect waves-light" href="?page=bst&act=del&id_surat='.$row['id_surat'].'">
                                                 <i class="material-icons">delete</i> DEL</a>';

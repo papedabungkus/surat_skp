@@ -10,8 +10,8 @@
 
             //validasi form kosong
             if($_REQUEST['no_agenda'] == "" || $_REQUEST['no_surat'] == "" || $_REQUEST['asal_surat'] == "" || $_REQUEST['isi'] == ""
-                || $_REQUEST['kode'] == "" || $_REQUEST['indeks'] == "" || $_REQUEST['tgl_surat'] == ""  || $_REQUEST['keterangan'] == ""){
-                $_SESSION['errEmpty'] = 'ERROR! Semua form wajib diisi';
+              || $_REQUEST['tgl_surat'] == "" ){
+                $_SESSION['errEmpty'] = 'ERROR! Ada Form yang belum diisi';
                 echo '<script language="javascript">window.history.back();</script>';
             } else {
 
@@ -204,10 +204,10 @@
 
                     <!-- Row in form START -->
                     <div class="row">
-                        <div class="input-field col s6">
+                        <div class="input-field col s2">
                             <i class="material-icons prefix md-prefix">looks_one</i>
                             <?php
-                            echo '<input id="no_agenda" type="number" class="validate" name="no_agenda" value="';
+                            echo '<input id="no_agenda" type="number" class="validate" readonly name="no_agenda" value="';
                                 $sql = mysqli_query($config, "SELECT no_agenda FROM tbl_surat_masuk");
                                 $no_agenda = "1";
                                 if (mysqli_num_rows($sql) == 0){
@@ -232,9 +232,26 @@
                             ?>
                             <label for="no_agenda">Nomor Agenda</label>
                         </div>
+                        <div class="input-field col s4">
+                            <i class="material-icons prefix md-prefix">looks_two</i>
+                            <input id="no_surat" type="text" class="validate" name="no_surat" required>
+                                <?php
+                                    if(isset($_SESSION['no_surat'])){
+                                        $no_surat = $_SESSION['no_surat'];
+                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$no_surat.'</div>';
+                                        unset($_SESSION['no_surat']);
+                                    }
+                                    if(isset($_SESSION['errDup'])){
+                                        $errDup = $_SESSION['errDup'];
+                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$errDup.'</div>';
+                                        unset($_SESSION['errDup']);
+                                    }
+                                ?>
+                            <label for="no_surat">Nomor Surat</label>
+                        </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">bookmark</i>
-                            <input id="kode" type="text" class="validate" name="kode" required>
+                            <input id="kode" type="text" class="validate" name="kode">
                                 <?php
                                     if(isset($_SESSION['kode'])){
                                         $kode = $_SESSION['kode'];
@@ -258,7 +275,7 @@
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">storage</i>
-                            <input id="indeks" type="text" class="validate" name="indeks" required>
+                            <input id="indeks" type="text" class="validate" name="indeks">
                                 <?php
                                     if(isset($_SESSION['indeks'])){
                                         $indeks = $_SESSION['indeks'];
@@ -267,23 +284,6 @@
                                     }
                                 ?>
                             <label for="indeks">Indeks Berkas</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <i class="material-icons prefix md-prefix">looks_two</i>
-                            <input id="no_surat" type="text" class="validate" name="no_surat" required>
-                                <?php
-                                    if(isset($_SESSION['no_surat'])){
-                                        $no_surat = $_SESSION['no_surat'];
-                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$no_surat.'</div>';
-                                        unset($_SESSION['no_surat']);
-                                    }
-                                    if(isset($_SESSION['errDup'])){
-                                        $errDup = $_SESSION['errDup'];
-                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$errDup.'</div>';
-                                        unset($_SESSION['errDup']);
-                                    }
-                                ?>
-                            <label for="no_surat">Nomor Surat</label>
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">date_range</i>
@@ -311,7 +311,7 @@
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">featured_play_list</i>
-                            <input id="keterangan" type="text" class="validate" name="keterangan" required>
+                            <input id="keterangan" type="text" class="validate" name="keterangan">
                                 <?php
                                     if(isset($_SESSION['keterangan'])){
                                         $keterangan = $_SESSION['keterangan'];
@@ -323,7 +323,7 @@
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">attach_file</i>
-                            <input id="lampiran" type="text" class="validate" name="lampiran" required>
+                            <input id="lampiran" type="text" class="validate" name="lampiran">
                                 <?php
                                     if(isset($_SESSION['lampiran'])){
                                         $lampiran = $_SESSION['lampiran'];

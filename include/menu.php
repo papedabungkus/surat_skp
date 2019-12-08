@@ -157,11 +157,15 @@
             
             <?php
                 if($_SESSION['admin'] == 1){ ?>
+            <li><a class="dropdown-button" href="#!" data-activates="agenda">Referensi <i class="material-icons md-18">arrow_drop_down</i></a></li>
+                <ul id='agenda' class='dropdown-content'>
+                    <li><a href="?page=dp">Data Pegawai</a></li>
+                    <li><a href="?page=ref">Data Klasifikasi</a></li>
+                </ul>
             <li><a class="dropdown-button" href="#!" data-activates="pengaturan">Pengaturan <i class="material-icons md-18">arrow_drop_down</i></a></li>
                 <ul id='pengaturan' class='dropdown-content'>
                     <li><a href="?page=sett">Instansi</a></li>
                     <li><a href="?page=sett&sub=usr">User</a></li>
-                    <li><a href="?page=dp">Data Pegawai</a></li>
                     <li class="divider"></li>
                     <li><a href="?page=sett&sub=back">Backup Database</a></li>
                     <li><a href="#">Restore Database</a></li>

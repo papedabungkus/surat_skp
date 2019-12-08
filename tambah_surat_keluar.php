@@ -218,7 +218,7 @@
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">bookmark</i>
-                            <input id="kode" type="text" class="validate" name="kode" required>
+                            <input id="kode" type="text" class="validate" name="kode" >
                                 <?php
                                     if(isset($_SESSION['kodek'])){
                                         $kodek = $_SESSION['kodek'];
@@ -271,7 +271,7 @@
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">featured_play_list</i>
-                            <input id="keterangan" type="text" class="validate" name="keterangan" required>
+                            <input id="keterangan" type="text" class="validate" name="keterangan">
                                 <?php
                                     if(isset($_SESSION['keterangank'])){
                                         $keterangank = $_SESSION['keterangank'];
