@@ -144,12 +144,17 @@
                                             while($row = mysqli_fetch_array($query2)){
                                             $no++;
                                              echo '
-                                                <tr>
+                                                <tr> 
                                                     <td>'.$no.'</td>
                                                     <td>'.$row['tujuan'].'</td>
                                                     <td>'.$row['isi_disposisi'].'</td>
                                                     <td>'.$row['sifat'].'<br/>'.indoDate($row['batas_waktu']).'</td>
-                                                    <td>
+                                                    <td>';
+                                                    if($row['file_dispo']!=""){
+                                                    echo '<a class="btn small green darken-3 waves-effect waves-light" href="upload/disposisi/'.$row['file_dispo'].'" target="_blank">
+                                                            <i class="material-icons">cloud_download</i> Download</a>';
+                                                    }
+                                                    echo '
                                                     <a class="btn small yellow darken-3 waves-effect waves-light" href="?page=ctk&id_surat='.$row['id_surat'].'&id_disposisi='.$row['id_disposisi'].'" target="_blank">
                                                             <i class="material-icons">print</i> PRINT</a>
                                                     <a class="btn small blue waves-effect waves-light" href="?page=tsm&act=disp&id_surat='.$id_surat.'&sub=edit&id_disposisi='.$row['id_disposisi'].'">

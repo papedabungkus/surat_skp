@@ -53,21 +53,90 @@
                                     $_SESSION['catatan'] = 'Form SIFAT hanya boleh mengandung karakter huruf dan spasi';
                                     echo '<script language="javascript">window.history.back();</script>';
                                 } else {
+                                                $ekstensi = array('jpg','png','jpeg','doc','docx','pdf');
+                                                $file = $_FILES['file']['name'];
+                                                $x = explode('.', $file);
+                                                $eks = strtolower(end($x));
+                                                $ukuran = $_FILES['file']['size'];
+                                                $target_dir = "upload/disposisi/";
 
-                                    $query = mysqli_query($config, "UPDATE tbl_disposisi SET tujuan='$tujuan', pegawai='$diteruskan', isi_disposisi='$isi_disposisi', sifat='$sifat', batas_waktu='$batas_waktu', catatan='$catatan', id_surat='$id_surat', id_user='$id_user' WHERE id_disposisi='$id_disposisi'");
+                                                if (! is_dir($target_dir)) {
+                                                    mkdir($target_dir, 0755, true);
+                                                }
+                                                //jika form file tidak kosong akan mengeksekusi script dibawah ini
+                                            if($file != ""){
 
-                                    if($query == true){
-                                        $_SESSION['succEdit'] = 'SUKSES! Data berhasil diupdate';
-                                        echo '<script language="javascript">
-                                                window.location.href="./admin.php?page=tsm&act=disp&id_surat='.$id_surat.'";
-                                              </script>';
-                                    } else {
-                                        $_SESSION['errQ'] = 'ERROR! Ada masalah dengan query';
-                                        echo '<script language="javascript">window.history.back();</script>';
+                                                $rand = rand(1,10000);
+                                                $nfile = $rand."-".$file;
+
+                                                //validasi file
+                                                if(in_array($eks, $ekstensi) == true){
+                                                    if($ukuran < 2300000){
+
+                                                        $id_surat = $_REQUEST['id_surat'];
+                                                        $query = mysqli_query($config, "SELECT file FROM tbl_surat_masuk WHERE id_surat='$id_surat'");
+                                                        list($file) = mysqli_fetch_array($query);
+
+                                                        //jika file tidak kosong akan mengeksekusi script dibawah ini
+                                                        if(!empty($file)){
+                                                            unlink($target_dir.$file);
+
+                                                            move_uploaded_file($_FILES['file']['tmp_name'], $target_dir.$nfile);
+
+                                                            $query = mysqli_query($config, "UPDATE tbl_disposisi SET tujuan='$tujuan', pegawai='$diteruskan', isi_disposisi='$isi_disposisi', sifat='$sifat', batas_waktu='$batas_waktu', catatan='$catatan', file_dispo='$nfile', id_surat='$id_surat', id_user='$id_user' WHERE id_disposisi='$id_disposisi'");
+                                                            if($query == true){
+                                                                $_SESSION['succEdit'] = 'SUKSES! Data berhasil diupdate';
+                                                                echo '<script language="javascript">
+                                                                        window.location.href="./admin.php?page=tsm&act=disp&id_surat='.$id_surat.'";
+                                                                      </script>';
+                                                            } else {
+                                                                $_SESSION['errQ'] = 'ERROR! Ada masalah dengan query';
+                                                                echo '<script language="javascript">window.history.back();</script>';
+                                                            }
+
+                                                            
+                                                        } else {
+
+                                                            //jika file kosong akan mengeksekusi script dibawah ini
+                                                            move_uploaded_file($_FILES['file']['tmp_name'], $target_dir.$nfile);
+                                                            $query = mysqli_query($config, "UPDATE tbl_disposisi SET tujuan='$tujuan', pegawai='$diteruskan', isi_disposisi='$isi_disposisi', sifat='$sifat', batas_waktu='$batas_waktu', catatan='$catatan', file_dispo='$nfile', id_surat='$id_surat', id_user='$id_user' WHERE id_disposisi='$id_disposisi'");
+                                                            if($query == true){
+                                                                $_SESSION['succEdit'] = 'SUKSES! Data berhasil diupdate';
+                                                                echo '<script language="javascript">
+                                                                        window.location.href="./admin.php?page=tsm&act=disp&id_surat='.$id_surat.'";
+                                                                      </script>';
+                                                            } else {
+                                                                $_SESSION['errQ'] = 'ERROR! Ada masalah dengan query';
+                                                                echo '<script language="javascript">window.history.back();</script>';
+                                                            }
+                                                        }
+                                    
+                                                    } else {
+                                                        $_SESSION['errSize'] = 'Ukuran file yang diupload terlalu besar!';
+                                                        echo '<script language="javascript">window.history.back();</script>';
+                                                    }
+                                                } else {
+                                                    $_SESSION['errFormat'] = 'Format file yang diperbolehkan hanya *.JPG, *.PNG, *.DOC, *.DOCX atau *.PDF!';
+                                                    echo '<script language="javascript">window.history.back();</script>';
+                                                }
+                                            } else {
+                                                //jika form file kosong akan mengeksekusi script dibawah ini
+                                            $id_surat = $_REQUEST['id_surat'];
+
+                                            $query = mysqli_query($config, "UPDATE tbl_disposisi SET tujuan='$tujuan', pegawai='$diteruskan', isi_disposisi='$isi_disposisi', sifat='$sifat', batas_waktu='$batas_waktu', catatan='$catatan', id_surat='$id_surat', id_user='$id_user' WHERE id_disposisi='$id_disposisi'");
+
+                                            if($query == true){
+                                                $_SESSION['succEdit'] = 'SUKSES! Data berhasil diupdate';
+                                                header("Location: ./admin.php?page=tsm&act=disp&id_surat=".$id_surat);
+                                                die();
+                                            } else {
+                                                $_SESSION['errQ'] = 'ERROR! Ada masalah dengan query';
+                                                echo '<script language="javascript">window.history.back();</script>';
+                                            }
+                                        }
                                     }
-                                }
+                                }          
                             }
-                        }
                     }
                 }
             }
@@ -128,14 +197,14 @@
                 <div class="row jarak-form">
 
                     <!-- Form START -->
-                    <form class="col s12" method="post" action="">
+                    <form class="col s12" method="post" action="" enctype="multipart/form-data">
 
                         <!-- Row in form START -->
                         <div class="row">
                             <div class="input-field col s6">
                                 <input type="hidden" value="<?php echo $row['id_disposisi'] ;?>">
                                 <i class="material-icons prefix md-prefix">account_box</i>
-                                <input id="tujuan" type="text" class="validate" name="tujuan" value="<?php echo $row['tujuan'] ;?>" required>
+                                <input id="tujuandisposisi" type="text" class="validate" name="tujuan" value="<?php echo $row['tujuan'] ;?>" required>
                                     <?php
                                         if(isset($_SESSION['tujuan'])){
                                             $tujuan = $_SESSION['tujuan'];
@@ -169,7 +238,7 @@
                                     ?>
                                 <label for="batas_waktu">Tanggal Penyelesaian</label>
                             </div>
-                            <div class="input-field col s6">
+                            <div class="input-field col s3">
                                 <i class="material-icons prefix md-prefix">description</i><label for="isi_disposisi">Isi Disposisi</label><br />
                                 <?php $queryx = mysqli_query($config, "SELECT * FROM tindakan_disposisi");?>
                                 <div class="input-field col s11 right">
@@ -196,6 +265,25 @@
                                     ?>
                                 
                             </div>
+                            <div class="input-field col s3">
+                                <i class="material-icons prefix md-prefix">low_priority</i><label>Pilih Sifat Disposisi</label><br/>
+                                <div class="input-field col s11 right">
+                                    <select class="browser-default validate" name="sifat" id="sifat" required>
+                                        <option value="<?php echo $row['sifat']; ?>"><?php echo $row['sifat']; ?></option>
+                                        <option value="Biasa">Biasa</option>
+                                        <option value="Penting">Penting</option>
+                                        <option value="Segera">Segera</option>
+                                        <option value="Rahasia">Rahasia</option>
+                                </select>
+                                </div>
+                                <?php
+                                    if(isset($_SESSION['sifat'])){
+                                        $sifat = $_SESSION['sifat'];
+                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$sifat.'</div>';
+                                        unset($_SESSION['sifat']);
+                                    }
+                                ?>
+                            </div>
                             <div class="input-field col s6">
                                 <i class="material-icons prefix md-prefix">featured_play_list   </i>
                                 <input id="catatan" type="text" class="validate" name="catatan" value="<?php echo $row['catatan'] ;?>" required>
@@ -209,23 +297,28 @@
                                 <label for="catatan">Catatan</label>
                             </div>
                             <div class="input-field col s6">
-                                <i class="material-icons prefix md-prefix">low_priority</i><label>Pilih Sifat Disposisi</label><br/>
-                                <div class="input-field col s11 right">
-                                    <select class="browser-default validate" name="sifat" id="sifat" required>
-                                        <option value="<?php echo $row['sifat']; ?>"><?php echo $row['sifat']; ?></option>
-                                        <option value="Biasa">Biasa</option>
-                                        <option value="Penting">Penting</option>
-                                        <option value="Segera">Segera</option>
-                                        <option value="Rahasia">Rahasia</option>
-                                </select>
+                            <div class="file-field input-field">
+                                <div class="btn light-green darken-1">
+                                    <span>File</span>
+                                    <input type="file" id="file" name="file">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text" value="<?php echo $file ;?>" placeholder="Upload file/scan gambar surat masuk">
+                                        <?php
+                                            if(isset($_SESSION['errSize'])){
+                                                $errSize = $_SESSION['errSize'];
+                                                echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$errSize.'</div>';
+                                                unset($_SESSION['errSize']);
+                                            }
+                                            if(isset($_SESSION['errFormat'])){
+                                                $errFormat = $_SESSION['errFormat'];
+                                                echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$errFormat.'</div>';
+                                                unset($_SESSION['errFormat']);
+                                            }
+                                        ?>
+                                    <small class="red-text">*Format file yang diperbolehkan *.JPG, *.PNG, *.DOC, *.DOCX, *.PDF dan ukuran maksimal file 2 MB!</small>
+                                </div>
                             </div>
-                                <?php
-                                    if(isset($_SESSION['sifat'])){
-                                        $sifat = $_SESSION['sifat'];
-                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$sifat.'</div>';
-                                        unset($_SESSION['sifat']);
-                                    }
-                                ?>
                         </div>
                         <!-- Row in form END -->
 
