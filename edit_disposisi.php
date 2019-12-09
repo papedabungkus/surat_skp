@@ -6,7 +6,7 @@
         die();
     } else {
 
-        if(isset($_REQUEST['submit'])){
+        if(isset($_REQUEST['submit'])){ 
 
             $id_surat = $_REQUEST['id_surat'];
             $query = mysqli_query($config, "SELECT * FROM tbl_surat_masuk WHERE id_surat='$id_surat'");
@@ -21,6 +21,7 @@
 
                 $id_disposisi = $_REQUEST['id_disposisi'];
                 $tujuan = $_REQUEST['tujuan'];
+                $diteruskan = $_REQUEST['diteruskan'];
                 $isi_disposisi = $_REQUEST['isi_disposisi'];
                 $sifat = $_REQUEST['sifat'];
                 $batas_waktu = $_REQUEST['batas_waktu'];
@@ -53,7 +54,7 @@
                                     echo '<script language="javascript">window.history.back();</script>';
                                 } else {
 
-                                    $query = mysqli_query($config, "UPDATE tbl_disposisi SET tujuan='$tujuan', isi_disposisi='$isi_disposisi', sifat='$sifat', batas_waktu='$batas_waktu', catatan='$catatan', id_surat='$id_surat', id_user='$id_user' WHERE id_disposisi='$id_disposisi'");
+                                    $query = mysqli_query($config, "UPDATE tbl_disposisi SET tujuan='$tujuan', pegawai='$diteruskan', isi_disposisi='$isi_disposisi', sifat='$sifat', batas_waktu='$batas_waktu', catatan='$catatan', id_surat='$id_surat', id_user='$id_user' WHERE id_disposisi='$id_disposisi'");
 
                                     if($query == true){
                                         $_SESSION['succEdit'] = 'SUKSES! Data berhasil diupdate';
@@ -145,6 +146,18 @@
                                 <label for="tujuan">Tujuan Disposisi</label>
                             </div>
                             <div class="input-field col s6">
+                                <i class="material-icons prefix md-prefix">perm_identity</i>
+                                <input id="pegawai" type="text" class="validate" name="diteruskan" value="<?php echo $row['pegawai'] ;?>">
+                                    <?php
+                                        if(isset($_SESSION['diteruskan'])){
+                                            $diteruskan = $_SESSION['diteruskan'];
+                                            echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$diteruskan.'</div>';
+                                            unset($_SESSION['diteruskan']);
+                                        }
+                                    ?>
+                                <label for="tujuan">Diteruskan Kepada (Opsional)</label>
+                            </div>
+                            <div class="input-field col s6">
                                 <i class="material-icons prefix md-prefix">alarm</i>
                                 <input id="batas_waktu" type="text" name="batas_waktu" class="datepicker" value="<?php echo $row['batas_waktu']; ?>"required>
                                     <?php
@@ -154,11 +167,26 @@
                                             unset($_SESSION['batas_waktu']);
                                         }
                                     ?>
-                                <label for="batas_waktu">Batas Waktu</label>
+                                <label for="batas_waktu">Tanggal Penyelesaian</label>
                             </div>
                             <div class="input-field col s6">
-                                <i class="material-icons prefix md-prefix">description</i>
-                                <textarea id="isi_disposisi" class="materialize-textarea validate" name="isi_disposisi" required><?php echo $row['isi_disposisi'] ;?></textarea>
+                                <i class="material-icons prefix md-prefix">description</i><label for="isi_disposisi">Isi Disposisi</label><br />
+                                <?php $queryx = mysqli_query($config, "SELECT * FROM tindakan_disposisi");?>
+                                <div class="input-field col s11 right">
+                                    <select class="browser-default" name="isi_disposisi" id="isi_disposisi" required>
+                                            <option value="">-- Pilih Salah Satu --</option>
+                                        <?php 
+                                            while($rowx = mysqli_fetch_array($queryx)){ 
+                                                if($rowx['tindakan']==$row['isi_disposisi']){
+                                                    $selected = "selected";
+                                                } else {
+                                                    $selected = "";
+                                                }
+                                        ?>
+                                            <option value="<?php echo $rowx['tindakan'] ;?>" <?php echo $selected;?>><?php echo $rowx['tindakan'];?></option>
+                                        <?php } ?>
+                                </select>
+                                </div>    
                                     <?php
                                         if(isset($_SESSION['isi_disposisi'])){
                                             $isi_disposisi = $_SESSION['isi_disposisi'];
@@ -166,7 +194,7 @@
                                             unset($_SESSION['isi_disposisi']);
                                         }
                                     ?>
-                                <label for="isi_disposisi">Isi Disposisi</label>
+                                
                             </div>
                             <div class="input-field col s6">
                                 <i class="material-icons prefix md-prefix">featured_play_list   </i>

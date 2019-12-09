@@ -139,7 +139,7 @@
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">perm_identity</i>
-                            <input id="pegawai" type="text" class="validate" name="diteruskan" required>
+                            <input id="pegawai" type="text" class="validate" name="diteruskan">
                                 <?php
                                     if(isset($_SESSION['diteruskan'])){
                                         $diteruskan = $_SESSION['diteruskan'];

@@ -10,7 +10,7 @@
 
             //validasi form kosong
             if($_REQUEST['no_agenda'] == "" || $_REQUEST['no_surat'] == "" || $_REQUEST['asal_surat'] == "" || $_REQUEST['isi'] == ""
-                || $_REQUEST['kode'] == "" || $_REQUEST['indeks'] == "" || $_REQUEST['tgl_surat'] == ""  || $_REQUEST['keterangan'] == ""){
+                ||  $_REQUEST['tgl_surat'] == "" ){
                 $_SESSION['errEmpty'] = 'ERROR! Semua form wajib diisi';
                 echo '<script language="javascript">window.history.back();</script>';
             } else {
@@ -228,7 +228,7 @@
 
                     <!-- Row in form START -->
                     <div class="row">
-                        <div class="input-field col s6">
+                        <div class="input-field col s2">
                             <input type="hidden" name="id_surat" value="<?php echo $id_surat ;?>">
                             <i class="material-icons prefix md-prefix">looks_one</i>
                             <input id="no_agenda" type="number" class="validate" value="<?php echo $no_agenda ;?>" name="no_agenda" required>
@@ -241,9 +241,21 @@
                                 ?>
                             <label for="no_agenda">Nomor Agenda</label>
                         </div>
+                        <div class="input-field col s4">
+                            <i class="material-icons prefix md-prefix">looks_two</i>
+                            <input id="no_surat" type="text" class="validate" name="no_surat" value="<?php echo $no_surat ;?>" required>
+                                <?php
+                                    if(isset($_SESSION['eno_surat'])){
+                                        $eno_surat = $_SESSION['eno_surat'];
+                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$eno_surat.'</div>';
+                                        unset($_SESSION['eno_surat']);
+                                    }
+                                ?>
+                            <label for="no_surat">Nomor Surat</label>
+                        </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">bookmark</i>
-                            <input id="kode" type="text" class="validate" name="kode" value="<?php echo $kode ;?>" required>
+                            <input id="kode" type="text" class="validate" name="kode" value="<?php echo $kode ;?>">
                                 <?php
                                     if(isset($_SESSION['ekode'])){
                                         $ekode = $_SESSION['ekode'];
@@ -267,7 +279,7 @@
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">storage</i>
-                            <input id="indeks" type="text" class="validate" name="indeks" value="<?php echo $indeks ;?>" required>
+                            <input id="indeks" type="text" class="validate" name="indeks" value="<?php echo $indeks ;?>">
                                 <?php
                                     if(isset($_SESSION['eindeks'])){
                                         $eindeks = $_SESSION['eindeks'];
@@ -276,18 +288,6 @@
                                     }
                                 ?>
                             <label for="indeks">Indeks Berkas</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <i class="material-icons prefix md-prefix">looks_two</i>
-                            <input id="no_surat" type="text" class="validate" name="no_surat" value="<?php echo $no_surat ;?>" required>
-                                <?php
-                                    if(isset($_SESSION['eno_surat'])){
-                                        $eno_surat = $_SESSION['eno_surat'];
-                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$eno_surat.'</div>';
-                                        unset($_SESSION['eno_surat']);
-                                    }
-                                ?>
-                            <label for="no_surat">Nomor Surat</label>
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">date_range</i>
@@ -315,7 +315,7 @@
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">featured_play_list</i>
-                            <input id="keterangan" type="text" class="validate" name="keterangan" value="<?php echo $keterangan ;?>" required>
+                            <input id="keterangan" type="text" class="validate" name="keterangan" value="<?php echo $keterangan ;?>">
                                 <?php
                                     if(isset($_SESSION['eketerangan'])){
                                         $eketerangan = $_SESSION['eketerangan'];

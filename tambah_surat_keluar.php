@@ -188,7 +188,7 @@
 
                     <!-- Row in form START -->
                     <div class="row">
-                        <div class="input-field col s6">
+                        <div class="input-field col s2">
                             <i class="material-icons prefix md-prefix">looks_one</i>
                             <?php
                             echo '<input id="no_agenda" type="number" class="validate" name="no_agenda" value="';
@@ -216,6 +216,23 @@
                             ?>
                             <label for="no_agenda">Nomor Agenda</label>
                         </div>
+                        <div class="input-field col s4">
+                            <i class="material-icons prefix md-prefix">looks_two</i>
+                            <input id="no_surat" type="text" class="validate" name="no_surat" required>
+                                <?php
+                                    if(isset($_SESSION['no_suratk'])){
+                                        $no_suratk = $_SESSION['no_suratk'];
+                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$no_suratk.'</div>';
+                                        unset($_SESSION['no_suratk']);
+                                    }
+                                    if(isset($_SESSION['errDup'])){
+                                        $errDup = $_SESSION['errDup'];
+                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$errDup.'</div>';
+                                        unset($_SESSION['errDup']);
+                                    }
+                                ?>
+                            <label for="no_surat">Nomor Surat</label>
+                        </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">bookmark</i>
                             <input id="kode" type="text" class="validate" name="kode" >
@@ -239,23 +256,6 @@
                                     }
                                 ?>
                             <label for="tujuan">Tujuan Surat</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <i class="material-icons prefix md-prefix">looks_two</i>
-                            <input id="no_surat" type="text" class="validate" name="no_surat" required>
-                                <?php
-                                    if(isset($_SESSION['no_suratk'])){
-                                        $no_suratk = $_SESSION['no_suratk'];
-                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$no_suratk.'</div>';
-                                        unset($_SESSION['no_suratk']);
-                                    }
-                                    if(isset($_SESSION['errDup'])){
-                                        $errDup = $_SESSION['errDup'];
-                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$errDup.'</div>';
-                                        unset($_SESSION['errDup']);
-                                    }
-                                ?>
-                            <label for="no_surat">Nomor Surat</label>
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">date_range</i>
