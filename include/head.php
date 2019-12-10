@@ -295,6 +295,7 @@
                 width: 600px!important;
             }
         }
+        
     </style>
     <!-- Global style END -->
 

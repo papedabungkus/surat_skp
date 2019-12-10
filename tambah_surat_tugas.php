@@ -84,7 +84,7 @@ $config = conn($host, $username, $password, $database);
                                             } else {
 
                                                     $query = mysqli_query($config, "INSERT INTO tbl_surat_keluar(no_agenda,tujuan,no_surat,isi,kode,tgl_surat,tgl_catat,file,keterangan,id_user)
-                                                        VALUES('$no_agenda','$penerima_tugas','$no_surat','$peruntukan','ST','$tgl_ttd',NOW(),'','','$id_user')");
+                                                        VALUES('$no_agenda','$petugas','$no_surat','$peruntukan','ST','$tgl_ttd',NOW(),'','Surat Tugas','$id_user')");
                                                     $query_surattugas = mysqli_query($config, "INSERT INTO tbl_surat_tugas(no_agenda,no_surat,pertimbangan,dasar,penerima_tugas,peruntukan,tgl_ttd,tempat_ttd,nama_ttd,id_user)
                                                     VALUES('$no_agenda','$no_surat','$pertimbangan','$dasar','$petugas','$peruntukan','$tgl_ttd','$tempat_ttd','1','$id_user')");
 

@@ -18,7 +18,18 @@
                 $id_surat = $_REQUEST['id_surat'];
                 $no_agenda = $_REQUEST['no_agenda'];
                 $no_surat = $_REQUEST['no_surat'];
-                $tujuan = $_REQUEST['tujuan'];
+
+                if($_REQUEST['keterangan']=="Surat Tugas")
+                {
+                    $penerima_tugas = array();
+                    foreach ($_REQUEST['tujuan'] as $petugas) {
+                        array_push($penerima_tugas, $petugas);
+                    }
+                    $tujuan = serialize($penerima_tugas);
+                } else {
+                    $tujuan = $_REQUEST['tujuan'];
+                }
+                
                 $isi = $_REQUEST['isi'];
                 $kode = substr($_REQUEST['kode'],0,30);
                 $nkode = trim($kode);
@@ -36,16 +47,6 @@
                         $_SESSION['no_suratk'] = 'Form No Surat hanya boleh mengandung karakter huruf, angka, spasi, titik(.), minus(-) dan garis miring(/)';
                         echo '<script language="javascript">window.history.back();</script>';
                     } else {
-
-                        if(!preg_match("/^[a-zA-Z0-9.,() \/ -]*$/", $tujuan)){
-                            $_SESSION['tujuan_surat'] = 'Form Tujuan Surat hanya boleh mengandung karakter huruf, angka, spasi, titik(.), koma(,), minus(-),kurung() dan garis miring(/)';
-                            echo '<script language="javascript">window.history.back();</script>';
-                        } else {
-
-                            if(!preg_match("/^[a-zA-Z0-9.,_()%&@\/\r\n -]*$/", $isi)){
-                                $_SESSION['isik'] = 'Form Isi Ringkas hanya boleh mengandung karakter huruf, angka, spasi, titik(.), koma(,), minus(-), garis miring(/), kurung(), underscore(_), dan(&) persen(%) dan at(@)';
-                                echo '<script language="javascript">window.history.back();</script>';
-                            } else {
 
                                 if(!preg_match("/^[a-zA-Z0-9., ]*$/", $nkode)){
                                     $_SESSION['kodek'] = 'Form Kode Klasifikasi hanya boleh mengandung karakter huruf, angka, spasi, titik(.) dan koma(,)';
@@ -147,8 +148,8 @@
                                     }
                                 }
                             }
-                        }
-                    }
+                        
+                    
                 }
             }
         } else {
@@ -219,7 +220,7 @@
                             <div class="input-field col s2">
                                 <input type="hidden" name="id_surat" value="<?php echo $id_surat ;?>">
                                 <i class="material-icons prefix md-prefix">looks_one</i>
-                                <input id="no_agenda" type="number" class="validate" name="no_agenda" value="<?php echo $no_agenda ;?>" required>
+                                <input id="no_agenda" type="number" class="validate" name="no_agenda" value="<?php echo $no_agenda ;?>" required <?php if($keterangan=="Surat Tugas"){ echo "readonly";} ?>>
                                     <?php
                                         if(isset($_SESSION['no_agendak'])){
                                             $no_agendak = $_SESSION['no_agendak'];
@@ -231,7 +232,7 @@
                             </div>
                             <div class="input-field col s4">
                                 <i class="material-icons prefix md-prefix">looks_two</i>
-                                <input id="no_surat" type="text" class="validate" name="no_surat" value="<?php echo $no_surat ;?>" required>
+                                <input id="no_surat" type="text" class="validate" name="no_surat" value="<?php echo $no_surat ;?>" required <?php if($keterangan=="Surat Tugas"){ echo "readonly";} ?>>
                                     <?php
                                         if(isset($_SESSION['no_suratk'])){
                                             $no_suratk = $_SESSION['no_suratk'];
@@ -243,7 +244,7 @@
                             </div>
                             <div class="input-field col s6">
                                 <i class="material-icons prefix md-prefix">bookmark</i>
-                                <input id="kode" type="text" class="validate" name="kode" value="<?php echo $kode ;?>">
+                                <input id="kode" type="text" class="validate" name="kode" value="<?php echo $kode ;?>" <?php if($keterangan=="Surat Tugas"){ echo "readonly";} ?>>
                                     <?php
                                         if(isset($_SESSION['kodek'])){
                                             $kodek = $_SESSION['kodek'];
@@ -253,18 +254,38 @@
                                     ?>
                                 <label for="kode">Kode Klasifikasi</label>
                             </div>
+                            <?php if($keterangan=="Surat Tugas"){ ?>
+                            <div class="input-field col s6">
+                            <style>
+                            select[readonly].select2+.select2-container {
+                                pointer-events: none;
+                                touch-action: none;
+                            }
+                            </style>
+                                <i class="material-icons prefix md-prefix">place</i><label for="tujuan">Tujuan Surat</label><br />
+                                <div class="input-field col s11 right">   
+                                    <?php $queryx = mysqli_query($config, "SELECT * FROM tbl_pegawai");?>
+                                    <select class="browser-default js-example-basic-multiple select2" name="tujuan[]" multiple="multiple" readonly>
+                                            <?php 
+                                                while($rowx = mysqli_fetch_array($queryx)){    
+                                            ?>
+                                            <option value="<?php echo $rowx['id'] ;?>" 
+                                            <?php $arraypeg = unserialize($tujuan);
+                                            for($i=0;$i<count($arraypeg);$i++)
+                                                {
+                                                    if ($rowx['id']==$arraypeg[$i]){ echo "selected"; } else { echo "";}
+                                                } ?>><?php echo $rowx['nama']; ?></option>
+                                        <?php  }?>
+                                    </select>
+                                </div>
+                            </div>
+                            <?php } else { ?>
                             <div class="input-field col s6">
                                 <i class="material-icons prefix md-prefix">place</i>
-                                <input id="tujuan" type="text" class="validate" name="tujuan" value="<?php echo $tujuan ;?>" required>
-                                    <?php
-                                        if(isset($_SESSION['tujuan_surat'])){
-                                            $tujuan_surat = $_SESSION['tujuan_surat'];
-                                            echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$tujuan_surat.'</div>';
-                                            unset($_SESSION['tujuan_surat']);
-                                        }
-                                    ?>
+                                <input id="tujuan" type="text" class="validate" name="tujuan" value="<?php echo $tujuan ;?>" required <?php if($keterangan=="Surat Tugas"){ echo "readonly";} ?>>
                                 <label for="tujuan">Tujuan Surat</label>
                             </div>
+                            <?php } ?>
                             <div class="input-field col s6">
                                 <i class="material-icons prefix md-prefix">date_range</i>
                                 <input id="tgl_surat" type="text" name="tgl_surat" class="datepicker" value="<?php echo $tgl_surat ;?>" required>
@@ -279,7 +300,7 @@
                             </div>
                             <div class="input-field col s6">
                                 <i class="material-icons prefix md-prefix">featured_play_list</i>
-                                <input id="keterangan" type="text" class="validate" name="keterangan" value="<?php echo $keterangan ;?>">
+                                <input id="keterangan" type="text" class="validate" name="keterangan" value="<?php echo $keterangan ;?>" <?php if($keterangan=="Surat Tugas"){ echo "readonly";} ?>>
                                     <?php
                                         if(isset($_SESSION['keterangank'])){
                                             $keterangank = $_SESSION['keterangank'];
@@ -291,7 +312,7 @@
                             </div>
                             <div class="input-field col s6">
                                 <i class="material-icons prefix md-prefix">description</i>
-                                <textarea id="isi" class="materialize-textarea validate" name="isi" required><?php echo $isi ;?></textarea>
+                                <textarea id="isi" class="materialize-textarea validate" name="isi" required <?php if($keterangan=="Surat Tugas"){ echo "readonly";} ?>><?php echo $isi ;?></textarea>
                                     <?php
                                         if(isset($_SESSION['isik'])){
                                             $isik = $_SESSION['isik'];
@@ -299,7 +320,7 @@
                                             unset($_SESSION['isik']);
                                         }
                                     ?>
-                                <label for="isi">Isi Ringkas</label>
+                                <label for="isi">Perihal/Isi Ringkasan Surat</label>
                             </div>
                             <div class="input-field col s6">
                                 <div class="file-field input-field">

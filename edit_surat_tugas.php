@@ -76,9 +76,9 @@
                                                 //jika form file kosong akan mengeksekusi script dibawah ini
                                                 $id_surat = $_REQUEST['id_surat'];
                                          
-                                                $query = mysqli_query($config, "UPDATE tbl_surat_tugas SET no_agenda='$no_agenda',no_surat='$no_surat',pertimbangan='$pertimbangan',dasar='$dasar',penerima_tugas='$petugas',peruntukan='$peruntukan',tgl_ttd='$tgl_ttd',tempat_ttd='$tempat_ttd',nama_ttd='$nama_ttd',id_user='$id_user' WHERE id_surat='$id_surat'");
-
-                                                if($query == true){
+                                                $query = mysqli_query($config, "UPDATE tbl_surat_tugas SET no_surat='$no_surat',pertimbangan='$pertimbangan',dasar='$dasar',penerima_tugas='$petugas',peruntukan='$peruntukan',tgl_ttd='$tgl_ttd',tempat_ttd='$tempat_ttd',nama_ttd='$nama_ttd',id_user='$id_user' WHERE id_surat='$id_surat'");
+                                                $querysuratkeluar = mysqli_query($config, "UPDATE tbl_surat_keluar SET no_surat='$no_surat', tujuan='$petugas', isi='$peruntukan', tgl_surat='$tgl_ttd' WHERE keterangan='Surat Tugas' AND no_agenda='$no_agenda'");
+                                                if($query == true && $querysuratkeluar == true){
                                                     $_SESSION['succEdit'] = 'SUKSES! Data berhasil diupdate';
                                                     header("Location: ./admin.php?page=bst");
                                                     die();

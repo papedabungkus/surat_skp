@@ -148,6 +148,7 @@
                                 if(mysqli_num_rows($query) > 0){
                                     $no = 1;
                                     while($row = mysqli_fetch_array($query)){
+                                        
                                       echo '
                                       <tr>
                                         <td>'.$row['no_agenda'].'<br/><hr/>'.$row['kode'].'</td>
@@ -158,7 +159,21 @@
                                         } else {
                                             echo ' <em>Tidak ada file yang diupload</em>';
                                         } echo '</td>
-                                        <td>'.$row['tujuan'].'</td><td>'.$row['no_surat'].'<br/><hr/>'.indoDate($row['tgl_surat']).'</td>
+                                        <td>';
+                                        if($row['keterangan']=="Surat Tugas") {
+                                            $idpeg = unserialize($row['tujuan']);
+                                            echo '<ol type="1">';
+                                            for($i=0;$i<count($idpeg);$i++)
+                                            {
+                                                $querypeg = mysqli_query($config, "SELECT * FROM tbl_pegawai WHERE id='$idpeg[$i]'");
+                                                $rowpeg = mysqli_fetch_array($querypeg);
+                                                echo '<li>'.$rowpeg['nama'].'</li>';
+                                            }
+                                            echo '</ol>';
+                                        } else {
+                                            echo $row['tujuan'];
+                                        }
+                                        echo '</td><td>'.$row['no_surat'].'<br/><hr/>'.indoDate($row['tgl_surat']).'</td>
                                         <td>';
 
                                         if($_SESSION['id_user'] != $row['id_user'] AND $_SESSION['id_user'] != 1){
@@ -259,7 +274,21 @@
                                     } else {
                                         echo ' <em>Tidak ada file yang diupload</em>';
                                     } echo '</td>
-                                    <td>'.$row['tujuan'].'</td><td>'.$row['no_surat'].'<br/><hr/>'.indoDate($row['tgl_surat']).'</td>
+                                    <td>';
+                                    if($row['keterangan']=="Surat Tugas") {
+                                        $idpeg = unserialize($row['tujuan']);
+                                        echo '<ol type="1">';
+                                        for($i=0;$i<count($idpeg);$i++)
+                                        {
+                                            $querypeg = mysqli_query($config, "SELECT * FROM tbl_pegawai WHERE id='$idpeg[$i]'");
+                                            $rowpeg = mysqli_fetch_array($querypeg);
+                                            echo '<li>'.$rowpeg['nama'].'</li>';
+                                        }
+                                        echo '</ol>';
+                                    } else {
+                                        echo $row['tujuan'];
+                                    }
+                                    echo '</td><td>'.$row['no_surat'].'<br/><hr/>'.indoDate($row['tgl_surat']).'</td>
                                     <td>';
 
                                     if($_SESSION['id_user'] != $row['id_user'] AND $_SESSION['id_user'] != 1){
