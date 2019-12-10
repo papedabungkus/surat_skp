@@ -144,7 +144,7 @@
                                 <tbody>';
 
                                 //script untuk mencari data
-                                $query = mysqli_query($config, "SELECT * FROM tbl_surat_keluar WHERE isi LIKE '%$cari%' ORDER by id_surat DESC LIMIT $curr, 15");
+                                $query = mysqli_query($config, "SELECT * FROM tbl_surat_keluar WHERE no_surat LIKE '%$cari%' OR isi LIKE '%$cari%' OR keterangan LIKE '%$cari%' ORDER by id_surat DESC LIMIT $curr, 15");
                                 if(mysqli_num_rows($query) > 0){
                                     $no = 1;
                                     while($row = mysqli_fetch_array($query)){

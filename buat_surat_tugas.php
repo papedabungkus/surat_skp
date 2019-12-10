@@ -136,39 +136,50 @@
                                     <tr>
                                         <th width="7%">No. Agenda</th>
                                         <th width="22%">No. Surat</th>
-                                        <th width="31%">Isi Ringkas</th>
+                                        <th width="27%">Isi Ringkas</th>
                                         <th width="24%">Yang Ditugaskan</th>
-                                        <th width="19%">Tempat / Tgl. Dikeluarkan</th>
+                                        <th width="19%">Tempat / Tgl Dikeluarkan</th>
                                         <th width="16%">Tindakan <span class="right tooltipped" data-position="left" data-tooltip="Atur jumlah data yang ditampilkan"><a class="modal-trigger" href="#modal"><i class="material-icons" style="color: #333;">settings</i></a></span></th>
                                     </tr>
                                 </thead>
                                 <tbody>';
 
                                 //script untuk mencari data
-                                $query = mysqli_query($config, "SELECT * FROM tbl_surat_tugas tst JOIN tbl_pegawai tp ON tp.id=tst.penerima_tugas WHERE peruntukan LIKE '%$cari%' OR nama LIKE '%$cari%' ORDER by id_surat DESC LIMIT $curr, 15");
+                                $query = mysqli_query($config, "SELECT * FROM tbl_surat_tugas WHERE peruntukan LIKE '%$cari%' OR no_surat LIKE '%$cari%' ORDER by id_surat DESC LIMIT $curr, 15");
                                 if(mysqli_num_rows($query) > 0){
                                     $no = 1;
                                     
                                     while($row = mysqli_fetch_array($query)){
+                                        $idpeg = unserialize($row['penerima_tugas']);                                   
+                                
                                       echo '
                                       <tr>
                                         <td>'.$row['no_agenda'].'</td>
                                         <td>'.$row['no_surat'].'</td>
                                         <td>'.substr($row['peruntukan'],0,200).'</td>
-                                        <td>'.serialize_ke_string($row['penerima_tugas']).'</td>
+                                        <td><ol type="1">';
+                                        for($i=0;$i<count($idpeg);$i++)
+                                        {
+                                            $querypeg = mysqli_query($config, "SELECT * FROM tbl_pegawai WHERE id='$idpeg[$i]'");
+                                            $rowpeg = mysqli_fetch_array($querypeg);
+                                            echo '<li>'.$rowpeg['nama'].'</li>';
+                                        }
+                                      echo '</ol></td>
                                         <td>'.$row['tempat_ttd'].'<br/><hr/>'.indoDate($row['tgl_ttd']).'</td>
                                         <td>';
-
+    
                                         if($_SESSION['id_user'] != $row['id_user'] AND $_SESSION['id_user'] != 1){
                                             echo '<button class="btn small blue-grey waves-effect waves-light"><i class="material-icons">error</i> No Action</button>';
                                         } else {
-                                        echo '<a class="btn small blue waves-effect waves-light" href="?page=bst&act=edit&id_surat='.$row['id_surat'].'">
+                                          echo '<a class="btn small blue darken-3 waves-effect waves-light" href="?page=bst&act=edit&id_surat='.$row['id_surat'].'">
                                                     <i class="material-icons">edit</i> EDIT</a>
+                                                <a class="btn small yellow darken-3 waves-effect waves-light" href="cetak_surat_tugas.php?id_surat='.$row['id_surat'].'" target="_blank">
+                                                    <i class="material-icons">print</i> PRINT</a>
                                                 <a class="btn small deep-orange waves-effect waves-light" href="?page=bst&act=del&id_surat='.$row['id_surat'].'">
                                                     <i class="material-icons">delete</i> DEL</a>';
                                         } echo '
                                         </td>
-                                    </tr>';
+                                        </tr>';
                                     }
                                 } else {
                                     echo '<tr><td colspan="5"><center><p class="add">Tidak ada data yang ditemukan</p></center></td></tr>';
