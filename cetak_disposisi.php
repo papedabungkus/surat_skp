@@ -6,8 +6,7 @@
         header("Location: ./");
         die(); 
     } else { */
-
-        echo '
+        echo'
         <style type="text/css">
             table {
                 background: #fff;
@@ -105,6 +104,9 @@
                     font-size: 12px;
                     color: #212121;
                 }
+                table.child {
+                    border: 0px !important;
+                }
                 tr, td {
                     border: table-cell;
                     border: 1px  solid #444;
@@ -113,6 +115,12 @@
                 }
                 tr,td {
                     vertical-align: top!important;
+                }
+                tr.child, td.child {
+                    border: table-cell;
+                    border: 0px  !important;
+                    padding: 2px !important;
+                    background:#00FF00	!important;
                 }
                 #lbr {
                     font-size: 20px;
@@ -171,28 +179,9 @@
                     border-bottom: 2px solid #616161;
                     margin: -1rem 0 1rem;
                 }
-                ol.lingkar {
-                    list-style: none;
-                    counter-reset: item;
-                  }
-                  li.select {
-                    counter-increment: item;
-                    margin-bottom: 5px;
-                  }
-                  li.select:before {
-                    margin-right: 10px;
-                    content: counter(item);
-                    background: black;
-                    border-radius: 100%;
-                    color: white;
-                    width: 1.2em;
-                    text-align: center;
-                    display: inline-block;
-                  }
             }
             
         </style>
-
         <body>
  
         <!-- Container START -->
@@ -317,7 +306,13 @@
                                     echo '<table class="child">';
                                     $nomor=1;
                                     while($kpd = mysqli_fetch_array($x)){
-                                            echo '<tr class="child"><td style="text-align: right !important;" width="2" class="child">'.$nomor++.'</td><td class="child">'.$kpd['kepada'].'</td></tr>';
+                                        if($row['tujuan']==$kpd['kepada'])
+                                        {
+                                            $selectedlist = 'background:#00FF00	!important; font-weight: bold !important;';
+                                        } else {
+                                            $selectedlist = '';
+                                        }
+                                            echo '<tr class="child"><td style="text-align: right !important; '.$selectedlist.'" width="2" class="child">'.$nomor++.'</td><td style="'.$selectedlist.'" class="child">'.$kpd['kepada'].'</td></tr>';
                                     }
                                     echo '</table>';
                                 echo '
