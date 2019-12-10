@@ -308,7 +308,7 @@
                                     while($kpd = mysqli_fetch_array($x)){
                                         if($row['tujuan']==$kpd['kepada'])
                                         {
-                                            $selectedlist = 'background:#00FF00	!important; font-weight: bold !important;';
+                                            $selectedlist = 'font-weight: bold !important; text-decoration: underline;';
                                         } else {
                                             $selectedlist = '';
                                         }
