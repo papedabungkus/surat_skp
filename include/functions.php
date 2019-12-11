@@ -1,5 +1,5 @@
 <?php
-date_default_timezone_set("Asia/Jakarta");
+date_default_timezone_set("Asia/Jayapura");
 /** fungsi serialize_ke_string */
 function serialize_ke_string($serial)
 {

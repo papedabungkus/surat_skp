@@ -160,7 +160,7 @@
                                             echo ' <em>Tidak ada file yang diupload</em>';
                                         } echo '</td>
                                         <td>';
-                                        if($row['keterangan']=="Surat Tugas") {
+                                        if($row['keterangan']=="Surat Tugas" || $row['keterangan']=="Surat Perintah Tugas") {
                                             $idpeg = unserialize($row['tujuan']);
                                             echo '<ol type="1">';
                                             for($i=0;$i<count($idpeg);$i++)
@@ -275,7 +275,7 @@
                                         echo ' <em>Tidak ada file yang diupload</em>';
                                     } echo '</td>
                                     <td>';
-                                    if($row['keterangan']=="Surat Tugas") {
+                                    if($row['keterangan']=="Surat Tugas" || $row['keterangan']=="Surat Perintah Tugas") {
                                         $idpeg = unserialize($row['tujuan']);
                                         echo '<ol type="1">';
                                         for($i=0;$i<count($idpeg);$i++)

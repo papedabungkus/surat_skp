@@ -220,7 +220,7 @@
                             <div class="input-field col s2">
                                 <input type="hidden" name="id_surat" value="<?php echo $id_surat ;?>">
                                 <i class="material-icons prefix md-prefix">looks_one</i>
-                                <input id="no_agenda" type="number" class="validate" name="no_agenda" value="<?php echo $no_agenda ;?>" required <?php if($keterangan=="Surat Tugas"){ echo "readonly";} ?>>
+                                <input id="no_agenda" type="number" class="validate" name="no_agenda" value="<?php echo $no_agenda ;?>" required <?php if($keterangan=="Surat Tugas" || $keterangan=="Surat Perintah Tugas"){ echo "readonly";} ?>>
                                     <?php
                                         if(isset($_SESSION['no_agendak'])){
                                             $no_agendak = $_SESSION['no_agendak'];
@@ -232,7 +232,7 @@
                             </div>
                             <div class="input-field col s4">
                                 <i class="material-icons prefix md-prefix">looks_two</i>
-                                <input id="no_surat" type="text" class="validate" name="no_surat" value="<?php echo $no_surat ;?>" required <?php if($keterangan=="Surat Tugas"){ echo "readonly";} ?>>
+                                <input id="no_surat" type="text" class="validate" name="no_surat" value="<?php echo $no_surat ;?>" required <?php if($keterangan=="Surat Tugas" || $keterangan=="Surat Perintah Tugas"){ echo "readonly";} ?>>
                                     <?php
                                         if(isset($_SESSION['no_suratk'])){
                                             $no_suratk = $_SESSION['no_suratk'];
@@ -244,7 +244,7 @@
                             </div>
                             <div class="input-field col s6">
                                 <i class="material-icons prefix md-prefix">bookmark</i>
-                                <input id="kode" type="text" class="validate" name="kode" value="<?php echo $kode ;?>" <?php if($keterangan=="Surat Tugas"){ echo "readonly";} ?>>
+                                <input id="kode" type="text" class="validate" name="kode" value="<?php echo $kode ;?>" <?php if($keterangan=="Surat Tugas" || $keterangan=="Surat Perintah Tugas"){ echo "readonly";} ?>>
                                     <?php
                                         if(isset($_SESSION['kodek'])){
                                             $kodek = $_SESSION['kodek'];
@@ -282,7 +282,7 @@
                             <?php } else { ?>
                             <div class="input-field col s6">
                                 <i class="material-icons prefix md-prefix">place</i>
-                                <input id="tujuan" type="text" class="validate" name="tujuan" value="<?php echo $tujuan ;?>" required <?php if($keterangan=="Surat Tugas"){ echo "readonly";} ?>>
+                                <input id="tujuan" type="text" class="validate" name="tujuan" value="<?php echo $tujuan ;?>" required <?php if($keterangan=="Surat Tugas" || $keterangan=="Surat Perintah Tugas"){ echo "readonly";} ?>>
                                 <label for="tujuan">Tujuan Surat</label>
                             </div>
                             <?php } ?>
@@ -300,7 +300,7 @@
                             </div>
                             <div class="input-field col s6">
                                 <i class="material-icons prefix md-prefix">featured_play_list</i>
-                                <input id="keterangan" type="text" class="validate" name="keterangan" value="<?php echo $keterangan ;?>" <?php if($keterangan=="Surat Tugas"){ echo "readonly";} ?>>
+                                <input id="keterangan" type="text" class="validate" name="keterangan" value="<?php echo $keterangan ;?>" <?php if($keterangan=="Surat Tugas" || $keterangan=="Surat Perintah Tugas"){ echo "readonly";} ?>>
                                     <?php
                                         if(isset($_SESSION['keterangank'])){
                                             $keterangank = $_SESSION['keterangank'];
@@ -312,7 +312,7 @@
                             </div>
                             <div class="input-field col s6">
                                 <i class="material-icons prefix md-prefix">description</i>
-                                <textarea id="isi" class="materialize-textarea validate" name="isi" required <?php if($keterangan=="Surat Tugas"){ echo "readonly";} ?>><?php echo $isi ;?></textarea>
+                                <textarea id="isi" class="materialize-textarea validate" name="isi" required <?php if($keterangan=="Surat Tugas" || $keterangan=="Surat Perintah Tugas"){ echo "readonly";} ?>><?php echo $isi ;?></textarea>
                                     <?php
                                         if(isset($_SESSION['isik'])){
                                             $isik = $_SESSION['isik'];
