@@ -182,7 +182,7 @@
             }
             
         </style>
-        <body>
+        <body onload="window.print()">
  
         <!-- Container START -->
             <div id="colres">';
