@@ -19,7 +19,7 @@
                 $no_agenda = $_REQUEST['no_agenda'];
                 $no_surat = $_REQUEST['no_surat'];
 
-                if($_REQUEST['keterangan']=="Surat Tugas")
+                if($_REQUEST['keterangan']=="Surat Tugas" || $_REQUEST['keterangan']=="Surat Perintah Tugas")
                 {
                     $penerima_tugas = array();
                     foreach ($_REQUEST['tujuan'] as $petugas) {

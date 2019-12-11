@@ -29,6 +29,7 @@ $config = conn($host, $username, $password, $database);
     	if(mysqli_num_rows($query) > 0){
             $no = 1;
             while($row = mysqli_fetch_array($query)){
+            $idpeg = unserialize($row['penerima_tugas']);
 
             if($_SESSION['id_user'] != $row['id_user'] AND $_SESSION['id_user'] != 1){
                 echo '<script language="javascript">
@@ -70,10 +71,16 @@ $config = conn($host, $username, $password, $database);
         				                    <td width="86%">'.$row['dasar'].'</td>
         				                </tr>
         				                <tr>
-        				                    <td width="13%">Penerima Tugas</td>
-        				                    <td width="1%">:</td>
-        				                    <td width="86%">'.$row['penerima_tugas'].'</td>
-        				                </tr>
+                                            <td width="13%" style="vertical-align:text-top">Penerima Tugas</td>
+                                            <td width="1%" style="vertical-align:text-top">:</td>
+                                            <td width="86%" style="vertical-align:text-top"><ol type="1">';
+                                            for($i=0;$i<count($idpeg);$i++)
+                                            {
+                                                $querypeg = mysqli_query($config, "SELECT * FROM tbl_pegawai WHERE id='$idpeg[$i]'");
+                                                $rowpeg = mysqli_fetch_array($querypeg);
+                                                echo '<li>'.$rowpeg['nama'].'</li>';
+                                            }
+                                        echo'</ol></td>
         				                <tr>
         				                    <td width="13%">Untuk</td>
         				                    <td width="1%">:</td>
