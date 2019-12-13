@@ -6,13 +6,6 @@
         die();
     } else {
 
-        if($_SESSION['admin'] != 1 AND $_SESSION['admin'] != 3){
-            echo '<script language="javascript">
-                    window.alert("ERROR! Anda tidak memiliki hak akses untuk membuka halaman ini");
-                    window.location.href="./logout.php";
-                  </script>';
-        } else {
-
         if(isset($_REQUEST['act'])){
             $act = $_REQUEST['act'];
             switch ($act) {
@@ -167,19 +160,17 @@
                                       echo '</ol></td>
                                         <td>'.$row['tempat_ttd'].'<br/><hr/>'.indoDate($row['tgl_ttd']).'</td>
                                         <td>';
-    
-                                        if($_SESSION['id_user'] != $row['id_user'] AND $_SESSION['id_user'] != 1){
-                                            echo '<button class="btn small blue-grey waves-effect waves-light"><i class="material-icons">error</i> No Action</button>';
-                                        } else {
-                                          echo '<a class="btn small blue darken-3 waves-effect waves-light" href="?page=bspt&act=edit&id_surat='.$row['id_surat'].'">
-                                                    <i class="material-icons">edit</i> EDIT</a>
-                                                <a class="btn small yellow darken-3 waves-effect waves-light" href="cetak_surat_perintah_tugas.php?id_surat='.$row['id_surat'].'" target="_blank">
-                                                    <i class="material-icons">print</i> PRINT</a>
-                                                <a class="btn small deep-orange waves-effect waves-light" href="?page=bspt&act=del&id_surat='.$row['id_surat'].'">
-                                                    <i class="material-icons">delete</i> DEL</a>';
-                                        } echo '
-                                        </td>
-                                        </tr>';
+                                        if($_SESSION['id_user'] == 1 || $_SESSION['id_user'] == 2){
+                                            echo '<a class="btn small blue darken-3 waves-effect waves-light" href="?page=bspt&act=edit&id_surat='.$row['id_surat'].'">
+                                                        <i class="material-icons">edit</i> EDIT</a>';
+                                            }
+                                            echo '<a class="btn small yellow darken-3 waves-effect waves-light" href="cetak_surat_perintah_tugas.php?id_surat='.$row['id_surat'].'" target="_blank">
+                                                        <i class="material-icons">print</i> PRINT</a>';
+                                            if($_SESSION['id_user'] == 1){            
+                                            echo '<a class="btn small deep-orange waves-effect waves-light" href="?page=bspt&act=del&id_surat='.$row['id_surat'].'">
+                                                        <i class="material-icons">delete</i> DEL</a>';
+                                            }
+                                        echo '</td></tr>';
                                     }
                                 } else {
                                     echo '<tr><td colspan="5"><center><p class="add">Tidak ada data yang ditemukan</p></center></td></tr>';
@@ -274,19 +265,17 @@
                                   echo '</ol></td>
                                     <td>'.$row['tempat_ttd'].'<br/><hr/>'.indoDate($row['tgl_ttd']).'</td>
                                     <td>';
-
-                                    if($_SESSION['id_user'] != $row['id_user'] AND $_SESSION['id_user'] != 1){
-                                        echo '<button class="btn small blue-grey waves-effect waves-light"><i class="material-icons">error</i> No Action</button>';
-                                    } else {
-                                      echo '<a class="btn small blue darken-3 waves-effect waves-light" href="?page=bspt&act=edit&id_surat='.$row['id_surat'].'">
-                                                <i class="material-icons">edit</i> EDIT</a>
-                                            <a class="btn small yellow darken-3 waves-effect waves-light" href="cetak_surat_perintah_tugas.php?id_surat='.$row['id_surat'].'" target="_blank">
-                                                <i class="material-icons">print</i> PRINT</a>
-                                            <a class="btn small deep-orange waves-effect waves-light" href="?page=bspt&act=del&id_surat='.$row['id_surat'].'">
+                                    if($_SESSION['id_user'] == 1 || $_SESSION['id_user'] == 2){
+                                    echo '<a class="btn small blue darken-3 waves-effect waves-light" href="?page=bspt&act=edit&id_surat='.$row['id_surat'].'">
+                                                <i class="material-icons">edit</i> EDIT</a>';
+                                    }
+                                    echo '<a class="btn small yellow darken-3 waves-effect waves-light" href="cetak_surat_perintah_tugas.php?id_surat='.$row['id_surat'].'" target="_blank">
+                                                <i class="material-icons">print</i> PRINT</a>';
+                                    if($_SESSION['id_user'] == 1){            
+                                    echo '<a class="btn small deep-orange waves-effect waves-light" href="?page=bspt&act=del&id_surat='.$row['id_surat'].'">
                                                 <i class="material-icons">delete</i> DEL</a>';
-                                    } echo '
-                                    </td>
-                                    </tr>';
+                                    }
+                                    echo '</td></tr>';
                                 }
                             } else {
                                 echo '<tr><td colspan="5"><center><p class="add">Tidak ada data untuk ditampilkan. <u><a href="?page=bspt&act=add">Tambah data baru</a></u> </p></center></td></tr>';
@@ -340,6 +329,6 @@
                 }
             }
         }
-    }
+    
 }
 ?>

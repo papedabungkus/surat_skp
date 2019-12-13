@@ -121,11 +121,11 @@
                                     <td>'.$no++.'</td>';
 
                                     if($row['admin'] == 1){
-                                        $row['admin'] = 'Super Admin';
-                                    } elseif($row['admin'] == 2){
                                         $row['admin'] = 'Administrator';
+                                    } elseif($row['admin'] == 2){
+                                        $row['admin'] = 'Operator';
                                     } else {
-                                        $row['admin'] = 'User Biasa';
+                                        $row['admin'] = 'Pengguna';
                                     } echo '<td>'.$row['username'].'</td>
                                             <td>'.$row['nama'].'<br/>'.$row['nip'].'</td>
                                             <td>'.$row['admin'].'</td>

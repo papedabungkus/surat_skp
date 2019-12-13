@@ -6,12 +6,6 @@
         die();
     } else {
 
-        if($_SESSION['admin'] != 1 AND $_SESSION['admin'] != 3){
-            echo '<script language="javascript">
-                    window.alert("ERROR! Anda tidak memiliki hak akses untuk membuka halaman ini");
-                    window.location.href="./logout.php";
-                  </script>';
-        } else {
 
             if(isset($_REQUEST['act'])){
                 $act = $_REQUEST['act'];
@@ -167,24 +161,21 @@
                                     <td>'.$row['asal_surat'].'</td>
                                     <td>'.$row['no_surat'].'<br/><hr/>'.indoDate($row['tgl_surat']).'</td>
                                     <td>';
-
-                                    if($_SESSION['id_user'] != $row['id_user'] AND $_SESSION['id_user'] != 1){
-                                        echo '<a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="?page=tsm&act=disp&id_surat='.$row['id_surat'].'">
+                                    if($row['file']!=""){
+                                      echo '<a class="btn small yellow darken-3 waves-effect waves-light" target="_BLANK" href="upload/surat_masuk/'.$row['file'].'">
+                                                <i class="material-icons">cloud_download</i> UNDUH</a>';
+                                    }
+                                    if($_SESSION['id_user'] == 1 || $_SESSION['id_user'] == 2){
+                                      echo '<a class="btn small blue waves-effect waves-light" href="?page=tsm&act=edit&id_surat='.$row['id_surat'].'">
+                                                <i class="material-icons">edit</i> EDIT</a>';
+                                    }
+                                      echo '<a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="?page=tsm&act=disp&id_surat='.$row['id_surat'].'">
                                                 <i class="material-icons">description</i> DISP</a>';
-                                    } else {
-                                        if($row['file']!=""){
-                                            echo '<a class="btn small yellow darken-3 waves-effect waves-light" target="_BLANK" href="upload/surat_masuk/'.$row['file'].'">
-                                                <i class="material-icons">cloud_download</i> DOWNLOAD</a>';
-                                        }
-                                            echo '<a class="btn small blue waves-effect waves-light" href="?page=tsm&act=edit&id_surat='.$row['id_surat'].'">
-                                                <i class="material-icons">edit</i> EDIT</a>
-                                            <a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="?page=tsm&act=disp&id_surat='.$row['id_surat'].'">
-                                                <i class="material-icons">description</i> DISP</a>
-                                            <a class="btn small deep-orange waves-effect waves-light" href="?page=tsm&act=del&id_surat='.$row['id_surat'].'">
+                                    if($_SESSION['id_user'] == 1){
+                                    echo '<a class="btn small deep-orange waves-effect waves-light" href="?page=tsm&act=del&id_surat='.$row['id_surat'].'">
                                                 <i class="material-icons">delete</i> DEL</a>';
-                                    } echo '
-                                        </td>
-                                    </tr>';
+                                    }
+                                    echo '</td></tr>';
                                 }
                             } else {
                                 echo '<tr><td colspan="5"><center><p class="add">Tidak ada data yang ditemukan</p></center></td></tr>';
@@ -273,22 +264,21 @@
                                         <td>'.$row['asal_surat'].'</td>
                                         <td>'.$row['no_surat'].'<br/><hr/>'.indoDate($row['tgl_surat']).'</td>
                                         <td>'; 
-
-                                        if($_SESSION['id_user'] != $row['id_user'] AND $_SESSION['id_user'] != 1){
-                                            echo '<a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="?page=tsm&act=disp&id_surat='.$row['id_surat'].'">
-                                                <i class="material-icons">description</i> DISP</a>';
-                                        } else {
+                                        if($row['file']!=""){
                                           echo '<a class="btn small yellow darken-3 waves-effect waves-light" target="_BLANK" href="upload/surat_masuk/'.$row['file'].'">
-                                                    <i class="material-icons">cloud_download</i> DOWNLOAD</a>
-                                                <a class="btn small blue waves-effect waves-light" href="?page=tsm&act=edit&id_surat='.$row['id_surat'].'">
-                                                    <i class="material-icons">edit</i> EDIT</a>
-                                                <a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="?page=tsm&act=disp&id_surat='.$row['id_surat'].'">
-                                                    <i class="material-icons">description</i> DISP</a>
-                                                <a class="btn small deep-orange waves-effect waves-light" href="?page=tsm&act=del&id_surat='.$row['id_surat'].'">
+                                                    <i class="material-icons">cloud_download</i> UNDUH</a>';
+                                        }
+                                        if($_SESSION['id_user'] == 1 || $_SESSION['id_user'] == 2){
+                                          echo '<a class="btn small blue waves-effect waves-light" href="?page=tsm&act=edit&id_surat='.$row['id_surat'].'">
+                                                    <i class="material-icons">edit</i> EDIT</a>';
+                                        }
+                                          echo '<a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="?page=tsm&act=disp&id_surat='.$row['id_surat'].'">
+                                                    <i class="material-icons">description</i> DISP</a>';
+                                        if($_SESSION['id_user'] == 1){
+                                        echo '<a class="btn small deep-orange waves-effect waves-light" href="?page=tsm&act=del&id_surat='.$row['id_surat'].'">
                                                     <i class="material-icons">delete</i> DEL</a>';
-                                        } echo '
-                                        </td>
-                                    </tr>';
+                                        }
+                                        echo '</td></tr>';
                                 }
                             } else {
                                 echo '<tr><td colspan="5"><center><p class="add">Tidak ada data untuk ditampilkan. <u><a href="?page=tsm&act=add">Tambah data baru</a></u></p></center></td></tr>';
@@ -341,6 +331,6 @@
                     }
                 }
             }
-        }
+        
     }
 ?>

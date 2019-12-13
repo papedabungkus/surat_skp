@@ -206,6 +206,30 @@ $config = conn($host, $username, $password, $database);
                                 ?>
                             <label for="no_surat">Nomor Surat</label>
                         </div>
+                        <div class="input-field col s3">
+                            <i class="material-icons prefix md-prefix">places</i>
+                            <input id="tempat_ttd" type="text" class="validate" name="tempat_ttd" required>
+                                <?php
+                                    if(isset($_SESSION['tempat_ttdk'])){
+                                        $tempat_ttdk = $_SESSION['tempat_ttdk'];
+                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$tempat_ttdk.'</div>';
+                                        unset($_SESSION['tempat_ttdk']);
+                                    }
+                                ?>
+                            <label for="keterangan">Tempat Dikeluarkan Surat Tugas</label>
+                        </div>
+                        <div class="input-field col s3">
+                            <i class="material-icons prefix md-prefix">date_range</i>
+                            <input id="tgl_surat" type="text" name="tgl_ttd" class="datepicker" required>
+                                <?php
+                                    if(isset($_SESSION['tgl_ttdk'])){
+                                        $tgl_ttdk = $_SESSION['tgl_ttdk'];
+                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$tgl_ttdk.'</div>';
+                                        unset($_SESSION['tgl_ttdk']);
+                                    }
+                                ?>
+                            <label for="tgl_surat">Tanggal Surat  Tugas</label>
+                        </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">description</i>
                             <textarea id="pertimbangan" class="materialize-textarea validate" name="pertimbangan" required></textarea>
@@ -217,18 +241,6 @@ $config = conn($host, $username, $password, $database);
                                     }
                                 ?>
                             <label for="isi">Menimbang</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <i class="material-icons prefix md-prefix">description</i>
-                            <textarea id="dasar" class="materialize-textarea validate" name="dasar" required></textarea>
-                                <?php
-                                    if(isset($_SESSION['dasark'])){
-                                        $dasark = $_SESSION['dasark'];
-                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$dasark.'</div>';
-                                        unset($_SESSION['dasark']);
-                                    }
-                                ?>
-                            <label for="isi">Dasar Surat Tugas</label>
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">perm_identity</i><label for="penerima_tugas">Menugaskan Kepada </label><br/>
@@ -250,6 +262,22 @@ $config = conn($host, $username, $password, $database);
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">description</i>
+                            <?php
+                                $textarea1 = "Surat Badan Karantina Pertanian \nNomor :        /TU.020/K.1/".date("m/Y").", tanggal ".indoDate(date("Y-m-d"))."\n \n";
+                                $textarea2 = "DIPA Stasiun Karantina Pertanian Kelas II Manokwari \nNomor : SP DIPA 018.12.2.499496/2019,  tanggal 05 Desember";
+                            ?>
+                            <textarea id="dasar" class="materialize-textarea validate" name="dasar" required><?php echo $textarea1.$textarea2; ?></textarea>
+                                <?php
+                                    if(isset($_SESSION['dasark'])){
+                                        $dasark = $_SESSION['dasark'];
+                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$dasark.'</div>';
+                                        unset($_SESSION['dasark']);
+                                    }
+                                ?>
+                            <label for="isi">Dasar Surat Tugas</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix md-prefix">description</i>
                             <textarea id="peruntukan" class="materialize-textarea validate" name="peruntukan" required></textarea>
                                 <?php
                                     if(isset($_SESSION['isik'])){
@@ -259,30 +287,6 @@ $config = conn($host, $username, $password, $database);
                                     }
                                 ?>
                             <label for="isi">Untuk Penugasan</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <i class="material-icons prefix md-prefix">places</i>
-                            <input id="tempat_ttd" type="text" class="validate" name="tempat_ttd" required>
-                                <?php
-                                    if(isset($_SESSION['tempat_ttdk'])){
-                                        $tempat_ttdk = $_SESSION['tempat_ttdk'];
-                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$tempat_ttdk.'</div>';
-                                        unset($_SESSION['tempat_ttdk']);
-                                    }
-                                ?>
-                            <label for="keterangan">Tempat Dikeluarkan Surat Tugas</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <i class="material-icons prefix md-prefix">date_range</i>
-                            <input id="tgl_surat" type="text" name="tgl_ttd" class="datepicker" required>
-                                <?php
-                                    if(isset($_SESSION['tgl_ttdk'])){
-                                        $tgl_ttdk = $_SESSION['tgl_ttdk'];
-                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$tgl_ttdk.'</div>';
-                                        unset($_SESSION['tgl_ttdk']);
-                                    }
-                                ?>
-                            <label for="tgl_surat">Tanggal Surat  Tugas</label>
                         </div>
                     </div>
                     <!-- Row in form END -->

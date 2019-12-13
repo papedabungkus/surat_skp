@@ -52,16 +52,17 @@
                         <a class="collapsible-header"><i class="material-icons">assignment</i> Buat Surat</a>
                         <div class="collapsible-body">
                             <ul>
-                                <li><a href="?page=bst">Surat Tugas</a></li>
-                                <li><a href="?page=bspt">Surat Perintah Tugas</a></li>
+                                <li><a href="?page=bst">Surat Tugas (Luar)</a></li>
+                                <li><a href="?page=bspt">Surat Perintah Tugas (Lokal)</a></li>
+                                <li><a href="?page=bsptp">Surat Perintah Tugas (Pengawasan)</a></li>
+                                <li><a href="?page=bsplhp">Surat Pengantar Laporan Hasil Pengujian (LAB)</a></li>
+                                <li><a href="?page=bstpa">Surat Tugas Penyelia dan Analisis (LAB)</a></li>
                             </ul>
                         </div>
                     </li>
                 </ul>
             </li>
             <li class="no-padding">
-                <?php
-                    if($_SESSION['admin'] == 1 || $_SESSION['admin'] == 3){ ?>
                 <ul class="collapsible collapsible-accordion">
                     <li>
                         <a class="collapsible-header"><i class="material-icons">repeat</i> Transaksi Surat</a>
@@ -73,9 +74,6 @@
                         </div>
                    </li>
                 </ul>
-                <?php
-                    }
-                ?>
             </li>
             
             <li class="no-padding">
@@ -138,19 +136,17 @@
             <li><a href="./"><i class="material-icons"></i>&nbsp; Beranda</a></li>
             <li><a class="dropdown-button" href="#!" data-activates="agenda">Buat Surat <i class="material-icons md-18">arrow_drop_down</i></a></li>
                 <ul id='agenda' class='dropdown-content'>
-                    <li><a href="?page=bst">Surat Tugas</a></li>
-                    <li><a href="?page=bspt">Surat Perintah Tugas</a></li>
+                                <li><a href="?page=bst">Surat Tugas (Luar)</a></li>
+                                <li><a href="?page=bspt">Surat Perintah Tugas (Lokal)</a></li>
+                                <li><a href="?page=bsptp">Surat Perintah Tugas (Pengawasan)</a></li>
+                                <li><a href="?page=bsplhp">Surat Pengantar Laporan Hasil Pengujian (LAB)</a></li>
+                                <li><a href="?page=bstpa">Surat Tugas Penyelia dan Analisis (LAB)</a></li>
                 </ul>
-            <?php
-                if($_SESSION['admin'] == 1 || $_SESSION['admin'] == 3){ ?>
             <li><a class="dropdown-button" href="#!" data-activates="transaksi">Transaksi Surat <i class="material-icons md-18">arrow_drop_down</i></a></li>
                 <ul id='transaksi' class='dropdown-content'>
                     <li><a href="?page=tsm">Surat Masuk</a></li>
                     <li><a href="?page=tsk">Surat Keluar</a></li>
                 </ul>
-            <?php
-                }
-            ?>
             <li><a class="dropdown-button" href="#!" data-activates="agenda">Buku Agenda <i class="material-icons md-18">arrow_drop_down</i></a></li>
                 <ul id='agenda' class='dropdown-content'>
                     <li><a href="?page=asm">Surat Masuk</a></li>
@@ -175,16 +171,7 @@
             <?php
                 }
             ?>
-            <?php
-                if($_SESSION['admin'] == 2){ ?>
-            <li><a class="dropdown-button" href="#!" data-activates="pengaturan">Pengaturan <i class="material-icons md-18">arrow_drop_down</i></a></li>
-                <ul id='pengaturan' class='dropdown-content'>
-                    <li><a href="?page=sett">Instansi</a></li>
-                    <li><a href="?page=sett&sub=usr">User</a></li>
-                </ul>
-            <?php
-                }
-            ?>
+            
             <li class="right" style="margin-right: 10px;"><a class="dropdown-button" href="#!" data-activates="logout"><i class="material-icons">account_circle</i> <?php echo $_SESSION['nama']; ?><i class="material-icons md-18">arrow_drop_down</i></a></li>
                 <ul id='logout' class='dropdown-content'>
                     <li><a href="?page=pro">Profil</a></li>

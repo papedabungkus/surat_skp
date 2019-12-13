@@ -83,7 +83,7 @@ $config = conn($host, $username, $password, $database);
                                             } else {
 
                                                     $query = mysqli_query($config, "INSERT INTO tbl_surat_keluar(no_agenda,tujuan,no_surat,isi,kode,tgl_surat,tgl_catat,file,keterangan,id_user)
-                                                        VALUES('$no_agenda','$petugas','$no_surat','$peruntukan','ST','$tgl_ttd',NOW(),'','Surat Perintah Tugas','$id_user')");
+                                                        VALUES('$no_agenda','$petugas','$no_surat','$peruntukan','SPT','$tgl_ttd',NOW(),'','Surat Perintah Tugas','$id_user')");
                                                     $query_suratperintahtugas = mysqli_query($config, "INSERT INTO tbl_surat_perintah_tugas(no_agenda,no_surat,dasar,penerima_tugas,peruntukan,tgl_ttd,tempat_ttd,nama_ttd,id_user)
                                                     VALUES('$no_agenda','$no_surat','$dasar','$petugas','$peruntukan','$tgl_ttd','$tempat_ttd','1','$id_user')");
 
@@ -206,18 +206,6 @@ $config = conn($host, $username, $password, $database);
                             <label for="no_surat">Nomor Surat</label>
                         </div>
                         <div class="input-field col s6">
-                            <i class="material-icons prefix md-prefix">description</i>
-                            <textarea id="dasar" class="materialize-textarea validate" name="dasar" required></textarea>
-                                <?php
-                                    if(isset($_SESSION['dasark'])){
-                                        $dasark = $_SESSION['dasark'];
-                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$dasark.'</div>';
-                                        unset($_SESSION['dasark']);
-                                    }
-                                ?>
-                            <label for="isi">Dasar Surat Perintah Tugas</label>
-                        </div>
-                        <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">perm_identity</i><label for="penerima_tugas">Menugaskan Kepada </label><br/>
                             <div class="input-field col s11 right">   
                                 <?php $queryx = mysqli_query($config, "SELECT * FROM tbl_pegawai");?>
@@ -237,6 +225,22 @@ $config = conn($host, $username, $password, $database);
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix md-prefix">description</i>
+                            <?php
+                                $textarea1 = "Surat Badan Karantina Pertanian \nNomor :        /TU.020/K.1/".date("m/Y").", tanggal ".indoDate(date("Y-m-d"))."\n \n";
+                                $textarea2 = "DIPA Stasiun Karantina Pertanian Kelas II Manokwari \nNomor : SP DIPA 018.12.2.499496/2019,  tanggal 05 Desember";
+                            ?>
+                            <textarea id="dasar" class="materialize-textarea validate" name="dasar" required><?php echo $textarea1.$textarea2; ?></textarea>
+                                <?php
+                                    if(isset($_SESSION['dasark'])){
+                                        $dasark = $_SESSION['dasark'];
+                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$dasark.'</div>';
+                                        unset($_SESSION['dasark']);
+                                    }
+                                ?>
+                            <label for="isi">Dasar Surat Perintah Tugas</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix md-prefix">description</i>
                             <textarea id="peruntukan" class="materialize-textarea validate" name="peruntukan" required></textarea>
                                 <?php
                                     if(isset($_SESSION['isik'])){
@@ -247,7 +251,7 @@ $config = conn($host, $username, $password, $database);
                                 ?>
                             <label for="isi">Untuk Penugasan</label>
                         </div>
-                        <div class="input-field col s6">
+                        <div class="input-field col s3">
                             <i class="material-icons prefix md-prefix">places</i>
                             <input id="tempat_ttd" type="text" class="validate" name="tempat_ttd" required>
                                 <?php
@@ -259,7 +263,7 @@ $config = conn($host, $username, $password, $database);
                                 ?>
                             <label for="keterangan">Tempat Dikeluarkan Surat</label>
                         </div>
-                        <div class="input-field col s6">
+                        <div class="input-field col s3">
                             <i class="material-icons prefix md-prefix">date_range</i>
                             <input id="tgl_surat" type="text" name="tgl_ttd" class="datepicker" required>
                                 <?php

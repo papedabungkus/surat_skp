@@ -118,14 +118,14 @@
                                                 <option value="<?php echo $row['admin']; ?>">
                                                     <?php
                                                         if($row['admin'] == 2){
-                                                            echo 'Administrator';
+                                                            echo 'Operator';
                                                         } else {
-                                                            echo 'User Biasa';
+                                                            echo 'Pengguna';
                                                         }
                                                     ?>
                                                 </option>
-                                                <option value="3">User Biasa</option>
-                                                <option value="2">Administrator</option>
+                                                <option value="2">Operator</option>
+                                                <option value="3">Pengguna</option>
                                             </select>
                                         </div>
                                             <?php

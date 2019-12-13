@@ -194,8 +194,8 @@
                             <i class="material-icons prefix md-prefix">supervisor_account</i><label>Pilih Tipe User</label><br/>
                             <div class="input-field col s11 right">
                                 <select class="browser-default validate" name="admin" id="admin" required>
-                                    <option value="3">User Biasa</option>
-                                    <option value="2">Administrator</option>
+                                    <option value="2">Operator</option>
+                                    <option value="3">Pengguna</option>
                                 </select>
                             </div>
                                 <?php
