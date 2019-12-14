@@ -82,7 +82,7 @@ if(mysqli_num_rows($query) > 0){
 <body>
 <div class="book">
     <div class="page">
-        <img width="100%" src="./asset/img/kop_disposisi.png"><br /><br />
+        <img width="100%" src="./asset/img/kop_surat.png"><br /><br />
         <div class="isisurat">
             <div class="judulsurat">SURAT PERINTAH TUGAS</div>
             <div class="nomorsurat">Nomor : <?=$row['no_surat']?></div><br /><br />
