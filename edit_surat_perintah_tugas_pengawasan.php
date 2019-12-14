@@ -86,11 +86,11 @@
                                                 //jika form file kosong akan mengeksekusi script dibawah ini
                                                 $id_surat = $_REQUEST['id_surat'];
                                          
-                                                $query = mysqli_query($config, "UPDATE tbl_surat_perintah_tugas SET no_surat='$no_surat',dasar='$dasar',penerima_tugas='$petugas',peruntukan='$peruntukan',tgl_ttd='$tgl_ttd',tempat_ttd='$tempat_ttd',jabatan_ttd='$jabatan_ttd',nama_ttd='$nama_ttd',id_user='$id_user' WHERE id_surat='$id_surat'");
+                                                $query = mysqli_query($config, "UPDATE tbl_surat_perintah_tugas_pengawasan SET no_surat='$no_surat',dasar='$dasar',penerima_tugas='$petugas',peruntukan='$peruntukan',tgl_ttd='$tgl_ttd',tempat_ttd='$tempat_ttd',jabatan_ttd='$jabatan_ttd',nama_ttd='$nama_ttd',id_user='$id_user' WHERE id_surat='$id_surat'");
                                                 $querysuratkeluar = mysqli_query($config, "UPDATE tbl_surat_keluar SET no_surat='$no_surat', tujuan='$petugas', isi='$peruntukan', tgl_surat='$tgl_ttd' WHERE keterangan='Surat Perintah Tugas' AND no_agenda='$no_agenda'");
                                                 if($query == true && $querysuratkeluar == true){
                                                     $_SESSION['succEdit'] = 'SUKSES! Data berhasil diupdate';
-                                                    header("Location: ./admin.php?page=bspt");
+                                                    header("Location: ./admin.php?page=bsptp");
                                                     die();
                                                 } else {
                                                     $_SESSION['errQ'] = 'ERROR! Ada masalah dengan query';
@@ -109,12 +109,12 @@
         } else {
 
             $id_surat = mysqli_real_escape_string($config, $_REQUEST['id_surat']);
-            $query = mysqli_query($config, "SELECT no_agenda,no_surat,dasar,penerima_tugas,peruntukan,tgl_ttd,tempat_ttd,jabatan_ttd,nama_ttd,id_user FROM tbl_surat_perintah_tugas WHERE id_surat='$id_surat'");
+            $query = mysqli_query($config, "SELECT no_agenda,no_surat,dasar,penerima_tugas,peruntukan,tgl_ttd,tempat_ttd,jabatan_ttd,nama_ttd,id_user FROM tbl_surat_perintah_tugas_pengawasan WHERE id_surat='$id_surat'");
             list($no_agenda, $no_surat, $dasar, $penerima_tugas, $peruntukan, $tgl_ttd, $tempat_ttd, $jabatan_ttd, $nama_ttd, $id_user) = mysqli_fetch_array($query);
             if($_SESSION['id_user'] != $id_user AND $_SESSION['id_user'] != 1){
                 echo '<script language="javascript">
                         window.alert("ERROR! Anda tidak memiliki hak akses untuk mengedit data ini");
-                        window.location.href="./admin.php?page=bspt";
+                        window.location.href="./admin.php?page=bsptp";
                       </script>';
             } else {?>
 
@@ -167,7 +167,7 @@
                 <div class="row jarak-form">
 
                     <!-- Form START -->
-                    <form class="col s12" method="POST" action="?page=bspt&act=edit" enctype="multipart/form-data">
+                    <form class="col s12" method="POST" action="?page=bsptp&act=edit" enctype="multipart/form-data">
 
                         <!-- Row in form START -->
                         <div class="row">
@@ -308,7 +308,7 @@
                                 <button type="submit" name="submit" class="btn-large blue waves-effect waves-light">SIMPAN <i class="material-icons">done</i></button>
                             </div>
                             <div class="col 6">
-                                <a href="?page=bspt" class="btn-large deep-orange waves-effect waves-light">BATAL <i class="material-icons">clear</i></a>
+                                <a href="?page=bsptp" class="btn-large deep-orange waves-effect waves-light">BATAL <i class="material-icons">clear</i></a>
                             </div>
                         </div>
 

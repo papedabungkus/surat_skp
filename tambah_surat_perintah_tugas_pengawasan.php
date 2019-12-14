@@ -94,12 +94,12 @@ $config = conn($host, $username, $password, $database);
 
                                                     $query = mysqli_query($config, "INSERT INTO tbl_surat_keluar(no_agenda,tujuan,no_surat,isi,kode,tgl_surat,tgl_catat,file,keterangan,id_user)
                                                         VALUES('$no_agenda','$petugas','$no_surat','$peruntukan','SPT','$tgl_ttd',NOW(),'','Surat Perintah Tugas','$id_user')");
-                                                    $query_suratperintahtugas = mysqli_query($config, "INSERT INTO tbl_surat_perintah_tugas(no_agenda,no_surat,dasar,penerima_tugas,peruntukan,tgl_ttd,tempat_ttd,jabatan_ttd,nama_ttd,id_user)
+                                                    $query_suratperintahtugas = mysqli_query($config, "INSERT INTO tbl_surat_perintah_tugas_pengawasan(no_agenda,no_surat,dasar,penerima_tugas,peruntukan,tgl_ttd,tempat_ttd,jabatan_ttd,nama_ttd,id_user)
                                                     VALUES('$no_agenda','$no_surat','$dasar','$petugas','$peruntukan','$tgl_ttd','$tempat_ttd','$jabatan_ttd','$nama_ttd','$id_user')");
 
                                                     if($query == true  && $query_suratperintahtugas == true){
                                                         $_SESSION['succAdd'] = 'SUKSES! Data berhasil ditambahkan';
-                                                        header("Location: ./admin.php?page=bspt");
+                                                        header("Location: ./admin.php?page=bsptp");
                                                         die();
                                                     } else {
                                                         $_SESSION['errQ'] = 'ERROR! Ada masalah dengan query';
@@ -124,7 +124,7 @@ $config = conn($host, $username, $password, $database);
                     <nav class="secondary-nav">
                         <div class="nav-wrapper blue-grey darken-1">
                             <ul class="left">
-                                <li class="waves-effect waves-light"><a href="?page=bspt&act=add" class="judul"><i class="material-icons">drafts</i> Tambah Data Surat Perintah Tugas</a></li>
+                                <li class="waves-effect waves-light"><a href="?page=bsptp&act=add" class="judul"><i class="material-icons">drafts</i> Tambah Data Surat Perintah Tugas</a></li>
                             </ul>
                         </div>
                     </nav>
@@ -166,7 +166,7 @@ $config = conn($host, $username, $password, $database);
             <div class="row jarak-form">
 
                 <!-- Form START -->
-                <form class="col s12" method="POST" action="?page=bspt&act=add" enctype="multipart/form-data">
+                <form class="col s12" method="POST" action="?page=bsptp&act=add" enctype="multipart/form-data">
 
                     <!-- Row in form START -->
                     <div class="row">
@@ -239,7 +239,7 @@ $config = conn($host, $username, $password, $database);
                                 $textarea1 = "Surat Badan Karantina Pertanian \nNomor :        /TU.020/K.1/".date("m/Y").", tanggal ".indoDate(date("Y-m-d"))."\n \n";
                                 $textarea2 = "DIPA Stasiun Karantina Pertanian Kelas II Manokwari \nNomor : SP DIPA 018.12.2.499496/2019,  tanggal 05 Desember";
                             ?>
-                            <textarea id="dasar" class="materialize-textarea validate" name="dasar" required><?php echo $textarea1.$textarea2; ?></textarea>
+                            <textarea id="dasar" class="materialize-textarea validate" name="dasar" required><?php echo $textarea2; ?></textarea>
                                 <?php
                                     if(isset($_SESSION['dasark'])){
                                         $dasark = $_SESSION['dasark'];
@@ -317,7 +317,7 @@ $config = conn($host, $username, $password, $database);
                             <button type="submit" name="submit" class="btn-large blue waves-effect waves-light">SIMPAN <i class="material-icons">done</i></button>
                         </div>
                         <div class="col 6">
-                            <a href="?page=bspt" class="btn-large deep-orange waves-effect waves-light">BATAL <i class="material-icons">clear</i></a>
+                            <a href="?page=bsptp" class="btn-large deep-orange waves-effect waves-light">BATAL <i class="material-icons">clear</i></a>
                         </div>
                     </div>
 

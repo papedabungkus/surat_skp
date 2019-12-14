@@ -81,6 +81,12 @@
                 case 'cspt':
                     include "cetak_surat_perintah_tugas.php";
                     break;
+                case 'bsptp':
+                    include "buat_surat_perintah_tugas_pengawasan.php";
+                    break;
+                case 'csptp':
+                    include "cetak_surat_perintah_tugas_pengawasan.php";
+                    break;
                 case 'dp':
                     include "data_pegawai.php";
                     break;

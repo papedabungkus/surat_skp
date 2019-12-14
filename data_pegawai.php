@@ -23,9 +23,10 @@
                     break;
             }
         } else {
-
+            $query = mysqli_query($config, "SELECT tbl_pegawai FROM tbl_sett");
+            list($tbl_pegawai) = mysqli_fetch_array($query);
             //pagging
-            $limit = 5;
+            $limit = $tbl_pegawai;
             $pg = @$_GET['pg'];
                 if(empty($pg)){
                     $curr = 0;

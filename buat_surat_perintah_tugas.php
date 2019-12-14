@@ -22,10 +22,10 @@
         } else {
 
             $query = mysqli_query($config, "SELECT surat_perintah_tugas FROM tbl_sett");
-            list($surat_keluar) = mysqli_fetch_array($query);
+            list($surat_perintah_tugas) = mysqli_fetch_array($query);
 
             //pagging
-            $limit = $surat_keluar;
+            $limit = $surat_perintah_tugas;
             $pg = @$_GET['pg'];
                 if(empty($pg)){
                     $curr = 0;
@@ -285,7 +285,7 @@
                     </div>
                     <!-- Row form END -->';
 
-                    $query = mysqli_query($config, "SELECT * FROM tbl_surat_keluar");
+                    $query = mysqli_query($config, "SELECT * FROM tbl_surat_perintah_tugas");
                     $cdata = mysqli_num_rows($query);
                     $cpg = ceil($cdata/$limit);
 
