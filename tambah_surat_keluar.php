@@ -291,7 +291,7 @@
                                         unset($_SESSION['isik']);
                                     }
                                 ?>
-                            <label for="isi">Isi Ringkas</label>
+                            <label for="isi">Perihal/Isi Ringkasan Surat</label>
                         </div>
                         <div class="input-field col s6">
                             <div class="file-field input-field">

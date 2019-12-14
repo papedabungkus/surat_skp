@@ -28,6 +28,8 @@
                 $peruntukan = $_REQUEST['peruntukan'];
                 $tgl_ttd = $_REQUEST['tgl_ttd'];
                 $tempat_ttd = $_REQUEST['tempat_ttd'];
+                $jabatan_ttd = $_REQUEST['jabatan_ttd'];
+                $nama_ttd = $_REQUEST['nama_ttd'];
                 $id_user = $_SESSION['id_user'];
 
             //validasi input data
@@ -49,6 +51,15 @@
                             $_SESSION['tempat_ttdk'] = 'Form Tujuan Surat hanya boleh mengandung karakter huruf, angka, spasi, titik(.), koma(,), minus(-), kurung() dan garis miring(/)';
                             echo '<script language="javascript">window.history.back();</script>';
                         } else {
+                            
+                            if(!preg_match("/^[a-zA-Z0-9.,() \/ -]*$/", $jabatan_ttd)){
+                                $_SESSION['jabatan_ttdk'] = 'Form Jabatan TTD hanya boleh mengandung karakter huruf, angka, spasi, titik(.), koma(,), minus(-), kurung() dan garis miring(/)';
+                                echo '<script language="javascript">window.history.back();</script>';
+                            } else {
+                                if(!preg_match("/^[a-zA-Z0-9.,() \/ -]*$/", $nama_ttd)){
+                                    $_SESSION['nama_ttdk'] = 'Form Nama TTD hanya boleh mengandung karakter huruf, angka, spasi, titik(.), koma(,), minus(-), kurung() dan garis miring(/)';
+                                    echo '<script language="javascript">window.history.back();</script>';
+                                } else {
 
 
                         if(!preg_match("/^[a-zA-Z0-9.,_()%&@\/\r\n -]*$/", $isi)){
@@ -75,7 +86,7 @@
                                                 //jika form file kosong akan mengeksekusi script dibawah ini
                                                 $id_surat = $_REQUEST['id_surat'];
                                          
-                                                $query = mysqli_query($config, "UPDATE tbl_surat_perintah_tugas SET no_surat='$no_surat',dasar='$dasar',penerima_tugas='$petugas',peruntukan='$peruntukan',tgl_ttd='$tgl_ttd',tempat_ttd='$tempat_ttd',nama_ttd='$nama_ttd',id_user='$id_user' WHERE id_surat='$id_surat'");
+                                                $query = mysqli_query($config, "UPDATE tbl_surat_perintah_tugas SET no_surat='$no_surat',dasar='$dasar',penerima_tugas='$petugas',peruntukan='$peruntukan',tgl_ttd='$tgl_ttd',tempat_ttd='$tempat_ttd',jabatan_ttd='$jabatan_ttd',nama_ttd='$nama_ttd',id_user='$id_user' WHERE id_surat='$id_surat'");
                                                 $querysuratkeluar = mysqli_query($config, "UPDATE tbl_surat_keluar SET no_surat='$no_surat', tujuan='$petugas', isi='$peruntukan', tgl_surat='$tgl_ttd' WHERE keterangan='Surat Perintah Tugas' AND no_agenda='$no_agenda'");
                                                 if($query == true && $querysuratkeluar == true){
                                                     $_SESSION['succEdit'] = 'SUKSES! Data berhasil diupdate';
@@ -90,16 +101,16 @@
                                         }
                                     }
                                 }
-                            }
-                        }
+                            }}
+                        }}
                     }
                 }
             }
         } else {
 
             $id_surat = mysqli_real_escape_string($config, $_REQUEST['id_surat']);
-            $query = mysqli_query($config, "SELECT no_agenda,no_surat,dasar,penerima_tugas,peruntukan,tgl_ttd,tempat_ttd,nama_ttd,id_user FROM tbl_surat_perintah_tugas WHERE id_surat='$id_surat'");
-            list($no_agenda, $no_surat, $dasar, $penerima_tugas, $peruntukan, $tgl_ttd, $tempat_ttd, $nama_ttd, $id_user) = mysqli_fetch_array($query);
+            $query = mysqli_query($config, "SELECT no_agenda,no_surat,dasar,penerima_tugas,peruntukan,tgl_ttd,tempat_ttd,jabatan_ttd,nama_ttd,id_user FROM tbl_surat_perintah_tugas WHERE id_surat='$id_surat'");
+            list($no_agenda, $no_surat, $dasar, $penerima_tugas, $peruntukan, $tgl_ttd, $tempat_ttd, $jabatan_ttd, $nama_ttd, $id_user) = mysqli_fetch_array($query);
             if($_SESSION['id_user'] != $id_user AND $_SESSION['id_user'] != 1){
                 echo '<script language="javascript">
                         window.alert("ERROR! Anda tidak memiliki hak akses untuk mengedit data ini");
@@ -191,19 +202,6 @@
                                     ?>
                                 <label for="no_surat">Nomor Surat</label>
                             </div>
-                            
-                            <div class="input-field col s6">
-                                <i class="material-icons prefix md-prefix">description</i>
-                                <textarea id="dasar" class="materialize-textarea validate" name="dasar" required><?php echo $dasar;?></textarea>
-                                    <?php
-                                        if(isset($_SESSION['dasark'])){
-                                            $dasark = $_SESSION['dasark'];
-                                            echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$dasark.'</div>';
-                                            unset($_SESSION['dasark']);
-                                        }
-                                    ?>
-                                <label for="isi">Dasar Surat Perintah Tugas</label>
-                            </div>
                             <div class="input-field col s6">
                                 <i class="material-icons prefix md-prefix">perm_identity</i><label for="penerima_tugas">Menugaskan Kepada </label><br/>
                                 <div class="input-field col s11 right">   
@@ -229,6 +227,19 @@
                                         } 
                                 ?>
                             </div>
+                            
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix md-prefix">description</i>
+                                <textarea id="dasar" class="materialize-textarea validate" name="dasar" required><?php echo $dasar;?></textarea>
+                                    <?php
+                                        if(isset($_SESSION['dasark'])){
+                                            $dasark = $_SESSION['dasark'];
+                                            echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$dasark.'</div>';
+                                            unset($_SESSION['dasark']);
+                                        }
+                                    ?>
+                                <label for="isi">Dasar Surat Perintah Tugas</label>
+                            </div>
                             <div class="input-field col s6">
                                 <i class="material-icons prefix md-prefix">description</i>
                                 <textarea id="peruntukan" class="materialize-textarea validate" name="peruntukan" required><?php echo $peruntukan;?></textarea>
@@ -241,7 +252,7 @@
                                     ?>
                                 <label for="isi">Untuk Penugasan</label>
                             </div>
-                            <div class="input-field col s6">
+                            <div class="input-field col s4">
                                 <i class="material-icons prefix md-prefix">places</i>
                                 <input id="tempat_ttd" type="text" class="validate" name="tempat_ttd" value="<?php echo $tempat_ttd;?>" required>
                                     <?php
@@ -253,7 +264,7 @@
                                     ?>
                                 <label for="keterangan">Tempat Dikeluarkan Surat</label>
                             </div>
-                            <div class="input-field col s6">
+                            <div class="input-field col s2">
                                 <i class="material-icons prefix md-prefix">date_range</i>
                                 <input id="tgl_surat" type="text" name="tgl_ttd" class="datepicker" value="<?php echo $tgl_ttd;?>" required>
                                     <?php
@@ -265,6 +276,30 @@
                                     ?>
                                 <label for="tgl_surat">Tanggal Surat</label>
                             </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix md-prefix">places</i>
+                            <input id="jabatan_ttd" type="text" class="validate" name="jabatan_ttd" value="<?php echo $jabatan_ttd;?>" required>
+                                <?php
+                                    if(isset($_SESSION['jabatan_ttdk'])){
+                                        $jabatan_ttdk = $_SESSION['jabatan_ttdk'];
+                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$jabatan_ttdk.'</div>';
+                                        unset($_SESSION['jabatan_ttdk']);
+                                    }
+                                ?>
+                            <label for="keterangan">Jabatan TTD</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix md-prefix">places</i>
+                            <input id="pegawai" type="text" class="validate" name="nama_ttd" value="<?php echo $nama_ttd;?>" required>
+                                <?php
+                                    if(isset($_SESSION['nama_ttdk'])){
+                                        $nama_ttdk = $_SESSION['nama_ttdk'];
+                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$nama_ttdk.'</div>';
+                                        unset($_SESSION['nama_ttdk']);
+                                    }
+                                ?>
+                            <label for="keterangan">Nama TTD</label>
+                        </div>
                         </div>
                         <!-- Row in form END -->
 

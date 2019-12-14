@@ -71,7 +71,7 @@ if(mysqli_num_rows($query) > 0){
             margin: 0;
             border: initial;
             border-radius: initial;
-            width: initial;
+            width: initial; 
             min-height: initial;
             box-shadow: initial;
             background: initial;
@@ -135,15 +135,13 @@ if(mysqli_num_rows($query) > 0){
                 </tr>
                 <tr>
                     <td colspan="3">
-                    <table width="90%" align="right">
+                        <table width="90%" align="right">
                         <tr><td width="40%"></td><td align="center"><?=$row['tempat_ttd'].", ".indoDate($row['tgl_ttd']);?></td></tr>
                         <tr><td width="40%"></td><td colspan="3"></td></tr>
-                        <tr><td width="40%"></td><td align="center" colspan="3">Kepala,<br /><br /><br /><br /><br /><br />
+                        <tr><td width="40%"></td><td align="center" colspan="3"><?=$row['jabatan_ttd']?>,<br /><br /><br /><br /><br /><br />
                                 <?php
-                                    $q_instansi = mysqli_query($config, "SELECT * FROM tbl_instansi");
-                                    $r_instansi = mysqli_fetch_array($q_instansi);
-                                    $pimpinan = $r_instansi['pimpinan'];
-                                    $queryz = mysqli_query($config, "SELECT * FROM tbl_pegawai WHERE nama='$pimpinan'");
+                                    $pejabat = $row['nama_ttd'];
+                                    $queryz = mysqli_query($config, "SELECT * FROM tbl_pegawai WHERE nama='$pejabat'");
                                     while($rowz = mysqli_fetch_array($queryz)){
                                         echo $rowz['nama']."<br />NIP. ".$rowz['nip'];
                                     }

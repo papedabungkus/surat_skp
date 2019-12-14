@@ -31,6 +31,8 @@ $config = conn($host, $username, $password, $database);
                 $peruntukan = $_REQUEST['peruntukan'];
                 $tgl_ttd = $_REQUEST['tgl_ttd'];
                 $tempat_ttd = $_REQUEST['tempat_ttd'];
+                $jabatan_ttd = $_REQUEST['jabatan_ttd'];
+                $nama_ttd = $_REQUEST['nama_ttd'];
                 $id_user = $_SESSION['id_user'];
 
                 //validasi input data
@@ -49,9 +51,17 @@ $config = conn($host, $username, $password, $database);
                             echo '<script language="javascript">window.history.back();</script>';
                         } else {
                             if(!preg_match("/^[a-zA-Z0-9.,() \/ -]*$/", $tempat_ttd)){
-                                $_SESSION['tempat_ttdk'] = 'Form Tujuan Surat hanya boleh mengandung karakter huruf, angka, spasi, titik(.), koma(,), minus(-), kurung() dan garis miring(/)';
+                                $_SESSION['tempat_ttdk'] = 'Form Tempat TTD hanya boleh mengandung karakter huruf, angka, spasi, titik(.), koma(,), minus(-), kurung() dan garis miring(/)';
                                 echo '<script language="javascript">window.history.back();</script>';
                             } else {
+                                if(!preg_match("/^[a-zA-Z0-9.,() \/ -]*$/", $jabatan_ttd)){
+                                    $_SESSION['jabatan_ttdk'] = 'Form Jabatan TTD hanya boleh mengandung karakter huruf, angka, spasi, titik(.), koma(,), minus(-), kurung() dan garis miring(/)';
+                                    echo '<script language="javascript">window.history.back();</script>';
+                                } else {
+                                    if(!preg_match("/^[a-zA-Z0-9.,() \/ -]*$/", $nama_ttd)){
+                                        $_SESSION['nama_ttdk'] = 'Form Nama TTD hanya boleh mengandung karakter huruf, angka, spasi, titik(.), koma(,), minus(-), kurung() dan garis miring(/)';
+                                        echo '<script language="javascript">window.history.back();</script>';
+                                    } else {
 
 
                             if(!preg_match("/^[a-zA-Z0-9.,_()%&@\/\r\n -]*$/", $isi)){
@@ -84,8 +94,8 @@ $config = conn($host, $username, $password, $database);
 
                                                     $query = mysqli_query($config, "INSERT INTO tbl_surat_keluar(no_agenda,tujuan,no_surat,isi,kode,tgl_surat,tgl_catat,file,keterangan,id_user)
                                                         VALUES('$no_agenda','$petugas','$no_surat','$peruntukan','SPT','$tgl_ttd',NOW(),'','Surat Perintah Tugas','$id_user')");
-                                                    $query_suratperintahtugas = mysqli_query($config, "INSERT INTO tbl_surat_perintah_tugas(no_agenda,no_surat,dasar,penerima_tugas,peruntukan,tgl_ttd,tempat_ttd,nama_ttd,id_user)
-                                                    VALUES('$no_agenda','$no_surat','$dasar','$petugas','$peruntukan','$tgl_ttd','$tempat_ttd','1','$id_user')");
+                                                    $query_suratperintahtugas = mysqli_query($config, "INSERT INTO tbl_surat_perintah_tugas(no_agenda,no_surat,dasar,penerima_tugas,peruntukan,tgl_ttd,tempat_ttd,jabatan_ttd,nama_ttd,id_user)
+                                                    VALUES('$no_agenda','$no_surat','$dasar','$petugas','$peruntukan','$tgl_ttd','$tempat_ttd','$jabatan_ttd','$nama_ttd','$id_user')");
 
                                                     if($query == true  && $query_suratperintahtugas == true){
                                                         $_SESSION['succAdd'] = 'SUKSES! Data berhasil ditambahkan';
@@ -100,8 +110,8 @@ $config = conn($host, $username, $password, $database);
                                         }
                                     }
                                 }}
-                            }
-                        }
+                            }}
+                        }}
                     }
                 }
             }
@@ -190,7 +200,7 @@ $config = conn($host, $username, $password, $database);
                         </div>
                         <div class="input-field col s4">
                             <i class="material-icons prefix md-prefix">looks_two</i>
-                            <input id="no_surat" type="text" class="validate" name="no_surat" required>
+                            <input id="no_surat" type="text" class="validate" name="no_surat" value="<?php echo '......./TU.040/K.54.E/'.date('m/Y');?>" required>
                                 <?php
                                     if(isset($_SESSION['no_suratk'])){
                                         $no_suratk = $_SESSION['no_suratk'];
@@ -251,7 +261,7 @@ $config = conn($host, $username, $password, $database);
                                 ?>
                             <label for="isi">Untuk Penugasan</label>
                         </div>
-                        <div class="input-field col s3">
+                        <div class="input-field col s4">
                             <i class="material-icons prefix md-prefix">places</i>
                             <input id="tempat_ttd" type="text" class="validate" name="tempat_ttd" required>
                                 <?php
@@ -263,7 +273,7 @@ $config = conn($host, $username, $password, $database);
                                 ?>
                             <label for="keterangan">Tempat Dikeluarkan Surat</label>
                         </div>
-                        <div class="input-field col s3">
+                        <div class="input-field col s2">
                             <i class="material-icons prefix md-prefix">date_range</i>
                             <input id="tgl_surat" type="text" name="tgl_ttd" class="datepicker" required>
                                 <?php
@@ -273,7 +283,31 @@ $config = conn($host, $username, $password, $database);
                                         unset($_SESSION['tgl_ttdk']);
                                     }
                                 ?>
-                            <label for="tgl_surat">Tanggal Surat  Tugas</label>
+                            <label for="tgl_surat">Tanggal Surat</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix md-prefix">places</i>
+                            <input id="jabatan_ttd" type="text" class="validate" name="jabatan_ttd" value="Kepala" required>
+                                <?php
+                                    if(isset($_SESSION['jabatan_ttdk'])){
+                                        $jabatan_ttdk = $_SESSION['jabatan_ttdk'];
+                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$jabatan_ttdk.'</div>';
+                                        unset($_SESSION['jabatan_ttdk']);
+                                    }
+                                ?>
+                            <label for="keterangan">Jabatan TTD</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix md-prefix">places</i>
+                            <input id="pegawai" type="text" class="validate" name="nama_ttd" value="LUKAS SAIBA, SST." required>
+                                <?php
+                                    if(isset($_SESSION['nama_ttdk'])){
+                                        $nama_ttdk = $_SESSION['nama_ttdk'];
+                                        echo '<div id="alert-message" class="callout bottom z-depth-1 red lighten-4 red-text">'.$nama_ttdk.'</div>';
+                                        unset($_SESSION['nama_ttdk']);
+                                    }
+                                ?>
+                            <label for="keterangan">Nama TTD</label>
                         </div>
                     </div>
                     <!-- Row in form END -->

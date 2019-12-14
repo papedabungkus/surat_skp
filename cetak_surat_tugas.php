@@ -98,7 +98,7 @@ if(mysqli_num_rows($query) > 0){
                     <td>
                         <?php
                             $arraypeg = unserialize($row['penerima_tugas']);
-                            if(count($arraypeg)>1)
+                            if(count($arraypeg)>1) 
                             {
                                 for($i=0;$i<count($arraypeg);$i++)
                                 {
@@ -142,11 +142,9 @@ if(mysqli_num_rows($query) > 0){
                         <tr><td width="40%"></td><td>Dikeluarkan di</td><td>:</td><td><?=$row['tempat_ttd'];?></td></tr>
                         <tr><td width="40%"></td><td>Tanggal</td><td>:</td><td><?=indoDate($row['tgl_ttd']);?></td></tr>
                         <tr><td width="40%"></td><td colspan="3"><hr /></td></tr>
-                        <tr><td width="40%"></td><td align="center" colspan="3">Kepala,<br /><br /><br /><br /><br /><br />
+                        <tr><td width="40%"></td><td align="center" colspan="3"><?=$row['jabatan_ttd']?>,<br /><br /><br /><br /><br /><br />
                                 <?php
-                                    $q_instansi = mysqli_query($config, "SELECT * FROM tbl_instansi");
-                                    $r_instansi = mysqli_fetch_array($q_instansi);
-                                    $pimpinan = $r_instansi['pimpinan'];
+                                    $pimpinan = $row['nama_ttd'];
                                     $queryz = mysqli_query($config, "SELECT * FROM tbl_pegawai WHERE nama='$pimpinan'");
                                     while($rowz = mysqli_fetch_array($queryz)){
                                         echo $rowz['nama']."<br />NIP. ".$rowz['nip'];

@@ -254,7 +254,7 @@
                                     ?>
                                 <label for="kode">Kode Klasifikasi</label>
                             </div>
-                            <?php if($keterangan=="Surat Tugas"){ ?>
+                            <?php if($keterangan=="Surat Tugas" || $keterangan=="Surat Perintah Tugas"){ ?>
                             <div class="input-field col s6">
                             <style>
                             select[readonly].select2+.select2-container {
@@ -346,7 +346,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                         <!-- Row in form END -->
 
                         <div class="row">
