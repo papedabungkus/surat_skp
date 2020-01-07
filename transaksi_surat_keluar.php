@@ -305,7 +305,14 @@
                                     } else {
                                         if($row['kode']=='ST' || $row['kode']=='SPT' || $row['kode']=='SPTP' || $row['kode']=='SPLHP' || $row['kode']=='STPA')
                                         {
-                                            echo '<button class="btn small blue-grey waves-effect waves-light"><i class="material-icons">error</i> No Action</button>';
+                                            if($row['file']!=""){
+                                                echo '<a class="btn small yellow darken-3 waves-effect waves-light" target="_BLANK" href="upload/surat_keluar/'.$row['file'].'">
+                                                <i class="material-icons">cloud_download</i> UNDUH</a>';
+                                                
+                                            } else {
+                                                echo '<a class="btn small blue waves-effect waves-light" href="?page=tsk&act=edit&id_surat='.$row['id_surat'].'">
+                                                <i class="material-icons">edit</i> EDIT</a> ';
+                                            }
                                         } else {                                            
                                             echo '<a class="btn small yellow darken-3 waves-effect waves-light" target="_BLANK" href="upload/surat_keluar/'.$row['file'].'">
                                             <i class="material-icons">cloud_download</i> UNDUH</a>';
