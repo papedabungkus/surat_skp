@@ -265,13 +265,13 @@
                                   echo '</ol></td>
                                     <td>'.$row['tempat_ttd'].'<br/><hr/>'.indoDate($row['tgl_ttd']).'</td>
                                     <td>';
-                                    if($_SESSION['id_user'] == 1 || $_SESSION['id_user'] == 2){
+                                    if($_SESSION['admin'] <= 2){
                                     echo '<a class="btn small blue darken-3 waves-effect waves-light" href="?page=bspt&act=edit&id_surat='.$row['id_surat'].'">
                                                 <i class="material-icons">edit</i> EDIT</a>';
                                     }
                                     echo '<a class="btn small yellow darken-3 waves-effect waves-light" href="cetak_surat_perintah_tugas.php?id_surat='.$row['id_surat'].'" target="_blank">
                                                 <i class="material-icons">print</i> PRINT</a>';
-                                    if($_SESSION['id_user'] == 1){            
+                                    if($_SESSION['admin'] == 1){            
                                     echo '<a class="btn small deep-orange waves-effect waves-light" href="?page=bspt&act=del&id_surat='.$row['id_surat'].'">
                                                 <i class="material-icons">delete</i> DEL</a>';
                                     }

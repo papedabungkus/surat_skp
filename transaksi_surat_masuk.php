@@ -165,13 +165,13 @@
                                       echo '<a class="btn small yellow darken-3 waves-effect waves-light" target="_BLANK" href="upload/surat_masuk/'.$row['file'].'">
                                                 <i class="material-icons">cloud_download</i> UNDUH</a>';
                                     }
-                                    if($_SESSION['id_user'] == 1 || $_SESSION['id_user'] == 2){
+                                    echo '<a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="?page=tsm&act=disp&id_surat='.$row['id_surat'].'">
+                                              <i class="material-icons">description</i> DISP</a>';
+                                    if($_SESSION['admin'] <= 2){
                                       echo '<a class="btn small blue waves-effect waves-light" href="?page=tsm&act=edit&id_surat='.$row['id_surat'].'">
                                                 <i class="material-icons">edit</i> EDIT</a>';
                                     }
-                                      echo '<a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="?page=tsm&act=disp&id_surat='.$row['id_surat'].'">
-                                                <i class="material-icons">description</i> DISP</a>';
-                                    if($_SESSION['id_user'] == 1){
+                                    if($_SESSION['admin'] == 1){
                                     echo '<a class="btn small deep-orange waves-effect waves-light" href="?page=tsm&act=del&id_surat='.$row['id_surat'].'">
                                                 <i class="material-icons">delete</i> DEL</a>';
                                     }
@@ -265,19 +265,19 @@
                                         <td>'.$row['no_surat'].'<br/><hr/>'.indoDate($row['tgl_surat']).'</td>
                                         <td>'; 
                                         if($row['file']!=""){
-                                          echo '<a class="btn small yellow darken-3 waves-effect waves-light" target="_BLANK" href="upload/surat_masuk/'.$row['file'].'">
-                                                    <i class="material-icons">cloud_download</i> UNDUH</a>';
-                                        }
-                                        if($_SESSION['id_user'] == 1 || $_SESSION['id_user'] == 2){
-                                          echo '<a class="btn small blue waves-effect waves-light" href="?page=tsm&act=edit&id_surat='.$row['id_surat'].'">
-                                                    <i class="material-icons">edit</i> EDIT</a>';
-                                        }
+                                            echo '<a class="btn small yellow darken-3 waves-effect waves-light" target="_BLANK" href="upload/surat_masuk/'.$row['file'].'">
+                                                      <i class="material-icons">cloud_download</i> UNDUH</a>';
+                                          }
                                           echo '<a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="?page=tsm&act=disp&id_surat='.$row['id_surat'].'">
                                                     <i class="material-icons">description</i> DISP</a>';
-                                        if($_SESSION['id_user'] == 1){
-                                        echo '<a class="btn small deep-orange waves-effect waves-light" href="?page=tsm&act=del&id_surat='.$row['id_surat'].'">
-                                                    <i class="material-icons">delete</i> DEL</a>';
-                                        }
+                                          if($_SESSION['admin'] <= 2){
+                                            echo '<a class="btn small blue waves-effect waves-light" href="?page=tsm&act=edit&id_surat='.$row['id_surat'].'">
+                                                      <i class="material-icons">edit</i> EDIT</a>';
+                                          }
+                                          if($_SESSION['admin'] == 1){
+                                          echo '<a class="btn small deep-orange waves-effect waves-light" href="?page=tsm&act=del&id_surat='.$row['id_surat'].'">
+                                                      <i class="material-icons">delete</i> DEL</a>';
+                                          }
                                         echo '</td></tr>';
                                 }
                             } else {
