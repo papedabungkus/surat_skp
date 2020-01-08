@@ -111,7 +111,7 @@
             $id_surat = mysqli_real_escape_string($config, $_REQUEST['id_surat']);
             $query = mysqli_query($config, "SELECT no_agenda,no_surat,dasar,penerima_tugas,peruntukan,tgl_ttd,tempat_ttd,jabatan_ttd,nama_ttd,id_user FROM tbl_surat_perintah_tugas_pengawasan WHERE id_surat='$id_surat'");
             list($no_agenda, $no_surat, $dasar, $penerima_tugas, $peruntukan, $tgl_ttd, $tempat_ttd, $jabatan_ttd, $nama_ttd, $id_user) = mysqli_fetch_array($query);
-            if($_SESSION['id_user'] != $id_user AND $_SESSION['id_user'] != 1){
+            if($_SESSION['id_user'] != $id_user AND $_SESSION['admin'] >= 3){
                 echo '<script language="javascript">
                         window.alert("ERROR! Anda tidak memiliki hak akses untuk mengedit data ini");
                         window.location.href="./admin.php?page=bsptp";
