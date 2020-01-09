@@ -90,6 +90,12 @@
                 case 'dp':
                     include "data_pegawai.php";
                     break;
+                case 'bsplhp':
+                    include "buat_splhp.php";
+                    break;
+                case 'csplhp':
+                    include "cetak_splhp.php";
+                    break;
             }
         } else {
     ?>
