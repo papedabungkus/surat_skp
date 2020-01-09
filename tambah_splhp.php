@@ -91,7 +91,7 @@ $config = conn($host, $username, $password, $database);
                                             } else {
 
                                                     $query = mysqli_query($config, "INSERT INTO tbl_surat_keluar(no_agenda,tujuan,no_surat,isi,kode,tgl_surat,tgl_catat,file,keterangan,id_user)
-                                                        VALUES('$no_agenda','$petugas','$no_surat','$peruntukan','SPT','$tgl_ttd',NOW(),'','Surat Perintah Tugas','$id_user')");
+                                                        VALUES('$no_agenda','$nama_pemilik','$no_surat','$alamat_pemilik','SPLHP','$tgl_ttd',NOW(),'','Surat Pengantar Laporan Hasil Pengujian','$id_user')");
                                                     $query_splhp = mysqli_query($config, "INSERT INTO tbl_splhp(no_agenda,no_surat,nama_pemilik,alamat_pemilik,nomor_pemilik,tgl_ttd,tempat_ttd,jabatan_ttd,nama_ttd,id_user)
                                                     VALUES('$no_agenda','$no_surat','$nama_pemilik','$alamat_pemilik','$nomor_pemilik','$tgl_ttd','$tempat_ttd','$jabatan_ttd','$nama_ttd','$id_user')");
 
@@ -217,7 +217,7 @@ $config = conn($host, $username, $password, $database);
                         
                         <div class="input-field col s3">
                             <i class="material-icons prefix md-prefix">description</i>
-                            <textarea id="nama_pemilik" class="materialize-textarea validate" name="nama_pemilik" required></textarea>
+                            <input type="text" id="nama_pemilik" class="validate" name="nama_pemilik" required>
                                 <?php
                                     if(isset($_SESSION['nama_pemilikk'])){
                                         $nama_pemilikk = $_SESSION['nama_pemilikk'];
@@ -229,7 +229,7 @@ $config = conn($host, $username, $password, $database);
                         </div>
                         <div class="input-field col s3">
                             <i class="material-icons prefix md-prefix">description</i>
-                            <textarea id="nomor_pemilik" class="materialize-textarea validate" name="nomor_pemilik" required></textarea>
+                            <input type="text" id="nomor_pemilik" class="validate" name="nomor_pemilik" required>
                             
                             <label for="isi">Nomor Telp/HP</label>
                         </div>
